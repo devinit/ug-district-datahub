@@ -1,7 +1,3 @@
-.branding {
-  background-image: url(/assets/svg/icons/home.svg);
-}
-
 .rich-text img {
     max-width: 100%;
     height: auto;
@@ -273,3 +269,31 @@ table th,
 h2 {
   opacity: initial !important;
 }
+
+/** ===== WHITELABELLING ===== **/
+
+.branding {
+  background-image: url(/assets/svg/icons/home.svg);
+}
+
+.hero__flourish {
+  display: none;
+}
+
+.header, .header:after {
+  background-color: #FFFFFF;
+}
+
+.hero {
+  background-color: #357BA5;
+}
+
+.hero__image::after, .footer::before {
+  display: none;
+}
+
+.hero__title span {
+  background-color: #3C8DBC;
+}
+
+/** ==== END WHITELABELLING ===== **/
