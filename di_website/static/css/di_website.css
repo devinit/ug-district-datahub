@@ -1,3 +1,7 @@
+.branding {
+  background-image: url(/assets/svg/icons/home.svg);
+}
+
 .rich-text img {
     max-width: 100%;
     height: auto;
@@ -265,7 +269,7 @@ select optgroup {
 table th,
 .cta,
 .js-copy-trigger,
-.download__list a, 
+.download__list a,
 h2 {
   opacity: initial !important;
 }
