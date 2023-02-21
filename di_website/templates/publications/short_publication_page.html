@@ -1,0 +1,70 @@
+{% extends "layouts/default.html" %}
+
+{% load string_utils wagtailcore_tags responsive wagtailimages_tags static chart_utils %}
+
+{% block hero %}
+  {% include 'includes/heroes/hero-pubs-short.html' %}
+{% endblock hero %}
+
+{% block colour %}body--{{page.colour}}{% endblock %}
+
+{% block body %}
+
+  {% include 'publications/chapter-nav/nav.html' with page=page menu_label='Jump to section' chapter_number=page.chapter_number %}
+
+  {% for block in page.content %}
+    <section class="section section--large">
+      <div class="row row--narrow">
+        {% if forloop.first %}
+          {% if page.authors|length > 0 %}
+            <div class="max-meter max-meter--center">
+              {% include 'includes/partials/multi-authors.html' with authors=page.authors %}
+              {% if page.call_to_action_title %}
+                <div class="space-section-both">
+                  {% include 'includes/partials/call-to-action.html' %}
+                </div>
+              {% endif %}
+            </div>
+          {% else %}
+            {% if page.call_to_action_title %}
+              <div class="max-meter max-meter--center">
+                <div class="space-section-both">
+                  {% include 'includes/partials/call-to-action.html' %}
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endif %}
+
+        {% if block.block_type == 'rich_text' and forloop.first %}
+          {% include_block block with id=block.id|string_start classname='is-typeset--additionals' %}
+        {% else %}
+          {% include_block block with id=block.id|string_start %}
+        {% endif %}
+      </div>
+    </section>
+  {% endfor %}
+
+  {% include 'publications/partials/downloads.html' %}
+
+  {% include 'publications/footnotes.html' %}
+
+  {% if related_pages %}
+    {% with heading='Related content' %}
+      {% include 'includes/partials/related_content.html' %}
+    {% endwith %}
+  {% endif %}
+
+{% endblock %}
+
+{% block html_header %}
+  {{block.super}}
+  {% load_viz_assets source='header' %}
+{% endblock html_header %}
+
+{% block html_footer %}
+  {{block.super}}
+  <script src="{% static 'publications/js/bundle.js' %}"></script>
+  {% load_viz_assets source='footer' %}
+  {% include 'visualisation/partials/pivot_table_footer_assets.html' %}
+{% endblock html_footer %}

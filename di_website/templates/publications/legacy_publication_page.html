@@ -1,0 +1,49 @@
+{% extends "layouts/default.html" %}
+
+{% load string_utils wagtailcore_tags responsive wagtailimages_tags footnotes_utils static %}
+
+{% block hero %}
+  {% include 'includes/heroes/hero-pubs-short.html' %}
+{% endblock hero %}
+
+{% block colour %}body--{{page.colour}}{% endblock %}
+
+{% block body %}
+
+  <section class="section section--post">
+    <div class="row row--narrow">
+      <div class="max-meter max-meter--center">
+        {% if page.authors|length > 0 %}
+          {% include 'includes/partials/multi-authors.html' with authors=page.authors %}
+        {% endif %}
+        {% if page.call_to_action_title %}
+          <div class="space-section-both">
+            {% include 'includes/partials/call-to-action.html' %}
+          </div>
+        {% endif %}
+        <div class="is-typeset is-typeset--additionals wysiwyg">
+          {% content_with_footnotes page.content %}
+          {{ page.raw_content | safe }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  {% include 'publications/partials/downloads.html' %}
+
+  {% include 'publications/footnotes.html' %}
+
+  {% if related_pages %}
+    {% with heading='Related content' %}
+      {% include 'includes/partials/related_content.html' %}
+    {% endwith %}
+  {% endif %}
+
+{% endblock %}
+
+
+{% block html_footer %}
+  {{block.super}}
+  <script src="{% static 'publications/js/bundle.js' %}"></script>
+{% endblock html_footer %}
