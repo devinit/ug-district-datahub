@@ -63,7 +63,7 @@ Pattern library available online at [http://development-initiatives.surge.sh/](h
 
 11. Run Celery worker
 
-        celery -A wagtaillinkchecker worker -l info
+        celery -A di_website worker -l info
 
 12. Build static assets - refer to *Pattern library* section, then in the project root
 
