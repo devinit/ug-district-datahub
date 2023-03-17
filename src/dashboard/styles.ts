@@ -1,15 +1,12 @@
-import Plotly, { relayout as Relayout } from 'plotly.js';
-import { PlotlyEnhancedHTMLElement, ChartOptions } from './types';
-
-const MAX_TRACES_FOR_THEME = 8;
+export const MAX_TRACES_FOR_THEME = 8;
 // Default hover template
-const hovertemplate = `
+export const hovertemplate = `
     <b style="font-family:Geomanist Bold,sans-serif!important;">%{fullData.name}</b><br>
     %{xaxis.title.text}: <b>%{x}</b><br>
     %{yaxis.title.text}: <b>%{meta.yAxisPrefix}%{y:,.1f}%{meta.yAxisSuffix}</b><extra></extra>`;
 
 // Map of colorways, applied based on number of items in legend and body class if present
-const colorways = {
+export const colorways = {
   rainbow: [
     '#e84439',
     '#eb642b',
@@ -33,47 +30,4 @@ const colorways = {
   lavendar: ['#42184c', '#632572', '#732c85', '#994d98', '#af73ae', '#cb98c4', '#deb5d6', '#ebcfe5'],
   bluebell: ['#0a3a64', '#00538e', '#1060a3', '#4397d3', '#77adde', '#a3c7eb', '#bcd4f0', '#d3e0f4'],
   leaf: ['#08492f', '#005b3e', '#00694a', '#3b8c62', '#74bf93', '#a2d1b0', '#b1d8bb', '#c5e1cb'],
-};
-
-// Assign the default hover template to each data node if there isn't one defined
-export const addHoverTemplateToTraces = (data: Plotly.Data[]): void => {
-  data.forEach((item) => {
-    if (!item.hovertemplate) {
-      item.hovertemplate = hovertemplate;
-    }
-  });
-};
-
-export const setDefaultColorway = (layout: Plotly.Layout): void => {
-  layout.colorway = colorways.default;
-};
-
-// Update the layout colorway based on legend and body class
-export const updateLayoutColorway = (plotlyNode: PlotlyEnhancedHTMLElement, relayout: typeof Relayout): void => {
-  try {
-    const count = plotlyNode.calcdata.length;
-    let colorway = undefined;
-    if (count > MAX_TRACES_FOR_THEME) {
-      colorway = colorways.rainbow;
-    } else {
-      const bodyClass = document.body.classList;
-      for (const [key, value] of Object.entries(colorways)) {
-        if (bodyClass.contains(`body--${key}`) && value.length <= MAX_TRACES_FOR_THEME) {
-          colorway = value;
-          break;
-        }
-      }
-    }
-    if (colorway) {
-      relayout(plotlyNode, { colorway });
-    }
-  } catch (e) {}
-};
-
-export const removeTitle = (layout: Plotly.Layout): void => {
-  layout.title = '';
-};
-
-export const addLayoutMeta = (layout: Plotly.Layout, options: ChartOptions): void => {
-  layout.meta = { title: options.title, imageCaption: options.imageCaption, source: options.source };
 };

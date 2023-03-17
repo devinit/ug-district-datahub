@@ -1,6 +1,5 @@
 import { DIChart } from './dicharts';
-import { DIChartConfig, DIChartPlotlyOptions, DIChartEChartOptions } from './utils';
-import { DIPlotlyChart } from './plotly';
+import { DIChartConfig, DIChartEChartOptions } from './utils';
 import { DIEChart } from './echarts';
 
 export const handler = (function () {
@@ -14,27 +13,11 @@ export const handler = (function () {
     return document.querySelectorAll(`.${className}:not(.dicharts-handler--active)`);
   };
   const onAdd = (chart: DIChartConfig, nodes: NodeListOf<Element>) => {
-    if (chart.plotly && chart.plotly.onAdd) {
-      chart.plotly.onAdd(nodes);
-    }
     if (chart.d3 && chart.d3.onAdd) {
       chart.d3.onAdd(nodes);
     }
     if (chart.echarts && chart.echarts.onAdd) {
       chart.echarts.onAdd(nodes);
-    }
-  };
-  const handlePlotly = (chartNode: HTMLElement, config: DIChartPlotlyOptions) => {
-    const manager = new DIPlotlyChart(chartNode, config);
-    manager.showLoading();
-    manager.setLayout(config.layout).setConfig(config.config);
-    if (config.data && config.data.length) {
-      manager.setData(config.data).updatePlot();
-    } else if (config.csv) {
-      manager.csv(config.csv.url).then((data) => {
-        manager.setSourceData(data);
-        config.csv?.onFetch(data, config, manager);
-      });
     }
   };
   const handleEChart = (chartNode: HTMLElement, config: DIChartEChartOptions) => {
@@ -55,9 +38,7 @@ export const handler = (function () {
     onAdd(chart, chartNodes);
     Array.prototype.forEach.call(chartNodes, (chartNode: HTMLElement) => {
       chartNode.classList.add('dicharts-handler--active');
-      if (chart.plotly) {
-        handlePlotly(chartNode, chart.plotly);
-      } else if (chart.echarts) {
+      if (chart.echarts) {
         handleEChart(chartNode, chart.echarts);
       }
     });

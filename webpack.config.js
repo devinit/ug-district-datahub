@@ -54,20 +54,6 @@ const wagtailAceEditorConfig = {
   ],
 };
 
-const chartsConfig = {
-  ...sharedConfig,
-  entry: ['./src/dashboard/index.ts'],
-  output: {
-    path: path.resolve(__dirname, 'dashboard/static/dashboard/js'),
-    filename: 'chart.js',
-    publicPath: '/assets/dashboard/js/',
-    chunkFilename: 'chart[chunkhash].js',
-    libraryTarget: 'umd',
-  },
-  externals: ['jquery', 'echarts'],
-};
-chartsConfig.module.rules[0].loader = 'babel-loader';
-
 const diChartsConfig = {
   ...sharedConfig,
   entry: './src/dashboard/library/index.ts',
@@ -113,4 +99,4 @@ const appConfig = {
   },
 };
 
-module.exports = [appConfig, wagtailAceEditorConfig, pivotTableConfig, diChartsConfig, chartsConfig];
+module.exports = [appConfig, wagtailAceEditorConfig, pivotTableConfig, diChartsConfig];
