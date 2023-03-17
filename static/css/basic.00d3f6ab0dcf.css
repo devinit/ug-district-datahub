@@ -1,0 +1,443 @@
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+q, blockquote {
+  quotes: none; }
+
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+a img {
+  border: none; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block; }
+
+button, input {
+  line-height: normal;
+  background-color: transparent; }
+
+button, input, select, textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle; }
+
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+  cursor: pointer;
+  *overflow: visible; }
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  resize: vertical; }
+
+/*
+	Colour themes for use in interactive visualisations
+	When using this for a colour scale, note the numbering needs to be 2,3,1,4,5
+	I've set up variables for each colour, and SCSS lists for the scales.
+	Brand book available here: https://www.dropbox.com/s/n5g9r5v8vvezy7a/DI%20Brand%20Book%20-%20update%20July%202018.pdf?dl=0;
+*/
+/* Primary Pallete */
+/* Red */
+/* Red extended pallete for charts */
+/* Secondary Pallete */
+/* Yellow */
+/* Yellow extended pallete for charts */
+/* Orange */
+/* Orange extended pallete for charts */
+/* Pink */
+/* Pink extended pallete for charts */
+/* Purple */
+/* Purple extended pallete for charts */
+/* Blue */
+/* Blue extended pallete for charts */
+/* Green */
+/* Green extended pallete for charts */
+/* Grey */
+/* Grey extended pallete for charts */
+/* Grey 8 is wrong in the brand book */
+/* Rainbow - all primary and secondary colours */
+.max-width, .is-typeset img {
+  max-width: 100%;
+  height: auto;
+  display: block; }
+
+body, select, input, textarea, button, .button {
+  font-family: "Geomanist Regular", sans-serif; }
+
+.heading, .is-typeset h1, .is-typeset h2, .is-typeset h3, .is-typeset h4, .is-typeset h5, .is-typeset h6, .is-typeset b, .is-typeset strong {
+  font-family: "Geomanist Bold", sans-serif; }
+
+/* ------------------------------------------------------------ */
+html {
+  font-size: 10px; }
+
+body {
+  font-size: 16px;
+  line-height: 1.75;
+  background: #f3f3f3;
+  color: #443e42; }
+
+.pagecontent {
+  overflow-x: hidden; }
+
+.ui-base {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto; }
+
+/* :: Basic styling for coherent, simple content */
+/* ------------------------------------------------------------ */
+h1 {
+  font-size: 30px;
+  margin: 14px auto; }
+
+h2 {
+  font-size: 26px;
+  margin: 14px auto; }
+
+h3, h4 {
+  font-size: 20px;
+  margin: 14px auto; }
+
+h5, h6 {
+  font-size: 16px;
+  margin: 14px auto; }
+
+p, li {
+  font-size: 16px;
+  margin: 16 auto; }
+
+ul, ol {
+  margin: 14px auto; }
+
+img {
+  margin: 14px auto;
+  max-width: 1000px; }
+
+*[role="banner"] {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+  margin-bottom: 19px;
+  display: block; }
+
+*[role="navigation"] {
+  display: block; }
+  *[role="navigation"] li {
+    display: inline-block;
+    margin-right: 8px; }
+
+*[role="contentinfo"] {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  margin-top: 19px;
+  display: block; }
+
+/* :: Get core styling for basic layout */
+/* ------------------------------------------------------------ */
+a {
+  color: #8f1b13;
+  text-decoration: none; }
+  a:hover {
+    color: #443e42; }
+
+a[href^="tel"] {
+  color: inherit;
+  text-decoration: none; }
+
+.skiplink {
+  background: #fff;
+  color: #8f1b13;
+  border: 1px solid #ddd;
+  display: block;
+  font-size: 16px;
+  line-height: 40px;
+  padding: 0 20px;
+  position: absolute;
+  top: -60px;
+  left: 0;
+  -webkit-transition: all ease-in-out 0.1s;
+  transition: all ease-in-out 0.1s; }
+  .skiplink:focus, .skiplink:active {
+    top: 0;
+    z-index: 80; }
+
+.pagecontent {
+  outline: none; }
+
+svg {
+  max-height: 10000px; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #443e42; }
+
+ul, ol {
+  list-style-type: none; }
+
+strong, b {
+  font-weight: 600; }
+
+em, i, q {
+  font-style: italic; }
+
+a {
+  font-size: inherit; }
+
+h1 a:not(.button), h1 span, h1 cite, h1 em, h1 i, h1 q, h1 strong, h1 b, h2 a:not(.button), h2 span, h2 cite, h2 em, h2 i, h2 q, h2 strong, h2 b, h3 a:not(.button), h3 span, h3 cite, h3 em, h3 i, h3 q, h3 strong, h3 b, h4 a:not(.button), h4 span, h4 cite, h4 em, h4 i, h4 q, h4 strong, h4 b, h5 a:not(.button), h5 span, h5 cite, h5 em, h5 i, h5 q, h5 strong, h5 b, h6 a:not(.button), h6 span, h6 cite, h6 em, h6 i, h6 q, h6 strong, h6 b, li a:not(.button), li span, li cite, li em, li i, li q, li strong, li b, p a:not(.button), p span, p cite, p em, p i, p q, p strong, p b {
+  font-size: inherit; }
+
+label, legend, select {
+  display: block;
+  color: #443e42; }
+
+input[type="search"]::search-decoration,
+input[type="search"]::search-cancel-button,
+input[type="submit"],
+button,
+.button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  -webkit-border-radius: 0;
+          border-radius: 0; }
+
+button,
+.button {
+  border: none;
+  background-color: transparent;
+  text-align: left; }
+
+select, input, textarea, button, .button {
+  -webkit-border-radius: 0;
+          border-radius: 0; }
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #443e42; }
+
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #443e42; }
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #443e42; }
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #443e42; }
+
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  font-family: inherit; }
+
+legend {
+  font-size: 2rem; }
+
+label {
+  font-size: 1.5rem; }
+
+fieldset {
+  margin: 0;
+  display: block;
+  width: 100%;
+  clear: both; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+input[type="number"],
+textarea {
+  width: 100%; }
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  *margin-top: 0;
+  line-height: normal;
+  cursor: pointer; }
+
+input[type="file"],
+input[type="image"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="radio"],
+input[type="checkbox"],
+input[type="submit"] button {
+  width: auto; }
+
+select,
+input[type="file"] {
+  *margin-top: 4px;
+  /* In IE7, the height of the select element cannot be changed by height, only font-size */ }
+
+@font-face {
+  font-family: "Geomanist Regular";
+  src: url("../fonts/geomanist-regular-webfont.15172c4485d2.eot");
+  src: url("../fonts/geomanist-regular-webfont.15172c4485d2.eot?#iefix") format("embedded-opentype"), url("../fonts/geomanist-regular-webfont.deb2e275f84c.woff") format("woff"), url("../fonts/geomanist-regular-webfont.7da201004f3c.ttf") format("truetype"), url("../fonts/geomanist-regular-webfont.0f2de97bae47.svg#Geomanist Regular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "Geomanist Light";
+  src: url("../fonts/geomanist-light-webfont.f2bbfd15d4f8.eot");
+  src: url("../fonts/geomanist-light-webfont.f2bbfd15d4f8.eot?#iefix") format("embedded-opentype"), url("../fonts/geomanist-light-webfont.16314416e7bd.woff") format("woff"), url("../fonts/geomanist-light-webfont.0aee630bf5cb.ttf") format("truetype"), url("../fonts/geomanist-light-webfont.961299e2d5c2.svg#Geomanist Light") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "Geomanist Bold";
+  src: url("../fonts/geomanist-bold-webfont.155952a90b0a.eot");
+  src: url("../fonts/geomanist-bold-webfont.155952a90b0a.eot?#iefix") format("embedded-opentype"), url("../fonts/geomanist-bold-webfont.8f7a14420cf9.woff") format("woff"), url("../fonts/geomanist-bold-webfont.0a7742378df0.ttf") format("truetype"), url("../fonts/geomanist-bold-webfont.ae26d3ffee7e.svg#Geomanist Bold") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+.type-xl, .is-typeset h1 {
+  font-size: 3rem;
+  line-height: 1.1666666667; }
+  .type-xl--leader, .is-typeset h1 {
+    margin-top: 2.4rem; }
+  .type-xl--trailer, .is-typeset h1 {
+    margin-bottom: 0.75rem; }
+
+.type-l, .is-typeset h2 {
+  font-size: 2.6rem; }
+  .type-l--leader, .is-typeset h2 {
+    margin-top: 5.2rem; }
+  .type-l--trailer, .is-typeset h2 {
+    margin-bottom: 1.3rem; }
+
+.type-m, .is-typeset h3 {
+  font-size: 2rem; }
+  .type-m--leader, .is-typeset h3 {
+    margin-top: 4rem; }
+  .type-m--trailer, .is-typeset h3 {
+    margin-bottom: 1rem; }
+
+.type-s, .is-typeset h4 {
+  font-size: 1.6rem; }
+  .type-s--leader, .is-typeset h4 {
+    margin-top: 3.2rem; }
+  .type-s--trailer, .is-typeset h4 {
+    margin-bottom: 0.8rem; }
+
+.type-xs, .is-typeset h5, .is-typeset h6 {
+  font-size: 1.5rem; }
+  .type-xs--leader, .is-typeset h5, .is-typeset h6 {
+    margin-top: 3rem; }
+  .type-xs--trailer, .is-typeset h5, .is-typeset h6 {
+    margin-bottom: 0.75rem; }
+
+.para, .is-typeset p {
+  font-size: 1.6rem; }
+
+.para--typeset, .is-typeset p {
+  margin-bottom: 1.6rem; }
+
+.list-item, .unordered-list li, .is-typeset ul li, .ordered-list li, .is-typeset ol li, .nobullet-list li {
+  font-size: 1.6rem; }
+
+.list-item--typeset, .unordered-list li, .is-typeset ul li, .ordered-list li, .is-typeset ol li, .nobullet-list li {
+  margin-bottom: 0.8rem; }
+
+.unordered-list, .is-typeset ul {
+  list-style-position: outside;
+  list-style-type: disc;
+  padding-left: 3em; }
+
+.ordered-list, .is-typeset ol {
+  list-style-position: outside;
+  list-style-type: decimal;
+  padding-left: 3.5em; }
+
+.nobullet-list {
+  list-style-type: none; }
+
+.list--typeset, .unordered-list--typeset, .ordered-list--typeset {
+  margin-bottom: 1.6rem;
+  margin-top: 1.6rem; }
+
+.is-typeset ol {
+  margin-top: 2em; }
+  .is-typeset ol ol {
+    margin-top: 0.5em; }
+
+.is-typeset ul {
+  margin-top: 2em; }
+  .is-typeset ul ul {
+    margin-top: 0.5em; }
+
+.is-typeset a:not(.button) {
+  text-decoration: underline;
+  word-break: break-word; }
+
+.is-typeset sup {
+  vertical-align: super;
+  font-size: 80%; }
+
+.is-typeset img {
+  margin: 1.6em 0; }
+
+.is-typeset .button + .button {
+  margin-top: 1em; }
+
+.is-typeset > h1:first-child,
+.is-typeset > h2:first-child,
+.is-typeset > h3:first-child,
+.is-typeset > h4:first-child,
+.is-typeset > h5:first-child,
+.is-typeset > h6:first-child,
+.is-typeset > img:first-child,
+.is-typeset > media-video-wrapper:first-child {
+  margin-top: 0; }
+
+.is-typeset br + br,
+.is-typeset h1:empty,
+.is-typeset h2:empty,
+.is-typeset h3:empty,
+.is-typeset h4:empty,
+.is-typeset h5:empty,
+.is-typeset h6:empty,
+.is-typeset p:empty,
+.is-typeset ul:empty,
+.is-typeset ol:empty,
+.is-typeset span:empty,
+.is-typeset cite:empty,
+.is-typeset div:empty {
+  display: none; }
+
+.is-typeset--no-trailing p:last-child, .is-typeset--no-trailing li:last-child, .is-typeset--no-trailing ul:last-child, .is-typeset--no-trailing ol:last-child {
+  margin-bottom: 0; }
+
+/* ::Print */
+/* ------------------------------------------------------------ */
+@media print {
+  body {
+    font-size: 62.5%; } }
+
+

@@ -1,0 +1,521 @@
+// ------------------------------------------------------------
+// Spotlight
+// ------------------------------------------------------------
+
+.spotlight-banner {
+    @extend %pie-clearfix;
+    position: relative;
+    background-color: #fff;
+    padding: 2em;
+    &--header {
+        background-color: darken($cloud, 10%);
+        margin-bottom: 2em;
+    }
+    &__aside {
+        margin-bottom: 2em;
+    }
+    &__main {
+        position: relative;
+    }
+    @include respond-to($c-vp) {
+        &__aside {
+            float: left;
+            width: 50%;
+            padding-right: 2em;
+            margin-bottom: 0;
+        }
+        &__main {
+            float: left;
+            width: 50%;
+            padding-left: 2em;
+            border-left: 1px solid $default-border-color;
+        }
+        &--alt {
+            .spotlight-banner__aside {
+                width: 40%;
+            }
+            .spotlight-banner__main {
+                width: 60%;
+            }
+        }
+        &--header {
+            .spotlight-banner__aside {
+                width: 50%;
+            }
+            .spotlight-banner__main {
+                width: 50%;
+            }
+        }
+    }
+}
+
+.spotlight-banner__heading {
+    @include font-size($epsilon);
+    margin-bottom: 0.5em;
+}
+
+.spotlight-banner__form {
+    display: block;
+    @include respond-to($b-vp) {
+        .form-field--inline {
+            margin-top: 0;
+        }
+        button.button {
+            margin-top: 1.9em;
+        }
+    }
+    // @include respond-to($c-vp) {
+    //     display: block;
+    //     html.js & {
+    //         display: none;
+    //     }
+    // }
+}
+
+.spotlight {
+    @extend %pie-clearfix;
+    margin-top: 1em;
+    &--leader {
+        margin-top: 2em;
+    }
+    &--full {
+        margin-top: 2em;
+    }
+    &__aside {
+        margin-bottom: 2em;
+        overflow: hidden;
+        &--no-margin {
+            margin-bottom: 0;
+        }
+    }
+    &__main {
+        position: relative;
+    }
+    @include respond-to($c-vp + 50px) {
+        @supports (display: flex) {
+            display: flex;
+        }
+        &--full {
+            display: block;
+        }
+        &__aside {
+            float: left;
+            width: 30%;
+            margin-bottom: 0;
+            &--ss {
+                display: none;
+            }
+        }
+        &__main {
+            float: left;
+            width: 70%;
+            //padding-left: 1em;
+            .spotlight--full & {
+                width: 100%;
+                float: none;
+                display: block;
+            }
+        }
+        &__main--map {
+            padding-left: 0;
+        }
+    }
+}
+
+.spotlight__location {
+    display: none;
+    &--active {
+        display: block;
+    }
+}
+
+.spotlight__countries {
+    display: none;
+    &--active {
+        display: block;
+    }
+    .spotlight-banner--header & {
+        display: block;
+    }
+}
+
+.spotlight__hide-ss {
+    display: none;
+    @include respond-to($c-vp + 50px) {
+        display: block;
+    }
+}
+
+.spotlight__select {
+    .button {
+        transform: translateY(2px);
+    }
+}
+
+.spotlight__select-container {
+    display: block;
+    width: 100%;
+    .spotlight--full & {
+        width: auto;
+        min-width: 250px;
+    }
+}
+
+.spotlight__heading {
+    position: relative;
+    @include font-size($beta);
+    .button {
+        display: none;
+        html.js & {
+            display: block;
+            float: right;
+        }
+    }
+}
+
+.spotlight__subheading {
+    @include font-size($delta);
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+}
+
+.spotlight__excerpt {
+    @include font-size($zeta);
+}
+
+.spotlight__header {
+    padding: 2em;
+    background-color: darken($cloud, 10%);
+    margin-bottom: 12px;
+}
+
+.spotlight__content {
+    @extend %pie-clearfix;
+    background-color: #fff;
+    padding: 2em;
+    .button {
+        margin-top: 1em;
+    }
+    .spotlight-description {
+        width: 47.5%;
+        float: left;
+        @include respond-to($c-vp) {
+            width: 100%;
+            float: none;
+        }
+    }
+    .spotlight-legend {
+        width: 47.5%;
+        float: right;
+        @include respond-to($c-vp) {
+            width: 100%;
+            float: none;
+        }
+    }
+    .spotlight-buttons {
+        clear: both;
+        display: block;
+    }
+}
+
+.spotlight-legend {
+    margin-top: 2em;
+    @include font-size($zeta);
+    span {
+        display: block;
+        text-align: center;
+        padding: 0.5em;
+        background-color: $cloud;
+    }
+    &--red {
+        span {
+            &:first-child {
+                background-color: lighten($poppy-light, 20%);
+            }
+            &:nth-child(2) {
+                background-color: lighten($poppy-light, 10%);
+            }
+            &:nth-child(3) {
+                background-color: $poppy-light;
+            }
+            &:nth-child(4) {
+                background-color: $poppy;
+                color: #fff;
+            }
+            &:nth-child(5) {
+                background-color: $poppy-dark;
+                color: #fff;
+            }
+        }
+    }
+    &--blue {
+        span {
+            &:first-child {
+                background-color: lighten($bluebell-light, 20%);
+            }
+            &:nth-child(2) {
+                background-color: lighten($bluebell-light, 10%);
+            }
+            &:nth-child(3) {
+                background-color: $bluebell-light;
+            }
+            &:nth-child(4) {
+                background-color: $bluebell;
+                color: #fff;
+            }
+            &:nth-child(5) {
+                background-color: $bluebell-dark;
+                color: #fff;
+            }
+        }
+    }
+    &--yellow {
+        span {
+            &:first-child {
+                background-color: lighten($sunflower-light, 20%);
+            }
+            &:nth-child(2) {
+                background-color: lighten($sunflower-light, 10%);
+            }
+            &:nth-child(3) {
+                background-color: $sunflower-light;
+            }
+            &:nth-child(4) {
+                background-color: $sunflower;
+                color: #fff;
+            }
+            &:nth-child(5) {
+                background-color: $sunflower-dark;
+                color: #fff;
+            }
+        }
+    }
+    &--orange {
+        span {
+            &:first-child {
+                background-color: lighten($marigold-light, 20%);
+            }
+            &:nth-child(2) {
+                background-color: lighten($marigold-light, 10%);
+            }
+            &:nth-child(3) {
+                background-color: $marigold-light;
+            }
+            &:nth-child(4) {
+                background-color: $marigold;
+                color: #fff;
+            }
+            &:nth-child(5) {
+                background-color: $marigold-dark;
+                color: #fff;
+            }
+        }
+    }
+    &--pink {
+        span {
+            &:first-child {
+                background-color: lighten($rose-light, 20%);
+            }
+            &:nth-child(2) {
+                background-color: lighten($rose-light, 10%);
+            }
+            &:nth-child(3) {
+                background-color: $rose-light;
+            }
+            &:nth-child(4) {
+                background-color: $rose;
+                color: #fff;
+            }
+            &:nth-child(5) {
+                background-color: $rose-dark;
+                color: #fff;
+            }
+        }
+    }
+    &--purple {
+        span {
+            &:first-child {
+                background-color: lighten($lavendar-light, 20%);
+            }
+            &:nth-child(2) {
+                background-color: lighten($lavendar-light, 10%);
+            }
+            &:nth-child(3) {
+                background-color: $lavendar-light;
+            }
+            &:nth-child(4) {
+                background-color: $lavendar;
+                color: #fff;
+            }
+            &:nth-child(5) {
+                background-color: $lavendar-dark;
+                color: #fff;
+            }
+        }
+    }
+    &--green {
+        span {
+            &:first-child {
+                background-color: lighten($leaf-light, 20%);
+            }
+            &:nth-child(2) {
+                background-color: lighten($leaf-light, 10%);
+            }
+            &:nth-child(3) {
+                background-color: $leaf-light;
+            }
+            &:nth-child(4) {
+                background-color: $leaf;
+                color: #fff;
+            }
+            &:nth-child(5) {
+                background-color: $leaf-dark;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.spotlight__interactive {
+    position: relative;
+    min-height: 500px;
+    background-color: #fff;
+    div {
+        position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+    }
+    div.alert {
+        position: relative;
+        transform: translate(1em, 1em);
+        width: calc(100% - 2em);
+    }
+    .button {
+        position: absolute;
+        top: 0;
+        left: 1.4em;
+        z-index: 20;
+    }
+    &--ss {
+        display: block;
+        min-height: 350px;
+        margin-top: 2em;
+    }
+    &--max-height {
+        overflow: hidden;
+        max-height: 500px;
+        &:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            background: rgb(243,243,243);
+            background: linear-gradient(0deg, rgba(243,243,243,1) 0%, rgba(243,243,243,0) 35%);
+        }
+        &--active {
+            max-height: 100%;
+            &:after {
+                content: none;
+            }
+        }
+    }
+    @include respond-to($c-vp + 50px) {
+        &--ss {
+            display: none;
+        }
+        .button {
+            top: 1.75em;
+        }
+    }
+    .spotlight__stat & {
+        min-height: auto;
+        @include maintain-ratio(4 3);
+    }
+    .spotlight__main--map & {
+        @include respond-to($c-vp + 50px) {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .tabs__content & {
+        @include respond-to($c-vp) {
+            min-height: 200px;
+            padding-bottom: 0;
+        }
+        @include respond-to($e-vp + 200px) {
+            min-height: 250px;
+        }
+        @include respond-to($e-vp + 400px) {
+            min-height: 300px;
+        }
+    }
+}
+
+
+.spotlight__stat {
+    text-align: center;
+}
+
+.spotlight__stat-heading {
+    @include font-size($delta);
+    line-height: 1.3;
+    margin-bottom: 0.5em;
+}
+
+.spotlight__stat-data {
+    @extend %font-heading;
+    @include font-size($alpha);
+    color: $poppy-dark;
+    &__note {
+        font-size: 45%;
+        color: $base-color;
+        @extend %font-sans;
+        display: block;
+        text-align: center;
+        transform: translateY(-0.75em);
+    }
+}
+
+.spotlight__comparison {
+    @extend %pie-clearfix;
+    display: block;
+    + .spotlight__comparison {
+        border-top: 1px solid $cloud;
+        padding-top: 1em;
+        margin-top: 2em;
+    }
+}
+
+.spotlight__comparison-legend {
+    width: 26px;
+    height: 26px;
+    background-color: $bluebell;
+    display: inline-block;
+    float: left;
+    margin-top: 0;
+    margin-right: 1em;
+    &--alt {
+        background-color: $marigold;
+    }
+    @include respond-to($c-vp - 100px) {
+        width: 70px;
+        height: 70px;
+        margin-top: 7px;
+    }
+}
+
+.spotlight-menu {
+    transform: translateX(-100%);
+    transition: all ease-in-out, 0.3s;
+    &--active {
+        transform: translateX(0);
+    }
+    display: none;
+    html.js & {
+        display: block;
+    }
+}
