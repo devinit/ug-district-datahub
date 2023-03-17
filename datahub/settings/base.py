@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "home",
     "dashboard",
     "common",
+    "downloads",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
