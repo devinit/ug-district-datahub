@@ -6,7 +6,7 @@ coverage.xml
 
 venv/*
 __pycache__
-/assets
+/static
 
 # Virtualenv folders
 bin
