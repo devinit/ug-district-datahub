@@ -2,7 +2,7 @@ from wagtail.admin.panels import InlinePanel
 from common.edit_handlers import MultiFieldPanel
 
 
-def DownloadsPanel(related_name='downloads', label='Download', heading='Downloads', description='Optional: add one or more downloads to the page.', max_num=None):
+def DownloadsPanel(related_name='dashboard_downloads', label='Download', heading='Downloads', description='Optional: add one or more downloads to the page.', max_num=None):
     return MultiFieldPanel(
         [
             InlinePanel(related_name, label=label, max_num=max_num),
