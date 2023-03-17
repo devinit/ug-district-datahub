@@ -183,3 +183,6 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='devinitautomailer@gmail.com
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='devinitautomailer@gmail.com')
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
