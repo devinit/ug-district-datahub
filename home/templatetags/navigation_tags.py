@@ -6,7 +6,7 @@ from django import template
 
 from wagtail.models import Page, Site
 
-from di_website.context import globals
+from datahub.context import globals
 
 register = template.Library()
 
