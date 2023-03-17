@@ -6,7 +6,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.images.models import SourceImageIOError
 
 from common.blocks import BaseStreamBlock, SectionStreamBlock, TypesetStreamBlock, TypesetFootnoteStreamBlock
-from common.constants import RICHTEXT_FEATURES_NO_FOOTNOTES
+from common.constants import RICHTEXT_FEATURES
 
 from wagtailmetadata.models import MetadataPageMixin
 
@@ -67,7 +67,7 @@ class HeroMixin(CustomMetadataPageMixin, models.Model):
         null=True,
         blank=True,
         help_text='A description of the page content',
-        features=RICHTEXT_FEATURES_NO_FOOTNOTES
+        features=RICHTEXT_FEATURES
     )
     hero_link = models.ForeignKey(
         'wagtailcore.Page',

@@ -14,9 +14,7 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
-from common.constants import (
-    FOOTNOTE_RICHTEXT_FEATURES, RICHTEXT_FEATURES, RICHTEXT_FEATURES_NO_FOOTNOTES
-)
+from common.constants import RICHTEXT_FEATURES
 
 class AccordionBlock(StructBlock):
     accordion_items = ListBlock(StructBlock([
@@ -70,7 +68,7 @@ class DocumentBoxSectionBlock(StructBlock):
     A block for holding multiple document boxes.
     """
     section_heading = TextBlock(required=False)
-    section_sub_heading = RichTextBlock(required=False, features=RICHTEXT_FEATURES_NO_FOOTNOTES)
+    section_sub_heading = RichTextBlock(required=False, features=RICHTEXT_FEATURES)
     document_box_heading = CharBlock(icon="title", required=False)
     document_boxes = StreamBlock([
         ('document_box', DocumentBoxBlock()),
@@ -167,7 +165,7 @@ class BannerBlock(StructBlock):
     text = StreamBlock([
         ('text_heading', CharBlock(template='blocks/banner/text_heading.html', required=False, icon='title')),
         ('text', TextBlock(template='blocks/banner/text.html')),
-        ('richtext', RichTextBlock(template='blocks/banner/richtext.html', features=RICHTEXT_FEATURES_NO_FOOTNOTES)),
+        ('richtext', RichTextBlock(template='blocks/banner/richtext.html', features=RICHTEXT_FEATURES)),
         ('list', ListBlock(StructBlock([
             ('title', TextBlock(required=False, help_text='An optional title to the list item')),
             ('content', TextBlock(required=True, help_text='The list item content')),
@@ -199,7 +197,7 @@ class BannerBlock(StructBlock):
 
 
 class SectionParagraphBlock(StructBlock):
-    text = RichTextBlock(features=RICHTEXT_FEATURES_NO_FOOTNOTES)
+    text = RichTextBlock(features=RICHTEXT_FEATURES)
     center = BooleanBlock(default=False, required=False)
 
     class Meta():
@@ -223,7 +221,7 @@ class BaseStreamBlock(StreamBlock):
     paragraph_block = RichTextBlock(
         icon='fa-paragraph',
         template='blocks/paragraph_block.html',
-        features=RICHTEXT_FEATURES_NO_FOOTNOTES
+        features=RICHTEXT_FEATURES
     )
     section_paragraph_block = SectionParagraphBlock()
     block_quote = BlockQuote()
@@ -244,7 +242,7 @@ class TestimonialBlock(StructBlock):
     body = RichTextBlock(
         icon='fa-paragraph',
         template='blocks/paragraph_block.html',
-        features=RICHTEXT_FEATURES_NO_FOOTNOTES
+        features=RICHTEXT_FEATURES
     )
     cite = TextBlock(help_text='The source of the testimonial')
     image = ImageChooserBlock(required=False)
@@ -312,7 +310,7 @@ class TypesetStreamBlock(StreamBlock):
     paragraph_block = RichTextBlock(
         icon='fa-paragraph',
         template='blocks/paragraph_block.html',
-        features=RICHTEXT_FEATURES_NO_FOOTNOTES
+        features=RICHTEXT_FEATURES
     )
     block_quote = BlockQuote()
     button_block = ButtonBlock()
@@ -345,7 +343,7 @@ class Table(StructBlock):
     table = TableBlock()
     caption = RichTextBlock(
         required=False,
-        features=FOOTNOTE_RICHTEXT_FEATURES,
+        features=RICHTEXT_FEATURES,
         help_text='Optional: caption text to appear below the table'
     )
     caption_link = URLBlock(
@@ -394,7 +392,7 @@ class ImageDuoTextBlock(ImageBlock):
     heading = CharBlock(icon='fa-heading', required=False)
     side_text = RichTextBlock(
         icon='fa-paragraph',
-        features=RICHTEXT_FEATURES_NO_FOOTNOTES,
+        features=RICHTEXT_FEATURES,
         template='blocks/paragraph_block.html',
         required=True
     )
@@ -459,7 +457,7 @@ class VideoDuoTextBlock(StructBlock):
     )
     side_text = RichTextBlock(
         icon='fa-paragraph',
-        features=RICHTEXT_FEATURES_NO_FOOTNOTES,
+        features=RICHTEXT_FEATURES,
         template='blocks/paragraph_block.html',
         required=True
     )
