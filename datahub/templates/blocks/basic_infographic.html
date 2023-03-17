@@ -1,4 +1,4 @@
-{% load string_utils responsive wagtailimages_tags footnotes_utils %}
+{% load string_utils responsive wagtailimages_tags string_utils %}
 
 {% uid_url page as short_url %}
 <div class="responsive-graph">
@@ -87,7 +87,7 @@
 
     <figcaption class="media-caption">
       {% if value.caption %}
-      {% content_with_footnotes value.caption %}
+      {% content value.caption %}
       {% endif %}
       {% if value.has_downloads %}
       <ul>
