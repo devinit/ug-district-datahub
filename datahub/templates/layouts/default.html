@@ -28,7 +28,6 @@
 <body class="body body--{{ id }} {% block colour %}{% endblock %} {% block body_class %}{% endblock %}" id="body-{{ id }}">
   {% wagtailuserbar %}
   <div class="ui-base">
-    {% cookie_notice %}
     <a href="#pagecontent" class="skiplink" data-js="skiplink">Skip to main content</a>
     {% block header %}
       {% include 'includes/scaffold/header.html' %}
