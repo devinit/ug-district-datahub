@@ -10,16 +10,14 @@ from wagtail.admin.panels import (
     MultiFieldPanel
 )
 from wagtail.models import Orderable, Page
-from wagtail.fields import RichTextField, StreamField
-from wagtail.images.models import SourceImageIOError
+from wagtail.fields import RichTextField
 from wagtail.snippets.models import register_snippet
-from wagtail.blocks import CharBlock, PageChooserBlock, RichTextBlock, StructBlock
 
 from wagtailmetadata.models import MetadataPageMixin
 
-from common.utils import hero_panels, get_related_pages
-from common.mixins import HeroMixin, OtherPageMixin, SectionBodyMixin, TypesetBodyMixin
-from common.constants import SIMPLE_RICHTEXT_FEATURES, RICHTEXT_FEATURES_NO_FOOTNOTES
+from common.utils import hero_panels
+from common.mixins import HeroMixin, SectionBodyMixin, TypesetBodyMixin
+from common.constants import SIMPLE_RICHTEXT_FEATURES
 
 
 class AbstractLink(models.Model):
@@ -157,8 +155,14 @@ class FooterText(models.Model):
     class Meta:
         verbose_name_plural = 'Footer Text'
 
-class HomePage(Page):
-    pass
+class HomePage(HeroMixin, Page):
+    content_panels = Page.content_panels + [
+        hero_panels(),
+    ]
+
+    class Meta():
+        verbose_name = 'Home Page'
+
 
 class StandardPage(SectionBodyMixin, TypesetBodyMixin, HeroMixin, Page):
     """
