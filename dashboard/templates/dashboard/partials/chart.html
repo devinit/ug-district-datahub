@@ -8,7 +8,7 @@
 {% endif %}
 
 {% if item.instruction_position == 'top' %}
-  {% include 'visualisation/chart_instructions.html' %}
+  {% include 'dashboard/chart_instructions.html' %}
 {% endif %}
 
 <div class="chart-container chart-container--full js-plotly-chart-wrapper js-lazy-loading">
@@ -22,14 +22,6 @@
     data-share-link="{{share_link}}"
     {% if item.source %}data-source="{{item.source}}"{% endif %}
     {% if not request.is_preview %}data-url="{% routablepageurl item 'data' %}"{% endif %}
-    {% if item.aggregated %}data-aggregated="{{ item.aggregated }}"{% endif %}
-    {% if item.aggregation_excludes %}data-aggregation-excludes="{{ item.aggregation_excludes }}"{% endif %}
-    {% if item.aggregation_includes %}data-aggregation-includes="{{ item.aggregation_includes }}"{% endif %}
-    {% if item.selector_excludes %}data-selector-excludes="{{ item.selector_excludes }}"{% endif %}
-    {% if item.selector_includes %}data-selector-includes="{{ item.selector_includes }}"{% endif %}
-    {% if item.aggregate_option_label %}data-aggregate-option-label="{{ item.aggregate_option_label }}"{% endif %}
-    {% if item.y_axis_prefix %}data-y-axis-prefix="{{ item.y_axis_prefix }}"{% endif %}
-    {% if item.y_axis_suffix %}data-y-axis-suffix="{{ item.y_axis_suffix }}"{% endif %}
     {% if item.image_caption %}data-image-caption="{{item.image_caption}}"{% endif %}
   >
     <div class="chart-loading">
@@ -57,7 +49,7 @@
 </div>
 
 {% if item.instruction_position == 'bottom' %}
-  {% include 'visualisation/chart_instructions.html' %}
+  {% include 'dashboard/chart_instructions.html' %}
 {% endif %}
 
 {% if item.caption %}

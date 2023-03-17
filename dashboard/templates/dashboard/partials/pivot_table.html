@@ -11,7 +11,7 @@
 {% gets_row_highlights pivot_page=item as row_highlights %}
 
 {% if item.instruction_position == 'top' %}
-  {% include 'visualisation/chart_instructions.html' %}
+  {% include 'dashboard/chart_instructions.html' %}
 {% endif %}
 
 <div class="chart-container chart-container--full">
@@ -43,7 +43,7 @@
 </div>
 
 {% if item.instruction_position == 'bottom' %}
-  {% include 'visualisation/chart_instructions.html' %}
+  {% include 'dashboard/chart_instructions.html' %}
 {% endif %}
 
 {% if item.caption %}

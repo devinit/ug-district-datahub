@@ -11,7 +11,7 @@
     <div class="row row--narrow">
         <span class="chart-label">Desktop view</span>
         <div class="max-meter max-meter--center responsive-graph">
-            {% include 'visualisation/partials/pivot_table.html' with item=page %}
+            {% include 'dashboard/partials/pivot_table.html' with item=page %}
         </div>
     </div>
   </section>
@@ -20,7 +20,7 @@
     <div class="row row--narrow">
         <span class="chart-label">Tablet view</span>
         <div class="max-meter max-meter--center responsive-graph chart-tablet {% if page.display_fallback_tablet %} show-fallback {% endif %}">
-            {% include 'visualisation/partials/pivot_table.html' with item=page %}
+            {% include 'dashboard/partials/pivot_table.html' with item=page %}
         </div>
     </div>
   </section>
@@ -29,7 +29,7 @@
     <div class="row row--narrow">
         <span class="chart-label">Mobile view</span>
         <div class="max-meter max-meter--center responsive-graph chart-mobile {% if page.display_fallback_mobile %} show-fallback {% endif %}">
-            {% include 'visualisation/partials/pivot_table.html' with item=page %}
+            {% include 'dashboard/partials/pivot_table.html' with item=page %}
         </div>
     </div>
   </section>
@@ -40,5 +40,5 @@
 {% block html_footer %}
     {{ block.super }}
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="{% static 'visualisation/widgets/js/pivot-table.js' %}"></script>
+    <script src="{% static 'dashboard/widgets/js/pivot-table.js' %}"></script>
 {% endblock %}
