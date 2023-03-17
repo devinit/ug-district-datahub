@@ -16,6 +16,8 @@ from common.templatetags.string_utils import uid
 from dashboard.fields import AceEditorField
 from dashboard.utils import CaptionPanel, InstructionsPanel
 
+from dashboard.fields import flexible_content_streamfield, content_streamfield
+
 
 class GeneralInstructionsMixin(models.Model):
     class Meta:
@@ -136,3 +138,91 @@ class CodePageMixin(InstructionsMixin, CaptionMixin, RoutablePageMixin, models.M
         if request.user.is_authenticated:
             return super().serve(request)
         raise Http404()
+
+
+class FilteredDatasetMixin(object):
+    @cached_property
+    def filtered_datasets(self):
+        results = []
+        all_dashbord_datasets = self.dashboard_datasets.all()
+        for dash_dataset in all_dashbord_datasets:
+            if type(dash_dataset.dataset.specific).__name__ == "DatasetPage":
+                results.append(dash_dataset)
+        return results
+
+class DashboardPageSearchMixin(object):
+    search_fields = Page.search_fields + [
+        index.FilterField('slug'),
+        index.SearchField('title', partial_match=True),
+        index.SearchField('hero_text', partial_match=True)
+    ]
+
+
+class PublishedDateMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    published_date = models.DateTimeField(
+        blank=True,
+        default=now,
+        help_text='This date will be used for display and ordering',
+    )
+
+
+class UUIDMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    uuid = models.CharField(max_length=6, default=uid)
+
+    def save(self, *args, **kwargs):
+        old_path = '/%s' % self.uuid
+        # using Redirect to enforce uuid uniqueness as using a unique field is prone to validation errors on page revisions
+        existing_redirect = Redirect.objects.filter(old_path=old_path).first()
+        if existing_redirect and existing_redirect.redirect_page.id == self.id:
+            super(UUIDMixin, self).save(*args, **kwargs)
+        else:
+            self.uuid = uid()
+            super(UUIDMixin, self).save(*args, **kwargs)
+
+            old_path = '/%s' % self.uuid
+            redirect = Redirect.objects.filter(old_path=old_path).first()
+            if not redirect:
+                Redirect(old_path=old_path, redirect_page=self).save()
+            else:
+                self.save(*args, **kwargs)
+
+
+class FlexibleContentMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    content = flexible_content_streamfield()
+
+
+class ContentMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    content = content_streamfield()
+
+
+class ReportDownloadMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    download_report_cover = WagtailImageField(verbose_name='Report cover')
+    download_report_title = models.CharField(
+        max_length=255, null=True, blank=True,
+        default="Download this report", verbose_name='Section title')
+    download_report_body = models.TextField(null=True, blank=True, verbose_name='Section body')
+    download_report_button_text = models.CharField(
+        max_length=255, null=True, blank=True,
+        default="Download now", verbose_name='Button caption')
+    report_download = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )

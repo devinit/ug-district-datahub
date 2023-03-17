@@ -210,7 +210,7 @@ class PivotTable(StructBlock):
         template = 'dashboard/blocks/pivot-table.html'
 
     show_title = BooleanBlock(required=False, default=True)
-    pivot_table = PageChooserBlock(page_type=['visualisation.PivotTable'])
+    pivot_table = PageChooserBlock(page_type=['dashboard.PivotTable'])
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
@@ -270,36 +270,16 @@ class RichText(AbstractRichText):
 class InteractiveChartBlock(StructBlock):
 
     class Meta:
-        help_text = 'Select a Plotly Studio chart page'
+        help_text = 'Select a chart page'
         icon = 'fa-area-chart'
-        label = 'Plotly Studio Chart'
-        template = 'dashboard/blocks/interactive_chart.html'
-        form_template = 'dashboard/block_forms/custom_struct.html'
-
-    chart_page = PageChooserBlock(
-        page_type='visualisation.ChartPage'
-    )
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        chart_page = value['chart_page']
-        context['chart'] = chart_page.specific if chart_page and chart_page.live else ''
-        return context
-
-
-class AdvancedInteractiveChartBlock(StructBlock):
-
-    class Meta:
-        help_text = 'Select an advanced chart page'
-        icon = 'fa-area-chart'
-        label = 'Advanced Interactive Chart'
+        label = 'Interactive Chart'
         template = 'dashboard/blocks/interactive_chart.html'
         form_template = 'dashboard/block_forms/custom_struct.html'
 
     show_title = BooleanBlock(required=False, default=True)
     allow_share = BooleanBlock(required=False, default=True)
     chart_page = PageChooserBlock(
-        page_type=['visualisation.AdvancedChartPage','visualisation.RawCodePage']
+        page_type=['dashboard.ChartPage','dashboard.RawCodePage']
     )
 
     def get_context(self, value, parent_context=None):
@@ -321,7 +301,6 @@ def flexible_content_streamfield(blank=False):
         ('rich_text', RichText()),
         ('anchor', AnchorBlock()),
         ('interactive_chart', InteractiveChartBlock()),
-        ('advanced_interactive_chart', AdvancedInteractiveChartBlock()),
         ('cta', CallToActionBlock()),
         ('accordion', AccordionBlock())
 

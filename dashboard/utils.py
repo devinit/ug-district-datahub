@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 
-from common.edit_handlers import HelpPanel
+from common.edit_handlers import HelpPanel, MultiFieldPanel as CustomMultiFieldPanel
 
 
 def InstructionsPanel():
@@ -81,7 +81,7 @@ def create_download(item):
 
 
 def ContentPanel(heading='Content', description='Main content for the page. Build page content by adding new rows from the available content types.'):
-    return MultiFieldPanel(
+    return CustomMultiFieldPanel(
         [
             FieldPanel('content'),
         ],
@@ -91,7 +91,7 @@ def ContentPanel(heading='Content', description='Main content for the page. Buil
 
 
 def PublishedDatePanel():
-    return MultiFieldPanel(
+    return CustomMultiFieldPanel(
         [
             FieldPanel('published_date'),
         ],
@@ -109,7 +109,7 @@ def StateMixinPanel():
 
 
 def ReportDownloadPanel():
-    return MultiFieldPanel([
+    return CustomMultiFieldPanel([
         FieldPanel('download_report_title'),
         FieldPanel('download_report_body'),
         FieldPanel('download_report_cover'),
@@ -118,7 +118,7 @@ def ReportDownloadPanel():
 
 
 def HeroButtonPanel(heading='Hero Button Captions', description='Edit captions for hero buttons'):
-    return MultiFieldPanel(
+    return CustomMultiFieldPanel(
         [
             FieldPanel('download_button_caption'),
             FieldPanel('read_online_button_text'),
