@@ -1,0 +1,38 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:15.2
+    environment:
+      POSTGRES_DB: aphrc_ssds
+      POSTGRES_USER: aphrc_ssds
+      POSTGRES_PASSWORD: aphrc_ssds_pw
+    restart: always
+    volumes:
+      - aphrc_dashboard_db:/var/lib/postgresql/data
+
+  web:
+    depends_on:
+      - db
+    expose:
+      - "8090"
+    env_file: .env
+    environment:
+      - HS_API_KEY
+      - HS_TICKET_PIPELINE
+      - HS_TICKET_PIPELINE_STAGE
+      - ELASTIC_SEARCH_URL
+      - CELERY_BROKER_URL
+    build:
+      context: .
+    volumes:
+      - ./:/code/
+      - ./config/celery/default:/etc/default
+      - ./config/celery/init.d:/etc/init.d
+    restart: always
+    command: python manage.py runserver 0.0.0.0:80
+    ports:
+      - "80:80"
+
+volumes:
+  aphrc_dashboard_db:

@@ -1,0 +1,108 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:15.2
+    environment:
+      POSTGRES_DB: aphrc_ssds
+      POSTGRES_USER: aphrc_ssds
+      POSTGRES_PASSWORD: aphrc_ssds_pw
+    restart: always
+    volumes:
+      - aphrc_dashboard_db:/var/lib/postgresql/data
+    networks:
+      - web
+      - consul
+
+  blue:
+    container_name: blue
+    image: aphrc_web:blue
+    depends_on:
+      - db
+    expose:
+      - "8090"
+    env_file: .env
+    environment:
+      - HS_API_KEY
+      - HS_TICKET_PIPELINE
+      - HS_TICKET_PIPELINE_STAGE
+      - ELASTIC_SEARCH_URL
+      - SERVICE_8090_NAME=blue
+      - SERVICE_8090_TAGS=backends
+      - CELERY_BROKER_URL
+    volumes:
+      - ./:/code/
+      - ./config/celery/default:/etc/default
+      - ./config/celery/init.d:/etc/init.d
+    networks:
+      - web
+      - consul
+
+  green:
+    container_name: green
+    image: aphrc_web:green
+    depends_on:
+      - db
+    expose:
+      - "8090"
+    env_file: .env
+    environment:
+      - HS_API_KEY
+      - HS_TICKET_PIPELINE
+      - HS_TICKET_PIPELINE_STAGE
+      - ELASTIC_SEARCH_URL
+      - SERVICE_8090_NAME=green
+      - SERVICE_8090_TAGS=backends
+      - CELERY_BROKER_URL
+    volumes:
+      - ./:/code/
+      - ./config/celery/default:/etc/default
+      - ./config/celery/init.d:/etc/init.d
+    restart: always
+    networks:
+      - web
+      - consul
+
+  nginx:
+    container_name: nginx
+    build: ./config/nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./assets:/assets
+      - ./storage:/media
+      - ./ssl:/etc/ssl/
+      - ./letsencrypt:/letsencrypt/
+      - ../wp-content:/wp-content
+    restart: always
+    environment:
+      - SERVICE_NAME=nginx
+      - SERVICE_TAGS=nginx
+    networks:
+      - web
+      - consul
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:latest
+    depends_on:
+      - nginx
+    env_file: .env
+    environment:
+      - SITE_URL
+      - WWW_SITE_URL
+    entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot --email chrisw@devinit.org --agree-tos --no-eff-email -d $SITE_URL -d $WWW_SITE_URL && trap exit TERM; while :; do certbot renew --deploy-hook /etc/letsencrypt/certbot_success.sh; sleep 12h & wait $${!}; done;"
+    volumes:
+      - ./letsencrypt:/var/www/certbot/
+      - ./ssl:/etc/letsencrypt/
+      - ./certbot_logs:/var/log/letsencrypt
+
+volumes:
+  aphrc_dashboard_db:
+
+networks:
+  web:
+  consul:
+    external:
+      name: consul

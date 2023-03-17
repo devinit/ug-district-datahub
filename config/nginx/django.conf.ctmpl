@@ -1,0 +1,127 @@
+upstream spotlights {
+    server 157.245.39.153;
+}
+
+upstream blue {
+    {{ range service "backends.blue" }}
+       server {{ .Address }}:{{ .Port }};
+    {{ else }}
+        {{ range service "backends.green" }}
+            server {{ .Address }}:{{ .Port }};
+        {{ else }}
+            server 127.0.0.1:12345;
+        {{ end }}
+    {{ end }}
+}
+
+upstream green {
+    {{ range service "backends.green" }}
+        server {{ .Address }}:{{ .Port }};
+    {{ else }}
+        {{ range service "backends.blue" }}
+            server {{ .Address }}:{{ .Port }};
+        {{ else }}
+            server 127.0.0.1:12345;
+        {{ end }}
+    {{ end }}
+}
+
+server {
+    listen 80;
+
+    server_name datahub.go.ug www.datahub.go.ug;
+
+    client_max_body_size 100M;
+
+    location / {
+        add_header Pragma no-cache;
+        add_header Cache-Control no-cache;
+        {{ with $key_value := keyOrDefault "deploy/backend" "blue" }}
+            {{ if or (eq $key_value "blue") (eq $key_value "green") }}
+                proxy_pass http://{{ $key_value }};
+            {{ else }}
+                proxy_pass http://blue;
+            {{ end }}
+        {{ end }}
+        proxy_read_timeout 600;
+        proxy_buffering off;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    error_page 404 /404-static.html;
+    location  /404-static.html {
+        root /usr/share/nginx/html/datahub/di_website/templates;
+        internal;
+    }
+
+    error_page 500 /500-static.html;
+    location  /500-static.html {
+        root /usr/share/nginx/html/datahub/di_website/templates;
+        internal;
+    }
+
+    location /assets/ {
+        expires 168h;
+        autoindex on;
+        root /;
+
+        # Remove static hash if mouseflow
+        if ($http_referer ~ mouseflow.com) {
+            rewrite "^(.*)(\.[a-f0-9]{12}(?=\.\w+$))(.*)$" $scheme://$host$1$3 last;
+        }
+    }
+
+    location /media/ {
+        expires 168h;
+        autoindex on;
+        root /;
+    }
+
+    location /wp-content/ {
+        expires 168h;
+        autoindex on;
+        root /;
+    }
+
+    location '/.well-known/acme-challenge' {
+        root /letsencrypt;
+    }
+
+    rewrite ^/data/spotlights-on-kenya-and-uganda/spotlight-uganda /data/spotlight-uganda permanent;
+    rewrite ^/data/spotlights-on-kenya-and-uganda/spotlight-uganda/compare /data/spotlight-uganda/compare permanent;
+    rewrite ^/data/spotlights-on-kenya-and-uganda/spotlight-kenya /data/spotlight-kenya permanent;
+    rewrite ^/data/spotlights-on-kenya-and-uganda/spotlight-kenya/compare /data/spotlight-kenya/compare permanent;
+
+    location /data/spotlight-uganda {
+        proxy_pass http://spotlights/spotlight/spotlight-uganda;
+    }
+
+    location /data/spotlight-uganda/compare {
+        proxy_pass http://spotlights/spotlight/spotlight-uganda/compare;
+    }
+
+    location /data/spotlight-kenya {
+        proxy_pass http://spotlights/spotlight/spotlight-kenya;
+    }
+
+    location /data/spotlight-kenya/compare {
+        proxy_pass http://spotlights/spotlight/spotlight-kenya/compare;
+    }
+
+    location /_next {
+        proxy_pass http://spotlights;
+    }
+
+    location /static {
+        proxy_pass http://spotlights;
+    }
+
+    location /bitly {
+        proxy_pass http://spotlights;
+    }
+
+    rewrite ^(/publications)(.*)$ /resources$2 permanent;
+}
