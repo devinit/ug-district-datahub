@@ -1,9 +1,9 @@
 from django import template
 
-from di_website.home.models import FooterText, FooterSection, NewsLetter
-from di_website.home.templatetags.navigation_tags import get_menu_items
+from home.models import FooterText, FooterSection, NewsLetter
+from home.templatetags.navigation_tags import get_menu_items
 
-from di_website.context import globals
+from datahub.context import globals
 
 register = template.Library()
 
