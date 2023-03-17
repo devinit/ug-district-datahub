@@ -1,14 +1,18 @@
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils.timezone import now
 from django.http import Http404
 
 from wagtail.models import Page
+from wagtail.contrib.redirects.models import Redirect
+from wagtail.search import index
 from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
-from common.constants import INSTRUCTIONS_RICHTEXT_FEATURES, POSITION_CHOICES, SIMPLE_RICHTEXT_FEATURES
+from common.constants import INSTRUCTIONS_RICHTEXT_FEATURES, MAX_RELATED_LINKS, POSITION_CHOICES, SIMPLE_RICHTEXT_FEATURES
 from common.utils import WagtailImageField
+from common.templatetags.string_utils import uid
 from dashboard.fields import AceEditorField
 from dashboard.utils import CaptionPanel, InstructionsPanel
 
