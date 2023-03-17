@@ -331,7 +331,7 @@ class Migration(migrations.Migration):
                                                                 (
                                                                     "file",
                                                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                        "downloads.PublicationDownload"
+                                                                        "downloads.DashboardDownload"
                                                                     ),
                                                                 )
                                                             ],

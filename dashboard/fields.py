@@ -140,7 +140,7 @@ class Downloads(StructBlock):
         [
             ('file', StructBlock(
                 [
-                    ('file', SnippetChooserBlock('downloads.PublicationDownload')),
+                    ('file', SnippetChooserBlock('downloads.DashboardDownload')),
                 ],
                 icon='doc-empty',
                 label='File'
