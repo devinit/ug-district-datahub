@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import dj_database_url
+from decouple import config
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -20,6 +22,11 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
+ADMINS = [
+    ('Edwin', 'edwin.magezi@devinit.org'),
+    ('David', 'david.ebukali@devinit.org'),
+    ('Chris', 'chrisw@devinit.org')
+]
 
 # Application definition
 
@@ -48,6 +55,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -85,10 +93,7 @@ WSGI_APPLICATION = "datahub.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 
@@ -134,6 +139,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, 'patterns/converted-html/assets'),
     os.path.join(PROJECT_DIR, "static"),
 ]
 
@@ -163,4 +169,15 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = "https://datahub.go.ug"
+
+# Email settings
+
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = config('EMAIL_HOST', default="smtp.gmail.com")
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='devinitautomailer@gmail.com')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='devinitautomailer@gmail.com')
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
