@@ -24,6 +24,8 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns = [
         path('robots.txt', TemplateView.as_view(template_name="robots.dev.txt", content_type='text/plain')),
+        path('test404', TemplateView.as_view(template_name='404.html')),
+        path('test500', TemplateView.as_view(template_name='500.html')),
     ] + urlpatterns
 else:
     urlpatterns = [

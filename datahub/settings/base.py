@@ -32,6 +32,7 @@ ADMINS = [
 
 INSTALLED_APPS = [
     "home",
+    "dashboard",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
