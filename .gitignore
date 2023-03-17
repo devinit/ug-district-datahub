@@ -131,4 +131,5 @@ node_modules/
 /src/assets/**/js/*.LICENSE.txt
 
 **/static/dashboard/js/*.js
-**/static/dashboard/widget/js/*.js
+**/static/dashboard/widgets/js/*.js
+**/static/dashboard/widgets/js/*.txt
