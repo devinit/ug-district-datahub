@@ -271,7 +271,7 @@ h2 {
 /** ===== WHITELABELLING ===== **/
 
 .branding {
-  background-image: url(/assets/svg/icons/home.svg);
+  background-image: url(/static/svg/icons/home.svg);
 }
 
 .hero__flourish {
