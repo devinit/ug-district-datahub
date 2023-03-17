@@ -159,3 +159,18 @@ class FooterText(models.Model):
 
 class HomePage(Page):
     pass
+
+class StandardPage(SectionBodyMixin, TypesetBodyMixin, HeroMixin, Page):
+    """
+    A generic content page. It could be used for any type of page content that only needs a hero,
+    streamfield content, and related fields
+    """
+
+    content_panels = Page.content_panels + [
+        hero_panels(),
+        FieldPanel('body'),
+        FieldPanel('sections'),
+    ]
+
+    class Meta():
+        verbose_name = 'Standard Page'
