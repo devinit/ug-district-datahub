@@ -1,7 +1,7 @@
-{% load string_utils footnotes_utils %}
+{% load string_utils %}
 
 <div class="max-meter max-meter--center">
   <div class="is-typeset wysiwyg {{classname}}">
-    {% content_with_footnotes value.rich_text %}
+    {{ value.rich_text|content }}
   </div>
 </div>

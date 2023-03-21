@@ -5,7 +5,7 @@
         {% get_previous_page page.listing_and_appendicies label as previous %}
         {% if previous %}
             <a href="{{ previous.url }}" class="page__action__previous">
-                {% include 'publications/icon.html' with file='ico-arrow-left-blank' size=16 %}
+                {% include 'dashboard/partials/icon.html' with file='ico-arrow-left-blank' size=16 %}
             </a>
         {% endif %}
         {% if nav_label %}
@@ -16,7 +16,7 @@
         {% get_next_page page.listing_and_appendicies label as next %}
         {% if next %}
             <a href="{{ next.url }}" class="page__action__next">
-                {% include 'publications/icon.html' with file='ico-arrow-right-blank' size=16 %}
+                {% include 'dashboard/partials/icon.html' with file='ico-arrow-right-blank' size=16 %}
             </a>
         {% endif %}
     </div>

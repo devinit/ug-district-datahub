@@ -4,7 +4,7 @@
     <div class="js-chapter-nav{% if page.get_verbose_name == "Short Publication" %}-simple{% endif %} {{classes}}">
         <div class="page__action">
             {% if page.get_verbose_name != "Short Publication" %}
-              {% include 'publications/chapter-nav/prev-next.html' %}
+              {% include 'dashboard/chapter-nav/prev-next.html' %}
             {% endif %}
             <div class="page__action__menu">
                 <span tabindex="0" class="page__action_text">{{ menu_label|default:'Jump to chapter' }}</span>
@@ -24,7 +24,7 @@
                               <a href="{% pageurl page %}" class="button button--summary button--a11y" title="View full publication"><i role="presentation" aria-hidden="true" class="ico ico--16 ico-list-poppy"></i> <span>View full publication</span></a>
                             {% endif %}
                             {% for item in page.listing_and_appendicies %}
-                              {% include 'publications/chapter-nav/nav-item.html' %}
+                              {% include 'dashboard/chapter-nav/nav-item.html' %}
                             {% endfor %}
                           {% endblock nav-list %}
                         </ul>
