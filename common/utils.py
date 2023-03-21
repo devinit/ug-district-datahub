@@ -19,7 +19,7 @@ def hero_panels(allowed_pages=[]):
         FieldPanel('hero_text', classname="hero_excerpt"),
         FieldPanel('hero_link_caption'),
         PageChooserPanel('hero_link', allowed_pages)
-    ], heading="Hero Section")
+    ], heading="Hero Section", classname='collapsible collapsed')
 
 
 def call_to_action_panel():
