@@ -1,7 +1,7 @@
 {% load responsive string_utils wagtailcore_tags %}
 {% uid_url page as short_url %}
 <a href="#{{ id }}" data-id="{{ id }}" data-js="share-section-trigger"
-  class="section-chapter__link">{% include 'dashboard/partials/icon.html' with file='ico-link-'|add:page.colour size=16 %}Share
+  class="section-chapter__link">{% include 'dashboard/partials/icon.html' with file='ico-link-poppy' size=16 %}Share
   box</a>
 {% include 'dashboard/partials/share-block.html' with share_type='box' title=value.heading short_url=short_url|add:'#'|add:id data_js='share-section' data_id=id %}
 <div class="pullout" id="{{ id }}">
