@@ -205,24 +205,3 @@ class ContentMixin(models.Model):
         abstract = True
 
     content = content_streamfield()
-
-
-class ReportDownloadMixin(models.Model):
-    class Meta:
-        abstract = True
-
-    download_report_cover = WagtailImageField(verbose_name='Report cover')
-    download_report_title = models.CharField(
-        max_length=255, null=True, blank=True,
-        default="Download this report", verbose_name='Section title')
-    download_report_body = models.TextField(null=True, blank=True, verbose_name='Section body')
-    download_report_button_text = models.CharField(
-        max_length=255, null=True, blank=True,
-        default="Download now", verbose_name='Button caption')
-    report_download = models.ForeignKey(
-        'wagtaildocs.Document',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )

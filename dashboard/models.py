@@ -23,8 +23,8 @@ from .inlines import *
 from .snippets import District
 from .mixins import (
     FilteredDatasetMixin, FlexibleContentMixin, DashboardPageSearchMixin,
-    PublishedDateMixin, ReportDownloadMixin, UUIDMixin)
-from dashboard.utils import ContentPanel, PublishedDatePanel, ReportDownloadPanel, get_downloads
+    PublishedDateMixin, UUIDMixin)
+from dashboard.utils import ContentPanel, PublishedDatePanel, get_downloads
 from downloads.utils import DownloadsPanel
 
 
@@ -267,7 +267,7 @@ class NarrativeDashboardTopic(TaggedItemBase):
 
 class NarrativeDashboardPage(
     HeroMixin, PublishedDateMixin, FlexibleContentMixin, DashboardPageSearchMixin,
-    UUIDMixin, FilteredDatasetMixin, CallToActionMixin, ReportDownloadMixin, Page):
+    UUIDMixin, FilteredDatasetMixin, CallToActionMixin, Page):
 
     class Meta:
         verbose_name = 'Narrative Dashboard'
@@ -294,7 +294,6 @@ class NarrativeDashboardPage(
             heading='Data downloads',
             description='Optional: data download for this chapter.'
         ),
-        ReportDownloadPanel(),
     ]
 
     @cached_property

@@ -108,15 +108,6 @@ def StateMixinPanel():
     return FieldPanel('use_state')
 
 
-def ReportDownloadPanel():
-    return CustomMultiFieldPanel([
-        FieldPanel('download_report_title'),
-        FieldPanel('download_report_body'),
-        FieldPanel('download_report_cover'),
-        FieldPanel('report_download')
-    ], heading='Report download section')
-
-
 def HeroButtonPanel(heading='Hero Button Captions', description='Edit captions for hero buttons'):
     return CustomMultiFieldPanel(
         [
