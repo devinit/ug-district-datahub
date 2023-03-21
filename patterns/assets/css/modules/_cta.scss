@@ -68,6 +68,12 @@
             background-color: darken($leaf, 15%);
         }
     }
+    body.body--cerulean & {
+        background-color: $cerulean;
+        &:before, &:after {
+            background-color: darken($cerulean, 15%);
+        }
+    }
 }
 
 .cta__heading {
