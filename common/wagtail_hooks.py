@@ -12,6 +12,12 @@ def editor_css():
     return format_html('<link rel="stylesheet" href="{}">', static("css/editor.css"))
 
 
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    """Add /static/css/admin.css to the admin."""
+    return format_html('<link rel="stylesheet" href="{}">', static("css/admin.css"))
+
+
 @hooks.register('construct_whitelister_element_rules')
 def whitelister_element_rules():
     return {
