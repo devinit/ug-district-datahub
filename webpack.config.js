@@ -86,6 +86,7 @@ const appConfig = {
   ...sharedConfig,
   entry: {
     state: './src/state/index.ts',
+    dashboard: './src/dashboard/index.ts',
   },
   output: {
     path: path.resolve(__dirname, 'src/assets/'),

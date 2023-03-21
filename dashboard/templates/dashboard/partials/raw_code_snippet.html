@@ -36,6 +36,6 @@
 
 {% if item.caption %}
   <figcaption class="media-caption">
-    {% content item.caption %}
+    {{ item.caption|content }}
   </figcaption>
 {% endif %}
