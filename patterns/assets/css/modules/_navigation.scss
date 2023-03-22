@@ -184,6 +184,31 @@
 }
 
 // ------------------------------------------------------------
+// Tertiary menu
+// ------------------------------------------------------------
+
+.navigation-tertiary__item {
+	@include font-size($epsilon);
+	margin-left: 2em;
+	&:first-child {
+		margin-top: 0.5em;
+	}
+	a {
+		font-size: inherit;
+		border-bottom: none;
+	}
+	&--active {
+		a {
+			border-bottom: 2px solid $poppy-dark;
+			border-style: dashed;
+			@include link-active-styles {
+
+			}
+		}
+	}
+}
+
+// ------------------------------------------------------------
 // burger
 // ------------------------------------------------------------
 .burger {

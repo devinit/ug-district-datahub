@@ -14,7 +14,7 @@
                     {% for child in item.children %}
                     <li
                         class="navigation-tertiary__item {% if child.active %}navigation-tertiary__item--active{% endif %}">
-                        <a href="{% pageurl item %}?nav=header">{{ child.title }}</a>
+                        <a href="{% pageurl child %}?nav=header">{{ child.title }}</a>
                     </li>
                     {% endfor %}
                   </ul>
