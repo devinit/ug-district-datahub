@@ -193,6 +193,9 @@
 	&:first-child {
 		margin-top: 0.5em;
 	}
+	&:last-child {
+		margin-bottom: 0;
+	}
 	a {
 		font-size: inherit;
 		border-bottom: none;

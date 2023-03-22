@@ -1461,8 +1461,9 @@ body.body--cerulean {
     .navigation-primary__item {
         @include respond-to($menu-respond) {
             a {
+                color: $cerulean;
                 @include link-active-styles {
-                    border-bottom: 2px solid $cerulean;
+                border-bottom: 2px solid $cerulean;
                 }
             }
             &--active a {
@@ -1470,7 +1471,28 @@ body.body--cerulean {
             }
         }
     }
-    .m-authors {
+    .navigation-secondary__item,
+    .navigation-tertiary__item {
+        @include respond-to($menu-respond) {
+            a {
+                color: $cerulean;
+                border-bottom: none;
+                &:hover, &:focus {
+                    color: $slate;
+                }
+            }
+            &--active a {
+                border-bottom: 2px solid $cerulean;
+            }
+        }
+    }
+    .navigation-secondary .navigation-tertiary__item {
+        a {
+            border-bottom: none;
+        }
+    }
+    .m-authors,
+    .breadcrumbs__item:not(:first-child) {
         a {
             color: $cerulean;
             &:hover, &:focus {
