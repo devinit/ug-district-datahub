@@ -8,9 +8,10 @@
     padding: 8em 0 5em 0;
     @include respond-to($menu-respond) {
         padding: 10em 0 8em 0;
-        width: 95%;
+        width: 100%;
         min-height: 400px;
         &:after {
+            display: none;
             content: "";
             position: absolute;
             bottom: 0;
@@ -50,6 +51,7 @@
         background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%);
     }
     &:after {
+        display: none;
         content: "";
         position: absolute;
         top: 0;
@@ -59,10 +61,10 @@
         background-color: $poppy;
     }
     @include respond-to($menu-respond) {
-        top: 5%;
-        left: 50px;
-        width: 90%;
-        height: 95%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -271,6 +273,7 @@
         right: 0;
         width: 120px;
         height: 120px;
+        border-radius: 50%;
         opacity: 0;
         background: $poppy-dark;
         animation: herofade 1s;
@@ -278,6 +281,7 @@
         animation-fill-mode: forwards;
         mix-blend-mode: color;
         &:nth-child(2) {
+            top: 100px;
             left: 50px;
             width: 100px;
             height: 100px;
@@ -342,6 +346,11 @@
             animation: herofade2 1s;
             animation-delay: 2s;
             animation-fill-mode: forwards;
+        }
+        &:nth-child(9) {
+            right: 10%;
+            bottom: auto;
+            border-radius: 35%;
         }
     }
 }

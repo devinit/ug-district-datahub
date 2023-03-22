@@ -1433,7 +1433,7 @@ body.body--cerulean {
     .header {
         background-color: $cerulean;
     	&:after {
-    		background-color: $cerulean;
+    		background-color: inherit;
     	}
     	@include respond-to($menu-respond) {
     		background-color: $body-color;
@@ -1441,6 +1441,9 @@ body.body--cerulean {
     }
     .hero {
         background-color: $cerulean;
+        &::after {
+            background-color: $cerulean;
+        }
     }
     .hero__image {
         &:after {
@@ -1456,7 +1459,7 @@ body.body--cerulean {
         }
     }
     .hero__flourish {
-        background: $cerulean;
+        background: $cerulean-dark;
     }
     .navigation-primary__item {
         @include respond-to($menu-respond) {
