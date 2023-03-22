@@ -25,7 +25,7 @@
     {# Override this in templates to add extra stylesheets #}
   {% endblock %}
 </head>
-<body class="body body--{{ id }} {% block colour %}{% endblock %} {% block body_class %}{% endblock %}" id="body-{{ id }}">
+<body class="body {% block colour %}{% endblock %} {% block body_class %}{% endblock %}" id="body-{{ id }}">
   {% wagtailuserbar %}
   <div class="ui-base">
     <a href="#pagecontent" class="skiplink" data-js="skiplink">Skip to main content</a>
@@ -45,9 +45,7 @@
   {% block html_footer %}
     {% include 'includes/scaffold/footer-assets.html' %}
     {% page_contains_chart as charts %}
-    {% if charts.plotly_studio %}
-      <script src="{% static 'dashboard/js/chart.js' %}"></script>
-    {% elif charts.advanced %}
+    {% if charts %}
       <script src="{% static 'dashboard/js/dicharts.js' %}"></script>
     {% endif %}
   {% endblock %}

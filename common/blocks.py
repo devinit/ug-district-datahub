@@ -334,8 +334,8 @@ class Table(StructBlock):
         help_text = 'Displays tabular data with an optional heading.'
         icon = 'list-ol'
         label = 'Table'
-        form_template = 'publications/block_forms/custom_struct.html'
-        template = 'publications/blocks/table.html'
+        form_template = 'dashboard/block_forms/custom_struct.html'
+        template = 'dashboard/blocks/table.html'
 
     heading = CharBlock(
         required=False

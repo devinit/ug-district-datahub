@@ -1423,3 +1423,280 @@ body.body--lavendar {
         border-color: $lavendar;
     }
 }
+
+// Cerulean
+// ------------------------------------------------------------
+body.body--cerulean {
+    // .branding {
+    //     background-image: url(/assets/img/logo-green.png);
+    // }
+    .header {
+        background-color: $cerulean;
+    	&:after {
+    		background-color: inherit;
+    	}
+    	@include respond-to($menu-respond) {
+    		background-color: $body-color;
+    	}
+    }
+    .hero {
+        background-color: $cerulean;
+        &::after {
+            background-color: $cerulean;
+        }
+    }
+    .hero__image {
+        &:after {
+            background-color: $cerulean;
+        }
+    }
+    .hero__title span {
+        background-color: darken($cerulean, 10%);
+    }
+    .hero--image {
+        .hero__title span {
+            background-color: transparent;
+        }
+    }
+    .hero__flourish {
+        background: $cerulean-dark;
+    }
+    .navigation-primary__item {
+        @include respond-to($menu-respond) {
+            a {
+                @include link-active-styles {
+                border-bottom: 2px solid $cerulean;
+                }
+            }
+            &--active a {
+                border-bottom: 2px solid $cerulean;
+            }
+        }
+    }
+    .navigation-secondary__item,
+    .navigation-tertiary__item {
+        @include respond-to($menu-respond) {
+            a {
+                color: $cerulean;
+                border-bottom: none;
+                &:hover, &:focus {
+                    color: $slate;
+                }
+            }
+            &--active a {
+                border-bottom: 2px solid $cerulean;
+            }
+        }
+    }
+    .navigation-secondary .navigation-tertiary__item {
+        a {
+            border-bottom: none;
+        }
+    }
+    .m-authors,
+    .breadcrumbs__item:not(:first-child) {
+        a {
+            color: $cerulean;
+            &:hover, &:focus {
+                color: $slate;
+            }
+        }
+    }
+    .is-typeset {
+        a:not(.button) {
+            color: $cerulean;
+            &:hover {
+                border-color: $cerulean;
+            }
+        }
+    }
+    .section-chapter {
+        &:before {
+            background-color: $cerulean;
+        }
+    }
+    .section-chapter__link {
+        color: $cerulean;
+    }
+    .section-chapter__number {
+        color: $cerulean;
+        border-color: $cerulean;
+    }
+    .media-caption {
+        a {
+            color: $cerulean;
+        }
+        border-color: $cerulean;
+    }
+    .pullout {
+        background-color: $cerulean;
+        &:before {
+            background-color: $cerulean;
+        }
+    }
+    .is-typeset table,
+    .table-styled,
+    .table-styled table {
+        th {
+            background-color: $cerulean;
+        }
+    }
+    .footer .button {
+        background-color: $cerulean;
+        border-color: $cerulean;
+    }
+    .m-downloads {
+        &:after {
+            background-color: $cerulean;
+        }
+        &:before {
+            @include rgba($cerulean, 0.5%);
+        }
+    }
+    .m-downloads__list a {
+        color: $cerulean;
+    }
+    .share {
+        background-color: $cerulean;
+        .button {
+            background-color: $cerulean;
+            border-color: $cerulean;
+        }
+    }
+    .download__link {
+        color: $cerulean;
+    }
+    .orderReport__content .button {
+        color: $cerulean;
+        border-color: $cerulean;
+    }
+    .footnotes__text a {
+        color: $cerulean;
+    }
+    .footnotes__link {
+        color: $cerulean;
+    }
+    .footnotes__return {
+        color: $cerulean;
+    }
+    .card__tag {
+        background-color: $cerulean;
+    }
+    .card__title {
+        a, span {
+            border-color: $cerulean;
+        }
+    }
+    .section__heading {
+        &:after {
+            background-color: $cerulean;
+        }
+    }
+    blockquote {
+        &:before, &:after {
+            background-color: $cerulean;
+        }
+        p, cite {
+            color: $cerulean;
+        }
+    }
+    .chapter-block-wrapper {
+        .button {
+            border-color: $cerulean;
+            color: $cerulean;
+            &:hover, &:focus {
+                background-color: $cerulean;
+                color: #fff;
+            }
+        }
+        button.button {
+        	background-color: transparent;
+        	&:hover, &:focus {
+                background-color: $cerulean!important;
+                color: #fff;
+            }
+        }
+        .list-item a {
+        	color: $cerulean;
+        	text-decoration: underline;
+        	&:hover, &:focus {
+                color: $slate;
+            }
+        }
+        .download-button {
+            &:hover, &:focus {
+                background-color: $slate;
+                border-color: $slate;
+                color: #fff;
+            }
+        }
+        &:after {
+            background-color: $cerulean;
+        }
+    }
+    .chapter-block-wrapper--alt {
+        .button {
+            border-color: #fff;
+            color: #fff;
+            &:hover, &:focus {
+                background-color: #fff;
+                color: $heading-color;
+            }
+        }
+        button.button {
+        	&:hover, &:focus {
+                background-color: #fff!important;
+                color: $heading-color;
+            }
+        }
+        .list-item a {
+        	color: #fff;
+        	text-decoration: underline;
+        	&:hover, &:focus {
+        		color: #fff;
+                text-decoration: none;
+            }
+        }
+        .download-button {
+            &:hover, &:focus {
+                background-color: $cerulean;
+                border-color: $cerulean;
+                color: #fff;
+            }
+        }
+    }
+    .orderReport .button {
+        &:hover, &:focus {
+            background-color: $cerulean;
+            color: #fff;
+        }
+    }
+    .pagination__item-link {
+        color: $cerulean;
+    }
+    .pagination__item-prev-link,
+    .pagination__item-next-link {
+        background-color: $cerulean;
+        border-color: $cerulean;
+    }
+    .form-field .button {
+        background-color: $cerulean;
+        border-color: $cerulean;
+    }
+
+    .tabs .tabs__input:checked+.tabs__label {
+        background-color: #fff;
+    }
+
+    .tabs .tabs__container .tabs__label {
+        background-color: $cerulean-dark;
+    }
+
+    .spotlight__stat-data {
+        color: $cerulean-dark;
+    }
+
+    .dicharts--keyfacts {
+        background: lighten($cerulean, 45%);
+    }
+}

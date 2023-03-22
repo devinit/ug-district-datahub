@@ -1,3 +1,9 @@
 .footnote-form {
   margin-top: 1rem;
 }
+
+.w-field__label,
+.w-panel__heading.w-panel__heading--label,
+.c-sf-button {
+  text-transform: capitalize;
+}

@@ -1,18 +1,31 @@
+from num2words import num2words
+
 from django.db import models
 from django.http import Http404
 from django.utils.functional import cached_property
 
+from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from wagtail.models import Page, Orderable
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel, InlinePanel
 
 from common.edit_handlers import HelpPanel
+from common.mixins import HeroMixin
+from common.utils import hero_panels, call_to_action_panel
 from dashboard.fields import AceEditorField
-from dashboard.mixins import (
-    CaptionMixin, CodePageMixin, InstructionsMixin, FallbackImageMixin
-)
-from dashboard.utils import CaptionPanel, InstructionsPanel, FallbackImagePanel
+from dashboard.mixins import CaptionMixin, CodePageMixin, InstructionsMixin, FallbackImageMixin
+from dashboard.utils import CaptionPanel, InstructionsPanel, FallbackImagePanel, get_downloads
+from common.mixins import HeroMixin, CallToActionMixin
+from common.edit_handlers import MultiFieldPanel
+from .inlines import *
+from .snippets import District
+from .mixins import (
+    FilteredDatasetMixin, FlexibleContentMixin, DashboardPageSearchMixin,
+    PublishedDateMixin, UUIDMixin)
+from dashboard.utils import ContentPanel, PublishedDatePanel, get_downloads
+from downloads.utils import DownloadsPanel
 
 
 class VisualisationsPage(InstructionsMixin, Page):
@@ -22,7 +35,7 @@ class VisualisationsPage(InstructionsMixin, Page):
     parent_page_types = ['home.HomePage', 'dashboard.VisualisationsPage']
     subpage_types = [
         'dashboard.VisualisationsPage',
-        'dashboard.AdvancedChartPage',
+        'dashboard.ChartPage',
         'dashboard.RawCodePage',
         'dashboard.PivotTable',
     ]
@@ -96,7 +109,7 @@ class VisualisationsPage(InstructionsMixin, Page):
         raise Http404()
 
 
-class AdvancedChartPage(FallbackImageMixin, CodePageMixin, Page):
+class ChartPage(FallbackImageMixin, CodePageMixin, Page):
     """
     A code based chart page for advanced users
     """
@@ -108,7 +121,7 @@ class AdvancedChartPage(FallbackImageMixin, CodePageMixin, Page):
     ]
 
     class Meta:
-        verbose_name = 'Advanced Chart Page'
+        verbose_name = 'Chart Page'
 
 
 class RawCodePage(CodePageMixin, Page):
@@ -246,3 +259,111 @@ class PivotTable(InstructionsMixin, CaptionMixin, Page):
 
     class Meta:
         verbose_name = 'Pivot Table'
+
+
+class NarrativeDashboardTopic(TaggedItemBase):
+    content_object = ParentalKey('dashboard.NarrativeDashboardPage', on_delete=models.CASCADE, related_name='narrative_dashboard_topics')
+
+
+class NarrativeDashboardPage(
+    HeroMixin, PublishedDateMixin, FlexibleContentMixin, DashboardPageSearchMixin,
+    UUIDMixin, FilteredDatasetMixin, CallToActionMixin, Page):
+
+    class Meta:
+        verbose_name = 'Narrative Dashboard'
+
+    parent_page_types = ['home.HomePage', 'dashboard.NarrativeDashboardPage']
+    subpage_types = ['dashboard.NarrativeDashboardPage']
+
+    topics = ClusterTaggableManager(through=NarrativeDashboardTopic, blank=True, verbose_name="Topics")
+
+    content_panels = Page.content_panels + [
+        hero_panels(),
+        call_to_action_panel(),
+        FieldPanel('topics'),
+        InlinePanel('page_districts', label="Districts"),
+        PublishedDatePanel(),
+        ContentPanel(),
+        InlinePanel('dashboard_datasets', label='Datasets'),
+        DownloadsPanel(
+            heading='Downloads',
+            description='Downloads for this chapter.'
+        ),
+        DownloadsPanel(
+            related_name='data_downloads',
+            heading='Data downloads',
+            description='Optional: data download for this chapter.'
+        ),
+    ]
+
+    @cached_property
+    def publication_downloads_title(self):
+        return 'Downloads'
+
+    @cached_property
+    def publication_downloads_list(self):
+        return get_downloads(self)
+
+    @cached_property
+    def data_downloads_title(self):
+        return 'Data downloads'
+
+    @cached_property
+    def data_downloads_list(self):
+        return get_downloads(self, with_parent=False, data=True)
+
+    @cached_property
+    def page_publication_downloads(self):
+        return self.dashboard_downloads.all()
+
+    @cached_property
+    def page_data_downloads(self):
+        return self.data_downloads.all()
+
+    @cached_property
+    def chapter_number(self):
+        return 1
+
+    @cached_property
+    def chapters(self):
+        return [self]
+
+    @cached_property
+    def listing_and_appendicies(self):
+        return [self]
+
+    @cached_property
+    def chapter_word(self):
+        return num2words(self.chapter_number)
+
+    @cached_property
+    def label_type(self):
+        return 'publication'
+
+    @cached_property
+    def label(self):
+        return 'publication'
+
+    @cached_property
+    def label_num(self):
+        return 'publication'
+
+    @cached_property
+    def sections(self):
+        sections = []
+        for block in self.content:
+            if block.block_type == 'section_heading':
+                sections.append(block)
+        return sections
+
+
+class PageDistrict(Orderable):
+    page = ParentalKey(
+        Page, related_name='page_districts', on_delete=models.CASCADE
+    )
+
+    district = models.ForeignKey(
+        District, related_name="+", null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.district.name

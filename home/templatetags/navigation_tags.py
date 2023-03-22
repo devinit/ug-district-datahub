@@ -91,8 +91,7 @@ def breadcrumbs(context):
         # When on the home page, displaying breadcrumbs is irrelevant.
         ancestors = ()
     else:
-        ancestors = Page.objects.live().ancestor_of(
-            self, inclusive=True).filter(depth__gt=1)
+        ancestors = Page.objects.live().ancestor_of(self, inclusive=True).filter(depth__gt=1)
     return {
         'ancestors': ancestors,
         'request': context['request'],

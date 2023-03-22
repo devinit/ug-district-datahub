@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 
-<h2 class="aside__heading">More about: {{ parent.title }}</h2>
+<h2 class="aside__heading">{{ parent.title }}</h2>
 {% if menu_items %}
     <nav class="navigation-secondary">
         <ul>
@@ -8,6 +8,17 @@
             <li
                 class="navigation-secondary__item {% if item.active %}navigation-secondary__item--active{% endif %}">
                 <a href="{% pageurl item %}?nav=header">{{ item.title }}</a>
+
+                {% if item.children %}
+                  <ul>
+                    {% for child in item.children %}
+                    <li
+                        class="navigation-tertiary__item {% if child.active %}navigation-tertiary__item--active{% endif %}">
+                        <a href="{% pageurl child %}?nav=header">{{ child.title }}</a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>

@@ -28,6 +28,9 @@
 		('leaf-light', $leaf-light),
 		('leaf-dark', $leaf-dark),
 		('cloud', $cloud),
+		('cerulean', $cerulean),
+		('cerulean-light', $cerulean-light),
+		('cerulean-dark', $cerulean-dark),
 	{
 	.color-#{$name} {
 		color: $color;

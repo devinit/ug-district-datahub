@@ -6,19 +6,16 @@ register = Library()
 
 @register.simple_tag(takes_context=True)
 def page_contains_chart(context):
-    charts = {'plotly_studio': False, 'advanced': False}
     self = context.get('page')
     try:
         content = self.tools if hasattr(self, 'tools') else self.content
         for item in content:
             if item.block.name == 'interactive_chart':
-                charts['plotly_studio'] = True
-            elif item.block.name == 'advanced_interactive_chart':
-                charts['advanced'] = True
+                return True
 
-        return charts
+        return False
     except Exception:
-        return charts
+        return False
 
 
 @register.filter
@@ -66,7 +63,7 @@ def load_viz_assets(context, source='header'):
     try:
         content = self.tools if hasattr(self, 'tools') else self.content
         for block in content:
-            if block.block_type == 'advanced_interactive_chart':
+            if block.block_type == 'interactive_chart':
                 chart_page = block.value['chart_page']
                 if chart_page and source == 'header':
                     header_assets = chart_page.specific.header_assets
@@ -102,3 +99,41 @@ def gets_row_highlights(context, pivot_page):
                 "color": highlight.row_highlight_colour or '#ffb3b3'
                 })
     return json.dumps(highlights)
+
+
+@register.simple_tag
+def get_previous_page(all_pages, label):
+    try:
+        for index, item in enumerate(all_pages):
+            if index > 0:
+                if item.label == label:
+                    return all_pages[index - 1]
+        return ''
+    except Exception:
+        return ''
+
+
+@register.simple_tag
+def get_next_page(all_pages, label):
+    try:
+        for index, item in enumerate(all_pages):
+            if index < len(all_pages) - 1:
+                if item.label == label:
+                    return all_pages[index + 1]
+
+        return ''
+    except Exception:
+        return ''
+
+
+@register.simple_tag
+def chapter_nav_slice(chapters, chapter_number=0, max_length=6):
+    try:
+        zerod = chapter_number - 1 if chapter_number else 0
+        length = len(chapters)
+        max_from_end = max(length - max_length, 0)
+        start = max_from_end if zerod > max_from_end else zerod
+        end = zerod + max_length
+        return '%s:%s' % (str(start), str(end))
+    except Exception:
+        return ''

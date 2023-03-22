@@ -271,29 +271,12 @@ h2 {
 /** ===== WHITELABELLING ===== **/
 
 .branding {
-  background-image: url(/assets/svg/icons/home.svg);
-}
-
-.hero__flourish {
-  display: none;
+  background-image: url(/static/svg/icons/home.svg);
 }
 
 .header,
 .header:after {
   background-color: #ffffff;
-}
-
-.hero {
-  background-color: #357ba5;
-}
-
-.hero__image::after,
-.footer::before {
-  display: none;
-}
-
-.hero__title span {
-  background-color: #3c8dbc;
 }
 
 /** ==== END WHITELABELLING ===== **/

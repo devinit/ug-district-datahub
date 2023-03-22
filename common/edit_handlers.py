@@ -4,6 +4,7 @@ from django.utils.html import mark_safe
 
 from wagtail.admin.panels import EditHandler
 from wagtail.admin.panels import HelpPanel as WagtailHelpPanel
+from wagtail.admin.panels import MultiFieldPanel as WagtailMultiFieldPanel
 
 
 class BaseReadOnlyPanel(EditHandler):
@@ -63,3 +64,21 @@ def HelpPanel(
     """Define a help text panel."""
     wrapped_content = '<div class="%s"><svg class="icon icon-help" aria-hidden="true"><use href="#icon-help"></use></svg>%s</div>' % (wrapper_class, content)
     return WagtailHelpPanel(content=wrapped_content, template=template, heading=heading, classname=classname)
+
+
+class MultiFieldPanel(WagtailMultiFieldPanel):
+    def __init__(self, children=(), *args, **kwargs):
+        if kwargs.get('description', None):
+            self.description = kwargs.pop('description')
+        super().__init__(children, *args, **kwargs)
+
+    def clone(self):
+        props = {
+            'children': self.children,
+            'heading': self.heading,
+            'classname': self.classname,
+            'help_text': self.help_text,
+        }
+        if hasattr(self, 'description'):
+            props['description'] = self.description
+        return self.__class__(**props)

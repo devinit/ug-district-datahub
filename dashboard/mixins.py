@@ -1,16 +1,22 @@
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils.timezone import now
 from django.http import Http404
 
 from wagtail.models import Page
+from wagtail.contrib.redirects.models import Redirect
+from wagtail.search import index
 from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
-from common.constants import INSTRUCTIONS_RICHTEXT_FEATURES, POSITION_CHOICES, SIMPLE_RICHTEXT_FEATURES
+from common.constants import INSTRUCTIONS_RICHTEXT_FEATURES, MAX_RELATED_LINKS, POSITION_CHOICES, SIMPLE_RICHTEXT_FEATURES
 from common.utils import WagtailImageField
+from common.templatetags.string_utils import uid
 from dashboard.fields import AceEditorField
 from dashboard.utils import CaptionPanel, InstructionsPanel
+
+from dashboard.fields import flexible_content_streamfield, content_streamfield
 
 
 class GeneralInstructionsMixin(models.Model):
@@ -132,3 +138,71 @@ class CodePageMixin(InstructionsMixin, CaptionMixin, RoutablePageMixin, models.M
         if request.user.is_authenticated:
             return super().serve(request)
         raise Http404()
+
+
+class FilteredDatasetMixin(object):
+    @cached_property
+    def filtered_datasets(self):
+        results = []
+        all_dashbord_datasets = self.dashboard_datasets.all()
+        for dash_dataset in all_dashbord_datasets:
+            if type(dash_dataset.dataset.specific).__name__ == "DatasetPage":
+                results.append(dash_dataset)
+        return results
+
+class DashboardPageSearchMixin(object):
+    search_fields = Page.search_fields + [
+        index.FilterField('slug'),
+        index.SearchField('title', partial_match=True),
+        index.SearchField('hero_text', partial_match=True)
+    ]
+
+
+class PublishedDateMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    published_date = models.DateTimeField(
+        blank=True,
+        null=True,
+        default=now,
+        help_text='This date will be used for display and ordering',
+    )
+
+
+class UUIDMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    uuid = models.CharField(max_length=6, default=uid)
+
+    def save(self, *args, **kwargs):
+        old_path = '/%s' % self.uuid
+        # using Redirect to enforce uuid uniqueness as using a unique field is prone to validation errors on page revisions
+        existing_redirect = Redirect.objects.filter(old_path=old_path).first()
+        if existing_redirect and existing_redirect.redirect_page.id == self.id:
+            super(UUIDMixin, self).save(*args, **kwargs)
+        else:
+            self.uuid = uid()
+            super(UUIDMixin, self).save(*args, **kwargs)
+
+            old_path = '/%s' % self.uuid
+            redirect = Redirect.objects.filter(old_path=old_path).first()
+            if not redirect:
+                Redirect(old_path=old_path, redirect_page=self).save()
+            else:
+                self.save(*args, **kwargs)
+
+
+class FlexibleContentMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    content = flexible_content_streamfield()
+
+
+class ContentMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    content = content_streamfield()
