@@ -1461,7 +1461,6 @@ body.body--cerulean {
     .navigation-primary__item {
         @include respond-to($menu-respond) {
             a {
-                color: $cerulean;
                 @include link-active-styles {
                 border-bottom: 2px solid $cerulean;
                 }
@@ -1680,5 +1679,21 @@ body.body--cerulean {
     .form-field .button {
         background-color: $cerulean;
         border-color: $cerulean;
+    }
+
+    .tabs .tabs__input:checked+.tabs__label {
+        background-color: #fff;
+    }
+
+    .tabs .tabs__container .tabs__label {
+        background-color: $cerulean-dark;
+    }
+
+    .spotlight__stat-data {
+        color: $cerulean-dark;
+    }
+
+    .dicharts--keyfacts {
+        background: lighten($cerulean, 45%);
     }
 }
