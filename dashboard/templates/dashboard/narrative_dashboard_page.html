@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% load string_utils wagtailcore_tags responsive wagtailimages_tags static dashboard_tags %}
+{% load string_utils wagtailcore_tags responsive wagtailimages_tags static dashboard_tags navigation_tags %}
 
 {% block hero %}
   {% include 'dashboard/partials/hero.html' %}
@@ -9,6 +9,23 @@
 {% block colour %}body--cerulean{% endblock %}
 
 {% block body %}
+
+  <section class="section">
+    <div class="row row--narrow">
+      <div class="l-sidebar">
+        {% if self.depth > 3 %}
+          <aside class="l-sidebar__aside">
+            <div class="aside aside--clipping">
+              {% secondary_menu True %}
+            </div>
+          </aside>
+        {% endif %}
+        <div class="l-sidebar__body">
+          {% breadcrumbs %}
+        </div>
+      </div>
+    </div>
+  </section>
 
   {% include 'dashboard/chapter-nav/nav.html' with page=page menu_label='Jump to section' chapter_number=page.chapter_number %}
 
