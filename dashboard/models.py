@@ -272,8 +272,8 @@ class NarrativeDashboardPage(
     class Meta:
         verbose_name = 'Narrative Dashboard'
 
-    parent_page_types = ['home.HomePage']
-    subpage_types = []
+    parent_page_types = ['home.HomePage', 'dashboard.NarrativeDashboardPage']
+    subpage_types = ['dashboard.NarrativeDashboardPage']
 
     topics = ClusterTaggableManager(through=NarrativeDashboardTopic, blank=True, verbose_name="Topics")
 
