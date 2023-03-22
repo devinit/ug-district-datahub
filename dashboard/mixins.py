@@ -164,6 +164,7 @@ class PublishedDateMixin(models.Model):
 
     published_date = models.DateTimeField(
         blank=True,
+        null=True,
         default=now,
         help_text='This date will be used for display and ordering',
     )
