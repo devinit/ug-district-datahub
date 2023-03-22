@@ -10,22 +10,22 @@
 
 {% block body %}
 
+{% if self.depth > 3 %}
   <section class="section">
     <div class="row row--narrow">
       <div class="l-sidebar">
-        {% if self.depth > 3 %}
           <aside class="l-sidebar__aside">
             <div class="aside aside--clipping">
               {% secondary_menu True %}
             </div>
           </aside>
-        {% endif %}
         <div class="l-sidebar__body">
           {% breadcrumbs %}
         </div>
       </div>
     </div>
   </section>
+{% endif %}
 
   {% include 'dashboard/chapter-nav/nav.html' with page=page menu_label='Jump to section' chapter_number=page.chapter_number %}
 
