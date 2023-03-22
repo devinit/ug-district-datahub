@@ -25,12 +25,12 @@
   <span class="hero__flourish"></span>
   <div class="row row--narrow">
     <div class="hero__content">
+      {% if page.published_date %}
       <ul class="hero__meta">
         <li class="hero__meta-item hero__meta-item--block">Dashboard</li>
-        {% if page.published_date %}
           <li class="hero__meta-item">{{ page.published_date|date:"j F Y" }}</li>
-        {% endif %}
       </ul>
+      {% endif %}
       <h1 class="hero__title">
         <span>{{ page.title }}</span>
       </h1>
