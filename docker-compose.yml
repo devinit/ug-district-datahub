@@ -12,7 +12,9 @@ services:
       - aphrc_dashboard_db:/var/lib/postgresql/data
 
   web:
-    container_name: web
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - db
     expose:
@@ -23,12 +25,11 @@ services:
       - HS_TICKET_PIPELINE
       - HS_TICKET_PIPELINE_STAGE
     volumes:
-      - ./:/code/
+      - ./:/app/
     restart: always
 
   nginx:
-    container_name: nginx
-    build: ./config/nginx/
+    image: nginx:latest
     ports:
       - "80:80"
       - "443:443"
@@ -37,9 +38,7 @@ services:
       - ./config/letsencrypt:/letsencrypt/
       - ./config/nginx:/etc/nginx/conf.d
     restart: always
-    environment:
-      - SERVICE_NAME=nginx
-      - SERVICE_TAGS=nginx
+    command: "/bin/sh -c 'while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   certbot:
     container_name: certbot
