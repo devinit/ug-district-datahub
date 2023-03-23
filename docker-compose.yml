@@ -27,13 +27,8 @@ services:
       - HS_TICKET_PIPELINE
       - HS_TICKET_PIPELINE_STAGE
       - ELASTIC_SEARCH_URL
-      - SERVICE_8090_NAME=blue
-      - SERVICE_8090_TAGS=backends
-      - CELERY_BROKER_URL
     volumes:
       - ./:/code/
-      - ./config/celery/default:/etc/default
-      - ./config/celery/init.d:/etc/init.d
     networks:
       - web
       - consul

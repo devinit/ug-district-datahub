@@ -186,7 +186,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST = config('EMAIL_HOST', default="smtp.gmail.com")
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='devinitautomailer@gmail.com')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default=None)
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='devinitautomailer@gmail.com')
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
