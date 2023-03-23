@@ -1690,6 +1690,9 @@ body.body--cerulean {
 
     .tabs .tabs__container .tabs__label {
         background-color: $cerulean-dark;
+        &:hover {
+            background-color: #fff;
+        }
     }
 
     .spotlight__stat-data {
