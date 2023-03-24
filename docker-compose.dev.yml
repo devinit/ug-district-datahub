@@ -22,6 +22,7 @@ services:
       - HS_TICKET_PIPELINE_STAGE
     build:
       context: .
+    working_dir: /code/
     volumes:
       - ./:/code/
     restart: always
