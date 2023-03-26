@@ -32,3 +32,4 @@ RUN pip install gunicorn
 
 # Copy the current directory contents into the container at /code/
 COPY . /code/
+CMD ["gunicorn","datahub.wsgi:application","--bind","0.0.0.0:8000","--workers","3"]
