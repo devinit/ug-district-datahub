@@ -24,7 +24,7 @@ services:
       - HS_TICKET_PIPELINE
       - HS_TICKET_PIPELINE_STAGE
     volumes:
-      - ./:/app/
+      - ./:/code/
     restart: always
 
   nginx:
