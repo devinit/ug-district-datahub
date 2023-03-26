@@ -23,7 +23,7 @@ services:
       - HS_API_KEY
       - HS_TICKET_PIPELINE
       - HS_TICKET_PIPELINE_STAGE
-    command: bash -c "python manage.py runserver 0.0.0.0:80"
+    working_dir: /code/
     volumes:
       - ./:/code/
     restart: always
