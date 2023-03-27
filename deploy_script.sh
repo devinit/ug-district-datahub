@@ -6,7 +6,6 @@ ORG_NAME="devinit"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_DIR=$SCRIPT_DIR
 CERTBOT_SUB_DIR="ssl"
-OPENSSL_CONFIG=$APP_DIR'/config/openssl/ssl.conf'
 FULL_CHAIN_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/fullchain.pem'
 PRIV_KEY_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/privkey.pem'
 REPOSITORY="https://github.com/"$ORG_NAME"/"$APP_NAME".git"
@@ -20,7 +19,7 @@ fi
 if [ ! -f $FULL_CHAIN_DESTINATION ]; then
     $FIRST_RUN='1'
     mkdir -d $APP_DIR'/'$CERTBOT_SUB_DIR
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $PRIV_KEY_DESTINATION -out $FULL_CHAIN_DESTINATION -config $OPENSSL_CONFIG
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $PRIV_KEY_DESTINATION -out $FULL_CHAIN_DESTINATION -subj "/C=UG/ST=Kampala/L=Kampala/O=Global Security/OU=Devs/CN=datahub.go.ug"
 fi
 
 
