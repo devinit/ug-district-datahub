@@ -37,6 +37,7 @@ services:
       - ./ssl:/etc/ssl/
       - ./config/letsencrypt:/letsencrypt/
       - ./config/nginx:/etc/nginx/conf.d
+      - ./static:/static
     restart: always
     command: "/bin/sh -c 'while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
