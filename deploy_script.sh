@@ -6,8 +6,9 @@ ORG_NAME="devinit"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_DIR=$SCRIPT_DIR
 CERTBOT_SUB_DIR="ssl"
-FULL_CHAIN_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/fullchain.pem'
-PRIV_KEY_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/privkey.pem'
+DOMAIN="live/datahub.go.ug/"
+FULL_CHAIN_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/'$DOMAIN'/fullchain.pem'
+PRIV_KEY_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/'$DOMAIN'/privkey.pem'
 REPOSITORY="https://github.com/"$ORG_NAME"/"$APP_NAME".git"
 FIRST_RUN="0"
 
@@ -37,6 +38,6 @@ docker-compose up -d
 
 docker-compose exec -T web python manage.py migrate
 
-if [ $FIRST_RUN == "1"]; then
+if [ $FIRST_RUN == "1" ]; then
     docker-compose restart web
 fi
