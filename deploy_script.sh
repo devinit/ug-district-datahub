@@ -36,7 +36,9 @@ docker-compose build certbot
 docker-compose down --remove-orphans
 docker-compose up -d
 
-docker-compose exec -T web python manage.py migrate
+docker-compose exec -T web python manage.py migrate --noinput
+docker-compose exec -T web python manage.py collectstatic --noinput
+docker-compose exec -T web npm run build
 
 if [ $FIRST_RUN == "1" ]; then
     docker-compose restart web
