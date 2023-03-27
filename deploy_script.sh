@@ -18,7 +18,7 @@ fi
 
 if [ ! -f $FULL_CHAIN_DESTINATION ]; then
     FIRST_RUN='1'
-    mkdir -d $APP_DIR'/'$CERTBOT_SUB_DIR
+    mkdir -p $APP_DIR'/'$CERTBOT_SUB_DIR
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $PRIV_KEY_DESTINATION -out $FULL_CHAIN_DESTINATION -subj "/C=UG/ST=Kampala/L=Kampala/O=Global Security/OU=Devs/CN=datahub.go.ug"
 fi
 
