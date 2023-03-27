@@ -23,6 +23,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     zlib1g-dev \
     libwebp-dev \
     nodejs \
+    npm \
  && rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /code/requirements.txt
