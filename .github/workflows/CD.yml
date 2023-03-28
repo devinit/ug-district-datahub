@@ -1,0 +1,59 @@
+name: DDW CI
+
+on:
+  push:
+    tags:
+      - "*"
+    branches:
+      - "dev"
+      - "feature/github-ci"
+  pull_request:
+    branches:
+      - "*"
+
+concurrency: CI
+
+jobs:
+  deploy:
+    name: 'Deploy'
+    runs-on: ubuntu-latest
+    if: contains('refs/heads/dev', github.ref) || contains('github-ci', github.ref)
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set env for develop branch
+      if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
+      run: |
+        echo "HOST=${{ secrets.DEV_HOST }}" >> $GITHUB_ENV
+        echo "USERNAME=${{ secrets.DEV_USER }}" >> $GITHUB_ENV
+        echo "SITE_URL=datahub.go.ug" >> $GITHUB_ENV
+        echo "REPO_PATH=~/git/ug-district-datahub" >> $GITHUB_ENV
+
+    - name: Pull latest repo updates to server
+      if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.HOST }}
+        username: ${{ env.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        command_timeout: 30m
+        script: |
+          cd ${{ env.REPO_PATH }}
+          git stash
+          git fetch
+          git checkout dev
+
+    - name: ssh into remote dev server for develop branch
+      if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.HOST }}
+        username: ${{ env.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        command_timeout: 30m
+        script: |
+          cd ${{ env.REPO_PATH }}
+          chmod 700 "deploy_script.sh"
+          ./deploy_script.sh
