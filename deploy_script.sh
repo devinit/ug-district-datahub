@@ -1,12 +1,13 @@
 #!/bin/bash
 ## gets run on host server
 
+export BASH_ENV="$HOME/.bashrc"
 APP_NAME="ug-district-datahub"
 ORG_NAME="devinit"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_DIR=$SCRIPT_DIR
 CERTBOT_SUB_DIR="ssl"
-DOMAIN="live/datahub.go.ug/"
+DOMAIN="live/datahub.go.ug"
 FULL_CHAIN_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/'$DOMAIN'/fullchain.pem'
 PRIV_KEY_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/'$DOMAIN'/privkey.pem'
 REPOSITORY="https://github.com/"$ORG_NAME"/"$APP_NAME".git"
