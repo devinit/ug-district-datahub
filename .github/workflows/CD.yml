@@ -1,4 +1,4 @@
-name: DDW CI
+name: APHRC Dashboard CD
 
 on:
   push:
