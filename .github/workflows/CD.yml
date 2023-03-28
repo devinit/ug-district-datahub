@@ -15,7 +15,6 @@ jobs:
   deploy:
     name: 'Deploy'
     runs-on: ubuntu-latest
-    if: contains('refs/heads/dev', github.ref) || endsWith('github-ci', github.ref)
 
     steps:
     - uses: actions/checkout@v3
