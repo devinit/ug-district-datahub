@@ -18,6 +18,10 @@ jobs:
     # if: contains('refs/heads/dev', github.ref) || contains('github-ci', github.ref)
 
     steps:
+    - name: Run tests
+      run: |
+        echo ${{ github.ref }}
+        echo ${{ github.ref_name }}
     - uses: actions/checkout@v3
     - name: Set env for develop branch
       if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
@@ -39,8 +43,9 @@ jobs:
         script: |
           cd ${{ env.REPO_PATH }}
           git stash
-          git fetch
+          git fetch --all --prune
           git checkout feature/github-ci
+          git pull
 
     - name: ssh into remote dev server for develop branch
       if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
