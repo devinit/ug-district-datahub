@@ -13,6 +13,8 @@ PRIV_KEY_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/privkey.pem'
 REPOSITORY="https://github.com/"$ORG_NAME"/"$APP_NAME".git"
 FIRST_RUN="0"
 
+export NVM_DIR=~/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 if [ -d $APP_DIR ]; then
       cd $APP_DIR
