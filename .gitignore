@@ -119,6 +119,9 @@ storage/
 deploy_key
 .vscode
 
+# ssl
+ssl
+
 # Downloaded Spotlight Files
 /spotlight-*.csv
 
