@@ -8,8 +8,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_DIR=$SCRIPT_DIR
 DOMAIN="live/datahub.go.ug"
 CERTBOT_SUB_DIR='ssl/'$DOMAIN
-FULL_CHAIN_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/fullchain.pem'
-PRIV_KEY_DESTINATION=$APP_DIR'/'$CERTBOT_SUB_DIR'/privkey.pem'
+FULL_CHAIN_SOURCE=$APP_DIR'/'$CERTBOT_SUB_DIR'/fullchain.pem'
+PRIV_KEY_SOURCE=$APP_DIR'/'$CERTBOT_SUB_DIR'/privkey.pem'
+FULL_CHAIN_DESTINATION=$APP_DIR'/ssl/fullchain.pem'
+PRIV_KEY_DESTINATION=$APP_DIR'/ssl/privkey.pem'
 REPOSITORY="https://github.com/"$ORG_NAME"/"$APP_NAME".git"
 FIRST_RUN="0"
 
@@ -44,6 +46,9 @@ docker-compose up -d
 
 docker-compose exec -T web python manage.py migrate --noinput
 docker-compose exec -T web python manage.py collectstatic --noinput
+
+cp -f $FULL_CHAIN_SOURCE $FULL_CHAIN_DESTINATION
+cp -f $PRIV_KEY_SOURCE $PRIV_KEY_DESTINATION
 
 if [ $FIRST_RUN == "1" ]; then
     docker-compose restart web

@@ -15,13 +15,9 @@ jobs:
   deploy:
     name: 'Deploy'
     runs-on: ubuntu-latest
-    # if: contains('refs/heads/dev', github.ref) || contains('github-ci', github.ref)
+    if: contains('refs/heads/dev', github.ref) || endsWith('github-ci', github.ref)
 
     steps:
-    - name: Run tests
-      run: |
-        echo ${{ github.ref }}
-        echo ${{ github.ref_name }}
     - uses: actions/checkout@v3
     - name: Set env for develop branch
       if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
@@ -47,7 +43,7 @@ jobs:
           git checkout feature/github-ci
           git pull
 
-    - name: ssh into remote dev server for develop branch
+    - name: Deploy dev branch
       if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
       uses: appleboy/ssh-action@master
       with:
