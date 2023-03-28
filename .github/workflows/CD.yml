@@ -42,7 +42,7 @@ jobs:
           cd ${{ env.REPO_PATH }}
           git stash
           git fetch
-          git checkout dev
+          git checkout feature/github-ci
 
     - name: ssh into remote dev server for develop branch
       if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'github-ci')
