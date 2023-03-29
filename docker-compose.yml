@@ -1,0 +1,61 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:15.2
+    environment:
+      POSTGRES_DB: aphrc_ssds
+      POSTGRES_USER: aphrc_ssds
+      POSTGRES_PASSWORD: aphrc_ssds_pw
+    restart: always
+    volumes:
+      - aphrc_dashboard_db:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+    depends_on:
+      - db
+    expose:
+      - "8090"
+    env_file: .env
+    environment:
+      - HS_API_KEY
+      - HS_TICKET_PIPELINE
+      - HS_TICKET_PIPELINE_STAGE
+      - ENVIRONMENT
+    working_dir: /code/
+    volumes:
+      - ./:/code/
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./ssl:/etc/ssl/
+      - ./config/letsencrypt:/letsencrypt/
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./static:/static
+    restart: always
+    command: "/bin/sh -c 'while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:latest
+    depends_on:
+      - nginx
+    env_file: .env
+    environment:
+      - SITE_URL
+      - WWW_SITE_URL
+    entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot --email chrisw@devinit.org --agree-tos --no-eff-email -d $SITE_URL -d $WWW_SITE_URL && trap exit TERM; while :; do certbot renew --deploy-hook \"cp -f /etc/letsencrypt/live/datahub.go.ug/fullchain.pem /etc/letsencrypt/fullchain.pem; cp -f /etc/letsencrypt/live/datahub.go.ug/privatekey.pem /etc/letsencrypt/privatekey.pem\"; sleep 12h & wait $${!}; done;"
+    volumes:
+      - ./config/letsencrypt:/var/www/certbot/
+      - ./ssl:/etc/letsencrypt/
+      - ./certbot_logs:/var/log/letsencrypt
+
+volumes:
+  aphrc_dashboard_db:
