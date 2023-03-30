@@ -26,6 +26,11 @@
         background-color: $action;
         color: #fff;
     }
+    &.footer--wide {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 3em 0 1em;
+    }
 }
 
 .footer__title {

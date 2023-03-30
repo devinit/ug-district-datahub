@@ -29,13 +29,6 @@ def get_footer_sections(context, parent, calling_page=None):
     }
 
 
-@register.inclusion_tag('tags/footer/newsletter.html')
-def subscribe_to_newsletter():
-    return {
-        'newsletters': NewsLetter.objects.all()
-    }
-
-
 @register.inclusion_tag('tags/footer/footer_text.html')
 def get_footer_text():
     footer_text = ''
