@@ -1,0 +1,44 @@
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags string_utils %}
+
+<section class="section" id="modal-container">
+  <div class="row row--narrow">
+    <div class="l-sidebar">
+      <div class="l-sidebar__body">
+        {% if page.release_date %}
+          <div class="m-notice">
+              Release date : {{ page.release_date|date:"j F Y"  }}
+          </div>
+        {% endif %}
+        <div class="is-typeset wysiwyg">
+          {% for block in page.body %}
+            {% include_block block %}
+          {% endfor %}
+        </div>
+
+        <div class="l-1up space-section-top">
+          {% if page.dataset_downloads.count %}
+            <div class="l-2up__col">
+              <div class="button button--faux button--icon">
+                <i role="presentation" aria-hidden="true" class="ico ico--24 ico-download-poppy"></i>
+                <span class="button--faux__meta">Download</span>
+                <ul class="button--faux__list">
+                  {% for item in page.get_dataset_downloads %}
+                    {% if item.file|file_info != item.file.title %}
+                      <li>
+                        <a href="{{ item.file.url }}" class="js-ga-download-click"
+                          data-event-label="Download {{ item.file }}"
+                          title="Download {{ item.file | file_label }}">{{item.file}} - {{ item.file|file_info }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+                <p class="button--faux__note">XLS files contain the dataset, metadata and charts / images</p>
+                <p class="button--faux__note">CSV files contain the raw dataset</p>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

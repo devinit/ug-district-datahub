@@ -60,7 +60,7 @@ class DatasetPage(DataSetMixin, TypesetBodyMixin, HeroMixin, Page):
 
     def get_usages(self):
         dashboards = Page.objects.live().filter(
-            models.Q(dashboardpage__dashboard_datasets__dataset__slug=self.slug)
+            models.Q(narrativedashboardpage__dashboard_datasets__dataset__slug=self.slug)
         ).specific()
 
         return dashboards
