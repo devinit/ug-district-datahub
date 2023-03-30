@@ -19,12 +19,12 @@
         <div class="form-field__select-dropdown">
             <select name="country" id="country">
                 <option value="">All districts</option>
-                {% regroup countries by region as country_groups %}
-                {% for country_group in country_groups %}
-                  <optgroup label="{{ country_group.grouper }}">
-                    <option value="{{ "all--"|add:country_group.grouper.name }}" id="{{ "all--"|add:country_group.grouper.name }}" {% if "all--"|add:country_group.grouper.name == selected_country %}selected{% endif %}>All in {{country_group.grouper}}</option>
-                    {% for country in country_group.list %}
-                      <option value="{{country.slug}}" id="{{country.slug}}" {% if country.slug == selected_country %}selected{% endif %}>
+                {% regroup districts by region as district_groups %}
+                {% for district_group in district_groups %}
+                  <optgroup label="{{ district_group.grouper }}">
+                    <option value="{{ "all--"|add:district_group.grouper.name }}" id="{{ "all--"|add:district_group.grouper.name }}" {% if "all--"|add:district_group.grouper.name == selected_district %}selected{% endif %}>All in {{district_group.grouper}}</option>
+                    {% for country in district_group.list %}
+                      <option value="{{country.slug}}" id="{{country.slug}}" {% if country.slug == selected_district %}selected{% endif %}>
                         {{country}}
                       </option>
                     {% endfor %}
@@ -34,8 +34,8 @@
         </div>
     </div>
     <div class="form-field form-field--inline-five">
-        <label for="publication-search" class="form-label form-label--hidden">Filter by topic</label>
-        <input class="form-item" type="text" name="publication-search" placeholder="Search...">
+        <label for="dataset-search" class="form-label form-label--hidden">Search</label>
+        <input class="form-item" type="text" name="dataset-search" placeholder="Search...">
     </div>
     <div class="form-field form-field--inline-five resources-filter--button">
         <button type="submit" class="button">Filter</button>

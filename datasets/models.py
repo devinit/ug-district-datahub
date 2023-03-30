@@ -14,6 +14,7 @@ from common.mixins import HeroMixin, TypesetBodyMixin
 from common.utils import hero_panels
 from datasets.mixins import DataSetMixin
 from datasets.panels import metadata_panel
+from dashboard.models import District
 from downloads.models import BaseDownload
 
 
@@ -127,3 +128,26 @@ class DatasetListing(HeroMixin, Page):
 
     def fetch_all_data(self):
         return DatasetPage.objects.live().specific()
+
+    def get_active_districts(self):
+        active_districts = []
+        datasets = DatasetPage.objects.all()
+
+        for dataset in datasets:
+            districts = dataset.page_districts.all()
+            for district in districts:
+                active_district = District.objects.get(id=district.district_id)
+                if active_district not in active_districts:
+                    active_districts.append(active_district)
+        return active_districts
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(DatasetListing, self).get_context(request, *args, **kwargs)
+
+
+        context['selected_district'] = request.GET.get('district', None)
+
+        context['topics'] = [page_orderable.topic for page_orderable in DatasetPageTopic.objects.all().order_by('topic__name') if page_orderable.page.live]
+        context['districts'] = self.get_active_districts()
+
+        return context
