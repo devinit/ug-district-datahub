@@ -1,0 +1,36 @@
+{% extends 'layouts/default.html' %}
+{% load wagtailcore_tags navigation_tags %}
+
+{% block colour %}body--cerulean{% endblock %}
+
+{% block body %}
+  {% include 'includes/heroes/hero-minor.html' %}
+
+  <section class="section">
+      <div class="row row--narrow">
+        <div class="highlight">
+          {% include 'datasets/partials/dataset-filter.html' %}
+        </div>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="row row--narrow">
+      {% if datasets|length == 0 %}
+        <h2 class="section__heading">Sorry, no results found</h2>
+      {% else %}
+        {% if is_filtered %}
+          <h2 class="section__heading">
+            Showing {{datasets.start_index}}-{{datasets.end_index}} of {{datasets.paginator.count}} result{% if datasets|length > 1 %}s{% endif %}
+          </h2>
+        {% endif %}
+        <div class="l-3up">
+          {% for item in datasets %}
+            {% include 'partials/card-dataset.html' %}
+          {% endfor %}
+        </div>
+        {% include "includes/scaffold/pagination.html" with children=datasets %}
+      {% endif %}
+    </div>
+  </section>
+{% endblock body %}
