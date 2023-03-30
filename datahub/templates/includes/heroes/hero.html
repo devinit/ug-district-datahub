@@ -24,7 +24,7 @@
     <span class="hero__flourish"></span>
     <span class="hero__flourish"></span>
     <div class="row row--narrow">
-        <div class="hero__content">
+        <div class="hero__content {% block hero_content_class %}{% endblock %}">
             {% block hero_meta %}{% endblock hero_meta %}
             <h1 class="hero__title">
                 <span>{{ page.title }}</span>
@@ -32,6 +32,9 @@
             {% if page.hero_text %}
                 <div class="hero__excerpt">{{ page.hero_text|richtext }}</div>
             {% endif %}
+
+            {% block hero_content %}{% endblock hero_content %}
+
             {% if page.hero_link and page.hero_link_caption %}
                 <a href="{% pageurl page.hero_link %}" class="button button--reverse">{{ page.hero_link_caption }}</a>
             {% endif %}
