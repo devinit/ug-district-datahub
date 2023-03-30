@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.text import slugify
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -9,9 +10,9 @@ from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.models import Orderable, Page
 from wagtail.snippets.models import register_snippet
 
-from common.constants import MAX_RELATED_LINKS
+from common.constants import MAX_RELATED_LINKS, MAX_PAGE_SIZE
 from common.mixins import HeroMixin, TypesetBodyMixin
-from common.utils import hero_panels
+from common.utils import get_paginator_range, hero_panels
 from datasets.mixins import DataSetMixin
 from datasets.panels import metadata_panel
 from dashboard.models import District
@@ -141,11 +142,46 @@ class DatasetListing(HeroMixin, Page):
                     active_districts.append(active_district)
         return active_districts
 
+    def fetch_all_data(self):
+        return DatasetPage.objects.live().specific()
+
+    def fetch_filtered_data(self, context):
+        topic = context['selected_topic']
+        district = context['selected_district']
+
+        if topic:
+            datasets = DatasetPage.objects.live().specific().filter(dataset_topics__topic__slug=topic)
+        else:
+            datasets = self.fetch_all_data()
+
+        return datasets
+
     def get_context(self, request, *args, **kwargs):
         context = super(DatasetListing, self).get_context(request, *args, **kwargs)
 
+        page = request.GET.get('page', None)
 
         context['selected_district'] = request.GET.get('district', None)
+        context['selected_topic'] = request.GET.get('topic', None)
+
+        if not self.is_filtering(request):
+            datasets = self.fetch_all_data()
+            is_filtered = False
+        else:
+            is_filtered = True
+            datasets = self.fetch_filtered_data(context)
+
+        datasets = datasets.order_by('-first_published_at') if datasets else []
+        context['is_filtered'] = is_filtered
+        paginator = Paginator(datasets, MAX_PAGE_SIZE)
+        try:
+            context['datasets'] = paginator.page(page)
+        except PageNotAnInteger:
+            context['datasets'] = paginator.page(1)
+        except EmptyPage:
+            context['datasets'] = paginator.page(paginator.num_pages)
+
+        context['paginator_range'] = get_paginator_range(paginator, context['datasets'])
 
         context['topics'] = [page_orderable.topic for page_orderable in DatasetPageTopic.objects.all().order_by('topic__name') if page_orderable.page.live]
         context['districts'] = self.get_active_districts()
