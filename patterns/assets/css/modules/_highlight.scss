@@ -28,6 +28,13 @@
         height: 50px;
         background-color: $body-color;
     }
+
+    &.highlight__simple {
+        &:after,
+        &:before {
+            display: none;
+        }
+    }
 }
 
 .highlight__heading {
