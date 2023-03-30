@@ -110,7 +110,7 @@ class DatasetDownloads(Orderable, BaseDownload):
     page = ParentalKey(DatasetPage, related_name='dataset_downloads', on_delete=models.CASCADE)
 
 
-class DatasetListing(TypesetBodyMixin, HeroMixin, Page):
+class DatasetListing(HeroMixin, Page):
     class Meta():
         verbose_name = 'Dataset Listing'
 
@@ -119,7 +119,6 @@ class DatasetListing(TypesetBodyMixin, HeroMixin, Page):
 
     content_panels = Page.content_panels + [
         hero_panels(),
-        FieldPanel('body'),
     ]
 
     def is_filtering(self, request):
