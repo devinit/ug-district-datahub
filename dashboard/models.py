@@ -297,11 +297,11 @@ class NarrativeDashboardPage(
     ]
 
     @cached_property
-    def publication_downloads_title(self):
+    def dashboard_downloads_title(self):
         return 'Downloads'
 
     @cached_property
-    def publication_downloads_list(self):
+    def dashboard_downloads_list(self):
         return get_downloads(self)
 
     @cached_property
@@ -313,7 +313,7 @@ class NarrativeDashboardPage(
         return get_downloads(self, with_parent=False, data=True)
 
     @cached_property
-    def page_publication_downloads(self):
+    def page_dashboard_downloads(self):
         return self.dashboard_downloads.all()
 
     @cached_property

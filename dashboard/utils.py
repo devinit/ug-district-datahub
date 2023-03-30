@@ -46,7 +46,7 @@ def FallbackImagePanel():
 
 def get_downloads(instance, with_parent=False, data=False):
     d = defaultdict(list)
-    downloads = instance.data_downloads.all() if data else instance.publication_downloads.all()
+    downloads = instance.data_downloads.all() if data else instance.dashboard_downloads.all()
 
     for item in downloads:
         download = create_download(item)
@@ -57,7 +57,7 @@ def get_downloads(instance, with_parent=False, data=False):
         if data:
             parent_downloads = instance.get_parent().specific.data_downloads.all()
         else:
-            parent_downloads = instance.get_parent().specific.publication_downloads.all()
+            parent_downloads = instance.get_parent().specific.dashboard_downloads.all()
 
         for item in parent_downloads:
             download = create_download(item)
