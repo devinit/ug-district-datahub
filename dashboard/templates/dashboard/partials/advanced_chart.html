@@ -13,7 +13,7 @@
   {% include 'dashboard/chart_instructions.html' %}
 {% endif %}
 
-<div class="chart-container chart-container--full">
+<div class="chart-container chart-container--full chart-container--loading">
   <div class="charts__chart" data-title="{{item.title}}">
     {% load_as_template raw_html=item.html %}
     <div class="chart-loading">
