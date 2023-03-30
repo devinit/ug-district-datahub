@@ -25,7 +25,8 @@
         "node_modules/",
         "patterns/",
         "assets/",
-        "static/"
+        "static/",
+        "src/assets"
     ],
     "include": [
         "src/"

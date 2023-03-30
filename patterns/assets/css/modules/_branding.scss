@@ -12,3 +12,16 @@
     display: inline-block;
     text-indent: -999em;
 }
+
+.text-branding {
+    font-size: 2.5rem;
+    font-family: Geomanist Bold,sans-serif;
+    text-transform: uppercase;
+    color: #000;
+}
+
+@media (max-width: 1000px) {
+    .text-branding {
+        color: #fff;
+    }
+}
