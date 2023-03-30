@@ -1702,4 +1702,12 @@ body.body--cerulean {
     .dicharts--keyfacts {
         background: lighten($cerulean, 45%);
     }
+
+    .page-action__section,
+    .page__action__burgerWrapper,
+    .page__action__next,
+    .page__action__previous,
+    .page__action_text {
+        background: $cerulean-dark;
+    }
 }
