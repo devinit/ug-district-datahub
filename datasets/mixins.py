@@ -12,7 +12,7 @@ class DataSetMixin(models.Model):
     class Meta():
         abstract = True
 
-    parent_page_types = ['datasets.DataSetListing']
+    parent_page_types = ['datasets.DatasetListing']
     subpage_types = []
 
     release_date = models.DateField(default=datetime.now)

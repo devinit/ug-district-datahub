@@ -110,9 +110,9 @@ class DatasetDownloads(Orderable, BaseDownload):
     page = ParentalKey(DatasetPage, related_name='dataset_downloads', on_delete=models.CASCADE)
 
 
-class DataSetListing(TypesetBodyMixin, HeroMixin, Page):
+class DatasetListing(TypesetBodyMixin, HeroMixin, Page):
     class Meta():
-        verbose_name = 'DataSet Listing'
+        verbose_name = 'Dataset Listing'
 
     parent_page_types = ['home.HomePage']
     subpage_types = ['datasets.DatasetPage']
