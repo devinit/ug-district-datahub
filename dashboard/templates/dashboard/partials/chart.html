@@ -11,7 +11,7 @@
   {% include 'dashboard/chart_instructions.html' %}
 {% endif %}
 
-<div class="chart-container chart-container--full js-plotly-chart-wrapper js-lazy-loading">
+<div class="chart-container chart-container--full chart-container--loading js-plotly-chart-wrapper js-lazy-loading">
   {% if item.selectable %}
     <select class="data-selector js-plotly-chart-data-selector"></select>
   {% endif %}
