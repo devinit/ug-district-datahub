@@ -533,7 +533,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name="DataSetListing",
+            name="DatasetListing",
             fields=[
                 (
                     "page_ptr",
