@@ -258,6 +258,23 @@
     }
 }
 
+.hero__meta--list {
+    margin-bottom: 1em;
+}
+
+.hero__meta--list .hero__meta-item {
+    margin-right: 0.6em;
+    margin-bottom: 0.5em;
+}
+
+.hero__extras {
+    @extend .hero__excerpt;
+    display: block;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    margin: 1em 0;
+}
+
 .hero__button {
     position: absolute;
     bottom: 0;
@@ -334,9 +351,10 @@
             @include respond-to($menu-respond) {
                 display: block;
                 bottom: 90px;
-                right: -30px;
+                right: 0;
                 width: 30px;
                 height: 30px;
+                border-radius: 40%;
                 animation: herofade6 1s;
                 animation-delay: 2s;
                 animation-fill-mode: forwards;

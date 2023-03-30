@@ -1,14 +1,9 @@
 {% load static wagtailcore_tags wagtailimages_tags navigation_tags string_utils %}
 
-<section class="section" id="modal-container">
+<section class="section space-section-top-none" id="modal-container">
   <div class="row row--narrow">
     <div class="l-sidebar">
       <div class="l-sidebar__body">
-        {% if page.release_date %}
-          <div class="m-notice">
-              Release date : {{ page.release_date|date:"j F Y"  }}
-          </div>
-        {% endif %}
         <div class="is-typeset wysiwyg">
           {% for block in page.body %}
             {% include_block block %}

@@ -2,4 +2,18 @@
 
 {% block hero_class %}hero--minor{% endblock %}
 
-{% block hero_content_class %}hero__content--wide{% endblock %}
+{% block hero_content %}
+  {% if page.release_date %}
+    <div class="hero__extras">
+        Release date : {{ page.release_date|date:"j F Y"  }}
+    </div>
+  {% endif %}
+
+  {% if topics|length %}
+    <ul class="hero__meta hero__meta--list">
+      {% for topic in topics %}
+        <li class="hero__meta-item hero__meta-item--block">{{ topic.name }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock hero_content %}
