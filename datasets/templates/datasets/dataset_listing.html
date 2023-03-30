@@ -26,7 +26,7 @@
         {% endif %}
         <div class="l-3up">
           {% for item in datasets %}
-            {% include 'partials/card-dataset.html' %}
+            {% include 'datasets/partials/card-dataset.html' %}
           {% endfor %}
         </div>
         {% include "includes/scaffold/pagination.html" with children=datasets %}

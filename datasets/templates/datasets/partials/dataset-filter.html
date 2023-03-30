@@ -15,17 +15,17 @@
       </div>
     {% endif %}
     <div class="form-field form-field--inline-five">
-        <label for="country" class="form-label form-label--hidden">All districts</label>
+        <label for="district" class="form-label form-label--hidden">All districts</label>
         <div class="form-field__select-dropdown">
-            <select name="country" id="country">
+            <select name="district" id="district">
                 <option value="">All districts</option>
                 {% regroup districts by region as district_groups %}
                 {% for district_group in district_groups %}
                   <optgroup label="{{ district_group.grouper }}">
                     <option value="{{ "all--"|add:district_group.grouper.name }}" id="{{ "all--"|add:district_group.grouper.name }}" {% if "all--"|add:district_group.grouper.name == selected_district %}selected{% endif %}>All in {{district_group.grouper}}</option>
-                    {% for country in district_group.list %}
-                      <option value="{{country.slug}}" id="{{country.slug}}" {% if country.slug == selected_district %}selected{% endif %}>
-                        {{country}}
+                    {% for district in district_group.list %}
+                      <option value="{{district.slug}}" id="{{district.slug}}" {% if district.slug == selected_district %}selected{% endif %}>
+                        {{district}}
                       </option>
                     {% endfor %}
                   </optgroup>
