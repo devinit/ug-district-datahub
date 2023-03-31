@@ -1716,10 +1716,18 @@ body.body--cerulean {
             color: $cerulean-dark;
             border: 1px solid $cerulean-dark;
         }
+
+        &:active, &:focus, &:hover {
+            background-color: $cerulean-dark;
+            border-color: $cerulean-dark;
+        }
     }
 
-    a {
-        color: $cerulean-dark;
+    .button--faux__list,
+    .m-slip__copy {
+        a {
+            color: $cerulean-dark;
+        }
     }
 
     .r-tabs .r-tabs-nav .r-tabs-state-active .r-tabs-anchor {

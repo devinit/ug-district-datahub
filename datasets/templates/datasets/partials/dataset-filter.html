@@ -35,7 +35,7 @@
     </div>
     <div class="form-field form-field--inline-five">
         <label for="q" class="form-label form-label--hidden">Search</label>
-        <input class="form-item" type="text" name="q" placeholder="Search..." value="{{q}}">
+        <input class="form-item" type="text" name="q" placeholder="Search..." value="{{q|default:''}}">
     </div>
     <div class="form-field form-field--inline-five resources-filter--button">
         <button type="submit" class="button">Filter</button>
