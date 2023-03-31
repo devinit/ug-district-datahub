@@ -125,7 +125,7 @@ class DatasetListing(HeroMixin, Page):
 
     def is_filtering(self, request):
         get = request.GET.get
-        return get('topic', None) or get('district', None) or get('search', None)
+        return get('topic', None) or get('district', None) or get('q', None)
 
     def fetch_all_data(self):
         return DatasetPage.objects.live().specific()
@@ -160,9 +160,11 @@ class DatasetListing(HeroMixin, Page):
         context = super(DatasetListing, self).get_context(request, *args, **kwargs)
 
         page = request.GET.get('page', None)
+        search_filter = request.GET.get('q', None)
 
         context['selected_district'] = request.GET.get('district', None)
         context['selected_topic'] = request.GET.get('topic', None)
+        context['q'] = search_filter
 
         if not self.is_filtering(request):
             datasets = self.fetch_all_data()
