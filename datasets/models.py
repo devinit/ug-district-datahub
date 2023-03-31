@@ -1,4 +1,7 @@
 import re
+import operator
+from functools import reduce
+from itertools import chain
 
 from django.db import models
 from django.utils.functional import cached_property
@@ -10,18 +13,19 @@ from modelcluster.models import ClusterableModel
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.models import Orderable, Page
+from wagtail.search.models import Query
 from wagtail.snippets.models import register_snippet
 
 from common.constants import MAX_RELATED_LINKS, MAX_PAGE_SIZE
 from common.mixins import HeroMixin, TypesetBodyMixin
 from common.utils import get_paginator_range, hero_panels
-from datasets.mixins import DataSetMixin
+from datasets.mixins import DataSetMixin, DatasetSearchMixin
 from datasets.panels import metadata_panel
 from dashboard.models import District
 from downloads.models import BaseDownload
 
 
-class DatasetPage(DataSetMixin, TypesetBodyMixin, HeroMixin, Page):
+class DatasetPage(DataSetMixin, DatasetSearchMixin, TypesetBodyMixin, HeroMixin, Page):
     """ Content of each dataset """
 
     class Meta():
@@ -150,9 +154,9 @@ class DatasetListing(HeroMixin, Page):
     def fetch_filtered_data(self, context):
         topic = context['selected_topic']
         district = context['selected_district']
-        query = context['q']
+        search_filter = context['q']
 
-        if not (topic or district or query):
+        if not (topic or district or search_filter):
             return self.fetch_all_data()
 
         if topic:
@@ -169,6 +173,9 @@ class DatasetListing(HeroMixin, Page):
                     pass
             else:
                 datasets = datasets.filter(page_districts__district__slug=district)
+
+        if search_filter:
+            datasets = datasets.search(search_filter).annotate_score("_score")
 
         return datasets
 
@@ -189,7 +196,8 @@ class DatasetListing(HeroMixin, Page):
             is_filtered = True
             datasets = self.fetch_filtered_data(context)
 
-        datasets = datasets.order_by('-first_published_at') if datasets else []
+        if not search_filter:
+            datasets = datasets.order_by('-first_published_at') if datasets else []
         context['is_filtered'] = is_filtered
         paginator = Paginator(datasets, MAX_PAGE_SIZE)
         try:

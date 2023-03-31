@@ -4,6 +4,8 @@ from django.db import models
 
 from wagtail.blocks import RichTextBlock
 from wagtail.fields import StreamField
+from wagtail.models import Page
+from wagtail.search import index
 
 from common.constants import RICHTEXT_FEATURES
 
@@ -27,3 +29,11 @@ class DataSetMixin(models.Model):
         help_text='A description is expected, but only one of each shall be shown',
         use_json_field=True
     )
+
+
+class DatasetSearchMixin(object):
+    search_fields = Page.search_fields + [
+        index.FilterField('slug'),
+        index.SearchField('title', partial_match=True),
+        index.SearchField('hero_text', partial_match=True)
+    ]
