@@ -1,0 +1,69 @@
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags string_utils %}
+
+<section class="section" id="modal-container">
+  <div class="row row--narrow">
+    <div class="l-sidebar">
+      {% if page.dataset_downloads.count %}
+        <aside class="l-sidebar__aside">
+          <div class="aside aside--clipping">
+            <h2 class="aside__heading">Downloads</h2>
+            <div class="aside__excerpt">
+              <p>XLS files contain the dataset, metadata and charts / images</p>
+              <p>CSV files contain the raw dataset</p>
+            </div>
+
+            {% for item in page.get_dataset_downloads %}
+              {% if item.file|file_info != item.file.title %}
+                <div class="button button--faux button--icon">
+                  <i role="presentation" aria-hidden="true" class="ico ico--24 ico-download-poppy"></i>
+                  <span class="button--faux__meta">Download</span>
+                  <h3 class="button--faux__heading">{{ item.title }}</h3>
+                  <ul class="button--faux__list">
+                      <li>
+                          <a
+                              href="{{ item.file.url }}"
+                              class="js-ga-download-click"
+                              data-event-label="Download {{ item.file }}"
+                              title="Download {{ item.file | file_label }}"
+                          >{{ item.file|file_info }}</a>
+                      </li>
+                  </ul>
+              </div>
+              {% endif %}
+            {% endfor %}
+
+            {% if page.page_downloads %}
+                {% for item in page.get_page_downloads %}
+                    <div class="button button--faux button--icon">
+                        <i role="presentation" aria-hidden="true" class="ico ico--24 ico-download-poppy"></i>
+                        <span class="button--faux__meta">Download</span>
+                        <h3 class="button--faux__heading">{{ item.title }}</h3>
+                        <ul class="button--faux__list">
+                            <li>
+                                <a
+                                    href="{{ item.file.url }}"
+                                    class="js-ga-download-click"
+                                    data-event-label="Download {{ item.file }} / vacancy / {{ page.title }}"
+                                    title="Download {{ item.file | file_label }}"
+                                >{{ item.file|file_info }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% endif %}
+          </div>
+        </aside>
+      {% endif %}
+      <div class="l-sidebar__body">
+        {% breadcrumbs %}
+        <div class="is-typeset wysiwyg">
+          {% for block in page.body %}
+            {% include_block block %}
+          {% endfor %}
+        </div>
+
+        {% include 'datasets/partials/dataset_metadata.html' %}
+      </div>
+    </div>
+  </div>
+</section>

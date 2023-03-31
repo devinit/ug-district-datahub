@@ -5,14 +5,20 @@
 
 // Padding
 .padd-section-top 		{ padding-top: $internal-spacing; }
+.padd-section-top-none       { padding-top: 0; }
 .padd-section-bottom 	{ padding-bottom: $internal-spacing; }
+.padd-section-bottom-none       { padding-bottom: 0; }
 .padd-section-both 		{ @extend .padd-section-top; @extend .padd-section-bottom; }
+.padd-section-none       { @extend .padd-section-top-none; @extend .padd-section-bottom-none; }
 
 
 // Spacing
 .space-section-top 		{ margin-top: $internal-spacing*1.5; }
+.space-section-top-none { margin-top: 0; }
 .space-section-bottom 	{ margin-bottom: $internal-spacing*1.5; }
+.space-section-bottom-none { margin-bottom: 0; }
 .space-section-both 	{ @extend .space-section-top; @extend .space-section-bottom; }
+.space-section-none { @extend .space-section-top-none; @extend .space-section-bottom-none; }
 
 .space-section-top--small { margin-top: $internal-spacing/2; }
 .space-section-bottom--small { margin-bottom: $internal-spacing/2; }

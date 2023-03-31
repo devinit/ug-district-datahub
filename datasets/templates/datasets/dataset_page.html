@@ -1,0 +1,63 @@
+{% extends "layouts/default.html" %}
+{% load static wagtailcore_tags wagtailimages_tags navigation_tags string_utils responsive %}
+
+{% block colour %}body--cerulean{% endblock %}
+
+{% block hero %}
+  {% include 'datasets/partials/hero-dataset.html' %}
+{% endblock hero %}
+
+{% block body %}
+
+  {% include 'datasets/partials/dataset_body.html' %}
+
+{% if dashboards|length %}
+  <section class="section">
+    <div class="row row--narrow">
+      <h2 class="section__heading">References to dashboards that use this dataset</h2>
+
+      <div class="l-2up-3up">
+      {% for item in dashboards %}
+        <a href="{% pageurl item %}" class="card card--offset padd-section-top">
+          <span class="card__tag">{{ "Dashboard" }}</span>
+          <div class="card__body">
+            {% if item.published_date and not hide_date %}
+              <span class="card__meta">{{ item.published_date|date:"j F Y" }}</span>
+            {% endif %}
+            <h3 class="card__title"><span>{{ item.title }}</span></h3>
+            <div class="card__excerpt">
+              {% if item.hero_text %}
+                {{item.hero_text|richtext}}
+              {% else %}
+                {{ item.body|first|striptags|truncatewords:40 }}
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+  {% if related_datasets|length %}
+    <section class="section">
+      <div class="row row--narrow">
+        <h2 class="section__heading">{{ page.related_datasets_title }}</h2>
+        <div class="l-3up">
+          {% for item in related_datasets %}
+            <div class="m-slip m-slip--icon">
+              <i role="presentation" aria-hidden="true" class="ico ico--24 ico-data-poppydark"></i>
+              <p class="m-slip__copy">
+                <a href="{% pageurl item %}">{{item.specific.title}}</a>
+              </p>
+              <span class="m-slip__meta">Released: {{item.specific.release_date|date:"j F Y"}}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+{% endblock %}

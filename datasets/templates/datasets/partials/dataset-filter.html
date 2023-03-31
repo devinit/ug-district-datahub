@@ -1,0 +1,43 @@
+<form class="form" method="get" action="{{self.pageurl}}">
+    {% if topics %}
+      <div class="form-field form-field--inline-five">
+          <label for="topic" class="form-label form-label--hidden">All topics</label>
+          <div class="form-field__select-dropdown">
+              <select name="topic" id="topic">
+                  <option value="" selected>All topics</option>
+                  {% for topic in topics %}
+                    <option value="{{topic.slug}}" id="{{topic.slug}}" {% if topic.slug == selected_topic %}selected{% endif %}>
+                      {{topic}}
+                    </option>
+                  {% endfor %}
+              </select>
+          </div>
+      </div>
+    {% endif %}
+    <div class="form-field form-field--inline-five">
+        <label for="district" class="form-label form-label--hidden">All districts</label>
+        <div class="form-field__select-dropdown">
+            <select name="district" id="district">
+                <option value="">All districts</option>
+                {% regroup districts by region as district_groups %}
+                {% for district_group in district_groups %}
+                  <optgroup label="{{ district_group.grouper }}">
+                    <option value="{{ "all--"|add:district_group.grouper.name }}" id="{{ "all--"|add:district_group.grouper.name }}" {% if "all--"|add:district_group.grouper.name == selected_district %}selected{% endif %}>All in {{district_group.grouper}}</option>
+                    {% for district in district_group.list %}
+                      <option value="{{district.slug}}" id="{{district.slug}}" {% if district.slug == selected_district %}selected{% endif %}>
+                        {{district}}
+                      </option>
+                    {% endfor %}
+                  </optgroup>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-field form-field--inline-five">
+        <label for="q" class="form-label form-label--hidden">Search</label>
+        <input class="form-item" type="text" name="q" placeholder="Search..." value="{{q|default:''}}">
+    </div>
+    <div class="form-field form-field--inline-five resources-filter--button">
+        <button type="submit" class="button">Filter</button>
+    </div>
+</form>

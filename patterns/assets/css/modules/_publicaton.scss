@@ -1710,4 +1710,34 @@ body.body--cerulean {
     .page__action_text {
         background: $cerulean-dark;
     }
+
+    .button {
+        &.button--faux {
+            color: $cerulean-dark;
+            border: 1px solid $cerulean-dark;
+        }
+
+        &:active, &:focus, &:hover {
+            background-color: $cerulean-dark;
+            border-color: $cerulean-dark;
+        }
+    }
+
+    .button--faux__list,
+    .m-slip__copy {
+        a {
+            color: $cerulean-dark;
+        }
+    }
+
+    .r-tabs .r-tabs-nav .r-tabs-state-active .r-tabs-anchor {
+        color: $cerulean-dark;
+        border-top: 2px solid $cerulean-dark;
+    }
+
+    .aside__heading {
+        &::after {
+            background-color: $cerulean;
+        }
+    }
 }
