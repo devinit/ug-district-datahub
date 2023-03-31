@@ -165,10 +165,10 @@ class HomePage(HeroMixin, Page):
         verbose_name = 'Home Page'
 
     def serve(self, request, *args, **kwargs):
-        dashboard = self.get_children().type(NarrativeDashboardPage).first().specific
+        dashboard = self.get_children().type(NarrativeDashboardPage).first()
 
         if dashboard:
-            return dashboard.serve(request)
+            return dashboard.specific.serve(request)
         return super().serve(request)
 
 
