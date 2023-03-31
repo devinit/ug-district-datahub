@@ -55,6 +55,7 @@
         </aside>
       {% endif %}
       <div class="l-sidebar__body">
+        {% breadcrumbs %}
         <div class="is-typeset wysiwyg">
           {% for block in page.body %}
             {% include_block block %}
