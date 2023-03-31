@@ -1712,8 +1712,10 @@ body.body--cerulean {
     }
 
     .button {
-        color: $cerulean-dark;
-        border: 1px solid $cerulean-dark;
+        &.button--faux {
+            color: $cerulean-dark;
+            border: 1px solid $cerulean-dark;
+        }
     }
 
     a {
