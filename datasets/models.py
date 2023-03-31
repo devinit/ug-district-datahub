@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.text import slugify
@@ -148,11 +150,25 @@ class DatasetListing(HeroMixin, Page):
     def fetch_filtered_data(self, context):
         topic = context['selected_topic']
         district = context['selected_district']
+        query = context['q']
+
+        if not (topic or district or query):
+            return self.fetch_all_data()
 
         if topic:
             datasets = DatasetPage.objects.live().specific().filter(dataset_topics__topic__slug=topic)
         else:
             datasets = self.fetch_all_data()
+
+        if district:
+            if 'all--' in district:
+                try:
+                    region = re.search('all--(.*)', district).group(1)
+                    datasets = datasets.filter(page_districts__district__region__name=region)
+                except AttributeError:
+                    pass
+            else:
+                datasets = datasets.filter(page_districts__district__slug=district)
 
         return datasets
 
