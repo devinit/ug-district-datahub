@@ -54,7 +54,7 @@ class DatasetPage(DataSetMixin, DatasetSearchMixin, TypesetBodyMixin, HeroMixin,
     def get_context(self, request):
         context = super().get_context(request)
 
-        context['topics'] = [orderable.topic for orderable in self.dataset_topics.all()]
+        context['topics'] = self.get_dataset_topics
         context['related_datasets'] = self.get_related_dataset_pages()
         context['dashboards'] = self.get_usages()
 
@@ -70,6 +70,10 @@ class DatasetPage(DataSetMixin, DatasetSearchMixin, TypesetBodyMixin, HeroMixin,
         ).specific()
 
         return dashboards
+
+    @cached_property
+    def get_dataset_topics(self):
+        return [orderable.topic for orderable in self.dataset_topics.all()]
 
     def get_download_name(self):
         return self.title

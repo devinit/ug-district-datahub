@@ -2,8 +2,8 @@
 
 <div class="m-slip m-slip--icon">
   <i role="presentation" aria-hidden="true" class="ico ico--24 ico-data-poppydark"></i>
-  {% if topics|length %}
-    {% for topic in topics %}
+  {% if item.get_dataset_topics|length %}
+    {% for topic in item.get_dataset_topics %}
       <span class="m-slip__flag">{{ topic.name }}</span>
     {% endfor %}
   {% endif %}

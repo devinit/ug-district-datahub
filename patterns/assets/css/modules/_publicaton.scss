@@ -1715,6 +1715,10 @@ body.body--cerulean {
         &.button--faux {
             color: $cerulean-dark;
             border: 1px solid $cerulean-dark;
+
+            &:hover {
+                background-color: transparent;
+            }
         }
 
         &:active, &:focus, &:hover {
