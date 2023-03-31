@@ -213,7 +213,7 @@ class DatasetListing(HeroMixin, Page):
 
         context['paginator_range'] = get_paginator_range(paginator, context['datasets'])
 
-        context['topics'] = [page_orderable.topic for page_orderable in DatasetPageTopic.objects.all().order_by('topic__name') if page_orderable.page.live]
+        context['topics'] = set([page_orderable.topic for page_orderable in DatasetPageTopic.objects.all().order_by('topic__name').distinct() if page_orderable.page.live])
         context['districts'] = self.get_active_districts()
 
         return context
