@@ -3,7 +3,7 @@
 <div class="dashboard__item" data-js-entity>
     <div class="dashboard__wrap">
         <a href="{% pageurl dashboard %}" data-js-entity-url class="dashboard__content">
-            <p class="meta__date"><svg class="icon-calendar-svg"><use xlink:href="{% static '/svg/icons/renders/sprite.svg#calendar' %}"></use></svg>Last updated: {{dashboard.published_at|date:'d M Y'}}</p>
+            <p class="meta__date"><svg class="icon-calendar-svg"><use xlink:href="{% static 'svg/icons/renders/sprite.svg#calendar' %}"></use></svg>Last updated: {{dashboard.published_at|date:'d M Y'}}</p>
             <h2 class="dashboard__heading" data-js-entity-title>{{dashboard.title}}</h2>
         </a>
     </div>
