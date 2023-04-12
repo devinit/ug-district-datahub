@@ -1,0 +1,89 @@
+// ------------------------------------------------------------
+// dataset
+// ------------------------------------------------------------
+
+@use "sass:math";
+
+.dataset__item {
+	background-color: $cerulean-dark;
+    position: relative;
+    @extend %pie-clearfix;
+    display: block;
+    border-top: 1px solid $body-color;
+    &:first-of-type{
+        border-top: 0;
+    }
+    transition: all ease-in-out 0.1s;
+    &:hover, &:focus {
+        background-color: lighten($cerulean-dark,5%);
+    }
+}
+
+.dataset__content {
+	padding: 0.5rem 2rem;
+    color: $body-color;
+	// @include respond-to($c-vp) {
+	// 	width: 70%;
+	// 	float: left;
+	// }
+    .dataset__item--heading & {
+        background-color: $slate;
+    }
+}
+
+.dataset__heading {
+	color: $body-color;
+	margin: 0.5rem 0;
+	@include respond-to($c-vp) {
+		margin: 1rem 0;
+	}
+}
+
+.dataset__aside {
+    color: $body-color;
+    background-color: $cerulean-light;
+    padding: 1.5rem 2rem;
+    @include respond-to($c-vp) {
+        width: 15%;
+        float: right;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 15%;
+        bottom: 0;
+    }
+    // & + .dataset__aside{
+    //     right: 0;
+    // }
+    // .dataset__item--heading & {
+    //     background-color: $gnr-slate-a11y;
+    // }
+}
+
+.dataset__list {
+    color: $body-color;
+    @include font-size($delta/1.25);
+    margin-bottom: 1rem;
+    li {
+        margin-bottom: 0.25em;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        span {
+            font-weight: bold;
+        }
+    }
+    svg {
+        width: 18px;
+        height: 18px;
+        vertical-align: text-bottom;
+        margin-right: 10px;
+        filter: brightness(0) invert(1);
+        &.icon-checklist-svg {
+            width: 20px;
+            height: 23px;
+            vertical-align: text-top;
+            margin-right: 8px;
+        }
+    }
+}
