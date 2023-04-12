@@ -1,32 +1,39 @@
-{% load static %}
+{% load static wagtailcore_tags %}
 
 <div class="dashboard__item" data-js-entity>
     <div class="dashboard__wrap">
-        <a href="#" data-js-entity-url class="dashboard__content">
-            <p class="meta__date"><svg class="icon-calendar-svg"><use xlink:href="{% static '/svg/icons/renders/sprite.svg#calendar' %}"></use></svg>Last updated: 12 Jan 2023</p>
-            <h2 class="dashboard__heading" data-js-entity-title>Kayunga District Dashboard</h2>
+        <a href="{% pageurl dashboard %}" data-js-entity-url class="dashboard__content">
+            <p class="meta__date"><svg class="icon-calendar-svg"><use xlink:href="{% static '/svg/icons/renders/sprite.svg#calendar' %}"></use></svg>Last updated: {{dashboard.published_at|date:'d M Y'}}</p>
+            <h2 class="dashboard__heading" data-js-entity-title>{{dashboard.title}}</h2>
         </a>
     </div>
     <ul class="accordion">
-      <li class="accordion__list-item">
-        <button type="button" class="accordion__heading">
-          Dashboards
-          <i role="presentation" aria-hidden="true" class="ico ico--20 ico-plus-blank"></i>
-        </button>
-        <div class="accordion__content">
-          {% include 'dashboard/partials/dashboard-item.html' %}
-          {% include 'dashboard/partials/dashboard-item.html' %}
-        </div>
-      </li>
-      <li class="accordion__list-item">
-        <button type="button" class="accordion__heading">
-          Datasets
-          <i role="presentation" aria-hidden="true" class="ico ico--20 ico-plus-blank"></i>
-        </button>
-        <div class="accordion__content">
-          {% include 'dashboard/partials/dataset-item.html' %}
-          {% include 'dashboard/partials/dataset-item.html' %}
-        </div>
-      </li>
+
+      {% if self.show_dashboards and dashboard.get_children %}
+        <li class="accordion__list-item">
+          <button type="button" class="accordion__heading">
+            {{self.child_dashboards_title}}
+            <i role="presentation" aria-hidden="true" class="ico ico--20 ico-plus-blank"></i>
+          </button>
+          <div class="accordion__content">
+            {% for item in dashboard.get_children.specific %}
+              {% include 'dashboard/partials/dashboard-item.html' %}
+            {% endfor %}
+          </div>
+        </li>
+      {% endif %}
+
+      {% if self.show_datasets %}
+        <li class="accordion__list-item">
+          <button type="button" class="accordion__heading">
+            {{self.related_datasets_title}}
+            <i role="presentation" aria-hidden="true" class="ico ico--20 ico-plus-blank"></i>
+          </button>
+          <div class="accordion__content">
+            {% include 'dashboard/partials/dataset-item.html' %}
+            {% include 'dashboard/partials/dataset-item.html' %}
+          </div>
+        </li>
+      {% endif %}
     </ul>
 </div>

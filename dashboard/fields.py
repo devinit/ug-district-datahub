@@ -40,12 +40,8 @@ class AceEditorInput(widgets.HiddenInput):
         return Media(
             css={"all": ("dashboard/widgets/css/ace-editor.css",)},
             js=[
-                versioned_static(
-                    "https://cdnjs.cloudflare.com/ajax/libs/ace/1.11.2/ace.min.js"
-                ),
-                versioned_static(
-                    "https://cdnjs.cloudflare.com/ajax/libs/ace/1.11.2/theme-monokai.min.js"
-                ),
+                versioned_static("https://cdnjs.cloudflare.com/ajax/libs/ace/1.11.2/ace.min.js"),
+                versioned_static("https://cdnjs.cloudflare.com/ajax/libs/ace/1.11.2/theme-monokai.min.js"),
                 versioned_static("dashboard/widgets/js/ace-editor.js"),
                 # versioned_static('https://cdn.plot.ly/plotly-basic-latest.min.js')
             ],
@@ -99,12 +95,8 @@ class CaptionedImage(StructBlock):
         features=RICHTEXT_FEATURES,
         help_text="Optional: descriptive text to appear above the image",
     )
-    caption = TextBlock(
-        required=False, help_text="Optional: caption text to appear below the image"
-    )
-    caption_link = URLBlock(
-        required=False, help_text="Optional: external link to appear below the image"
-    )
+    caption = TextBlock(required=False, help_text="Optional: caption text to appear below the image")
+    caption_link = URLBlock(required=False, help_text="Optional: external link to appear below the image")
     caption_label = CharBlock(
         required=False,
         help_text="Optional: label for the caption link, defaults to the link if left blank",
@@ -195,9 +187,7 @@ class Table(StructBlock):
         features=RICHTEXT_FEATURES,
         help_text="Optional: caption text to appear below the table",
     )
-    caption_link = URLBlock(
-        required=False, help_text="Optional: external link to appear below the table"
-    )
+    caption_link = URLBlock(required=False, help_text="Optional: external link to appear below the table")
     caption_label = CharBlock(
         required=False,
         help_text="Optional: label for the caption link, defaults to the link if left blank",
@@ -206,9 +196,7 @@ class Table(StructBlock):
 
 class PivotTable(StructBlock):
     class Meta:
-        help_text = (
-            "Uses a CSV data source to displays tabular data with an optional title."
-        )
+        help_text = "Uses a CSV data source to displays tabular data with an optional title."
         icon = "table"
         label = "Pivot Table"
         form_template = "dashboard/block_forms/custom_struct.html"
@@ -220,17 +208,13 @@ class PivotTable(StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         pivot_table = value["pivot_table"]
-        context["table"] = (
-            pivot_table.specific if pivot_table and pivot_table.live else ""
-        )
+        context["table"] = pivot_table.specific if pivot_table and pivot_table.live else ""
         return context
 
 
 class DynamicTable(StructBlock):
     class Meta:
-        help_text = (
-            "Uses a CSV data source to display tabular data with an optional heading."
-        )
+        help_text = "Uses a CSV data source to display tabular data with an optional heading."
         icon = "table"
         label = "Dynamic Table"
         form_template = "dashboard/block_forms/custom_struct.html"
@@ -243,9 +227,7 @@ class DynamicTable(StructBlock):
         features=RICHTEXT_FEATURES,
         help_text="Optional: caption text to appear below the table",
     )
-    caption_link = URLBlock(
-        required=False, help_text="Optional: external link to appear below the table"
-    )
+    caption_link = URLBlock(required=False, help_text="Optional: external link to appear below the table")
     caption_label = CharBlock(
         required=False,
         help_text="Optional: label for the caption link, defaults to the link if left blank",
@@ -280,15 +262,32 @@ class InteractiveChartBlock(StructBlock):
 
     show_title = BooleanBlock(required=False, default=True)
     allow_share = BooleanBlock(required=False, default=True)
-    chart_page = PageChooserBlock(
-        page_type=["dashboard.ChartPage", "dashboard.RawCodePage"]
-    )
+    chart_page = PageChooserBlock(page_type=["dashboard.ChartPage", "dashboard.RawCodePage"])
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         chart_page = value["chart_page"]
         context["chart"] = chart_page.specific if chart_page and chart_page.live else ""
         return context
+
+
+class DashboardListingBlock(StructBlock):
+    class Meta:
+        label = "Dashboards Listing"
+        template = "dashboard/blocks/dashboard_listing_block.html"
+
+    child_dashboards_title = CharBlock(
+        required=False,
+        default="Dashboards",
+        help_text="Optional: the title of the child dashboards accordion",
+    )
+    related_datasets_title = TextBlock(
+        required=False,
+        default="Datasets",
+        help_text="Optional: the title of the related datasets accordion",
+    )
+    show_dashboards = BooleanBlock(required=False, default=True)
+    show_datasets = BooleanBlock(required=False, default=True)
 
 
 def flexible_content_streamfield(blank=False):
@@ -309,6 +308,7 @@ def flexible_content_streamfield(blank=False):
             ("interactive_chart", InteractiveChartBlock()),
             ("cta", CallToActionBlock()),
             ("accordion", AccordionBlock()),
+            ("dashboard_listing", DashboardListingBlock()),
         ],
         blank=blank,
         use_json_field=True,

@@ -9,7 +9,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from wagtail.models import Page, Orderable
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, InlinePanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 
 from common.edit_handlers import HelpPanel
 from common.mixins import HeroMixin
@@ -23,11 +23,13 @@ from dashboard.mixins import (
 )
 from dashboard.utils import (
     CaptionPanel,
+    ContentPanel,
     InstructionsPanel,
     FallbackImagePanel,
+    PublishedDatePanel,
     get_downloads,
 )
-from common.mixins import HeroMixin, CallToActionMixin
+from common.mixins import CallToActionMixin
 from common.edit_handlers import MultiFieldPanel
 from .inlines import *
 from .snippets import District
@@ -38,7 +40,6 @@ from .mixins import (
     PublishedDateMixin,
     UUIDMixin,
 )
-from dashboard.utils import ContentPanel, PublishedDatePanel, get_downloads
 from downloads.utils import DownloadsPanel
 
 
@@ -166,9 +167,7 @@ class PivotTableRowHighlight(Orderable):
         ("gte", "Greater Than or Equal"),
     ]
 
-    page = ParentalKey(
-        "dashboard.PivotTable", related_name="row_highlights", on_delete=models.CASCADE
-    )
+    page = ParentalKey("dashboard.PivotTable", related_name="row_highlights", on_delete=models.CASCADE)
     row_highlight_field = models.CharField(
         blank=True,
         null=True,
@@ -214,9 +213,7 @@ class PivotTable(InstructionsMixin, CaptionMixin, Page):
     ]
 
     data_source_url = models.TextField(help_text="Link to the CSV data file")
-    row_label = models.CharField(
-        max_length=200, help_text="CSV column to show as the label for each table row"
-    )
+    row_label = models.CharField(max_length=200, help_text="CSV column to show as the label for each table row")
     row_label_heading = models.CharField(
         max_length=200,
         default="Row labels",
@@ -337,9 +334,7 @@ class NarrativeDashboardPage(
     parent_page_types = ["home.HomePage", "dashboard.NarrativeDashboardPage"]
     subpage_types = ["dashboard.NarrativeDashboardPage"]
 
-    topics = ClusterTaggableManager(
-        through=NarrativeDashboardTopic, blank=True, verbose_name="Topics"
-    )
+    topics = ClusterTaggableManager(through=NarrativeDashboardTopic, blank=True, verbose_name="Topics")
 
     content_panels = Page.content_panels + [
         hero_panels(),
@@ -417,13 +412,15 @@ class NarrativeDashboardPage(
                 sections.append(block)
         return sections
 
+    @cached_property
+    def published_at(self):
+        return self.published_date if self.published_date else self.first_published_at
+
 
 class PageDistrict(Orderable):
     page = ParentalKey(Page, related_name="page_districts", on_delete=models.CASCADE)
 
-    district = models.ForeignKey(
-        District, related_name="+", null=True, blank=True, on_delete=models.CASCADE
-    )
+    district = models.ForeignKey(District, related_name="+", null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.district.name

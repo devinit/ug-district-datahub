@@ -1,18 +1,19 @@
-{% load static %}
+{% load static wagtailcore_tags string_utils %}
 
-<a href="{{goal.url}}" class="dataset__item">
+<a href="{% pageurl item %}" class="dataset__item">
   <div class="dataset__content">
-      <h3 class="dataset__heading heading type-s">Kayunga Education Dashboard</h3>
+      <h3 class="dataset__heading heading type-s">{{item.title}}</h3>
       <ul class="dataset__list">
           <li class="meta__date">
               <i role="presentation" aria-hidden="true" class="ico ico--14 ico-calendar-slate" style="top:-1.5px;"></i>
-              <span>Last updated:</span> 12 Nov 2022
+              <span>Last updated:</span> {{item.published_at|date:'d M Y'}}
           </li>
+
+          {% if item.hero_text %}
           <li class="is-typeset">
-              <p>
-                Converging global development challenges mean ODA is increasingly stretched. In this report, we unpack some of the key aid figures and drill down into the details to establish whether ODA really is reaching those living in greatest poverty.
-              </p>
+            {{ item.hero_text|content }}
           </li>
+          {% endif %}
       </ul>
   </div>
 </a>
