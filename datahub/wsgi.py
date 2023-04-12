@@ -12,13 +12,11 @@ import os
 from django.core.wsgi import get_wsgi_application
 from decouple import config
 
-enviroment = config('ENVIRONMENT', 'dev')
+enviroment = config("ENVIRONMENT", "dev")
 
-if enviroment.lower() == 'production' or enviroment.lower() == 'staging':
-    os.environ.setdefault(
-        "DJANGO_SETTINGS_MODULE",
-        'datahub.settings.production')
+if enviroment.lower() == "production" or enviroment.lower() == "staging":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "datahub.settings.production")
 else:
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'datahub.settings.dev')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "datahub.settings.dev")
 
 application = get_wsgi_application()

@@ -3,7 +3,6 @@ from wagtail.admin.panels import FieldPanel
 
 
 class DownloadGroupMixin(models.Model):
-
     class Meta:
         abstract = True
 
@@ -19,12 +18,12 @@ class DownloadGroupMixin(models.Model):
     @property
     def is_valid(self):
         for item in self.downloads:
-            if item.value[0].get('file'):
+            if item.value[0].get("file"):
                 return True
         return False
 
     panels = [
-        FieldPanel('title'),
-        FieldPanel('singular_name'),
-        FieldPanel('downloads'),
+        FieldPanel("title"),
+        FieldPanel("singular_name"),
+        FieldPanel("downloads"),
     ]

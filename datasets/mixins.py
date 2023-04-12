@@ -11,29 +11,39 @@ from common.constants import RICHTEXT_FEATURES
 
 
 class DataSetMixin(models.Model):
-    class Meta():
+    class Meta:
         abstract = True
 
-    parent_page_types = ['datasets.DatasetListing']
+    parent_page_types = ["datasets.DatasetListing"]
     subpage_types = []
 
     release_date = models.DateField(default=datetime.now)
     meta_data = StreamField(
         [
-            ('description', RichTextBlock(required=True, features=RICHTEXT_FEATURES)),
-            ('internal_notes', RichTextBlock(required=False, features=RICHTEXT_FEATURES)),
-            ('licence', RichTextBlock(required=False, features=RICHTEXT_FEATURES)),
-            ('citation', RichTextBlock(required=False, template="blocks/urlize_richtext.html", features=RICHTEXT_FEATURES)),
+            ("description", RichTextBlock(required=True, features=RICHTEXT_FEATURES)),
+            (
+                "internal_notes",
+                RichTextBlock(required=False, features=RICHTEXT_FEATURES),
+            ),
+            ("licence", RichTextBlock(required=False, features=RICHTEXT_FEATURES)),
+            (
+                "citation",
+                RichTextBlock(
+                    required=False,
+                    template="blocks/urlize_richtext.html",
+                    features=RICHTEXT_FEATURES,
+                ),
+            ),
         ],
-        verbose_name='Content',
-        help_text='A description is expected, but only one of each shall be shown',
-        use_json_field=True
+        verbose_name="Content",
+        help_text="A description is expected, but only one of each shall be shown",
+        use_json_field=True,
     )
 
 
 class DatasetSearchMixin(object):
     search_fields = Page.search_fields + [
-        index.FilterField('slug'),
-        index.SearchField('title', partial_match=True),
-        index.SearchField('hero_text', partial_match=True)
+        index.FilterField("slug"),
+        index.SearchField("title", partial_match=True),
+        index.SearchField("hero_text", partial_match=True),
     ]

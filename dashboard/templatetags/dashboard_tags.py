@@ -6,11 +6,11 @@ register = Library()
 
 @register.simple_tag(takes_context=True)
 def page_contains_chart(context):
-    self = context.get('page')
+    self = context.get("page")
     try:
-        content = self.tools if hasattr(self, 'tools') else self.content
+        content = self.tools if hasattr(self, "tools") else self.content
         for item in content:
-            if item.block.name == 'interactive_chart':
+            if item.block.name == "interactive_chart":
                 return True
 
         return False
@@ -23,16 +23,16 @@ def as_json(value):
     try:
         return json.dumps(value)
     except Exception:
-        return 'Invalid JSON data'
+        return "Invalid JSON data"
 
 
 @register.filter
 def padding_by_ratio(image):
     try:
         ratio = image.height / image.width
-        return 'padding-top: %s%%;' % round(ratio * 100, 2)
+        return "padding-top: %s%%;" % round(ratio * 100, 2)
     except Exception:
-        return ''
+        return ""
 
 
 @register.simple_tag(takes_context=True)
@@ -46,26 +46,27 @@ def load_as_template(context, raw_html=None):
 @register.simple_tag(takes_context=True)
 def has_pivot_table(context):
     context = Context(context)
-    self = context['page']
+    self = context["page"]
     has_pivot_table = False
     for block in self.content:
-        if block.block_type == 'pivot_table':
+        if block.block_type == "pivot_table":
             has_pivot_table = True
             break
 
     return has_pivot_table
 
+
 @register.simple_tag(takes_context=True)
-def load_viz_assets(context, source='header'):
+def load_viz_assets(context, source="header"):
     context = Context(context)
-    self = context['page']
+    self = context["page"]
     assets = []
     try:
-        content = self.tools if hasattr(self, 'tools') else self.content
+        content = self.tools if hasattr(self, "tools") else self.content
         for block in content:
-            if block.block_type == 'interactive_chart':
-                chart_page = block.value['chart_page']
-                if chart_page and source == 'header':
+            if block.block_type == "interactive_chart":
+                chart_page = block.value["chart_page"]
+                if chart_page and source == "header":
                     header_assets = chart_page.specific.header_assets
                     duplicate = False
                     for asset in assets:
@@ -74,7 +75,7 @@ def load_viz_assets(context, source='header'):
 
                     if not duplicate:
                         assets.append(header_assets)
-                elif chart_page and source == 'footer':
+                elif chart_page and source == "footer":
                     footer_assets = chart_page.specific.footer_assets
                     duplicate = False
                     for asset in assets:
@@ -84,20 +85,23 @@ def load_viz_assets(context, source='header'):
                     if not duplicate:
                         assets.append(footer_assets)
 
-        return load_as_template(context, '\n'.join(assets))
+        return load_as_template(context, "\n".join(assets))
     except AttributeError:
-        return ''
+        return ""
+
 
 @register.simple_tag(takes_context=True)
 def gets_row_highlights(context, pivot_page):
     highlights = []
     for highlight in pivot_page.row_highlights.all():
-        highlights.append({
+        highlights.append(
+            {
                 "field": highlight.row_highlight_field,
                 "condition": highlight.row_highlight_condition,
                 "value": highlight.row_highlight_value,
-                "color": highlight.row_highlight_colour or '#ffb3b3'
-                })
+                "color": highlight.row_highlight_colour or "#ffb3b3",
+            }
+        )
     return json.dumps(highlights)
 
 
@@ -108,9 +112,9 @@ def get_previous_page(all_pages, label):
             if index > 0:
                 if item.label == label:
                     return all_pages[index - 1]
-        return ''
+        return ""
     except Exception:
-        return ''
+        return ""
 
 
 @register.simple_tag
@@ -121,9 +125,9 @@ def get_next_page(all_pages, label):
                 if item.label == label:
                     return all_pages[index + 1]
 
-        return ''
+        return ""
     except Exception:
-        return ''
+        return ""
 
 
 @register.simple_tag
@@ -134,6 +138,6 @@ def chapter_nav_slice(chapters, chapter_number=0, max_length=6):
         max_from_end = max(length - max_length, 0)
         start = max_from_end if zerod > max_from_end else zerod
         end = zerod + max_length
-        return '%s:%s' % (str(start), str(end))
+        return "%s:%s" % (str(start), str(end))
     except Exception:
-        return ''
+        return ""

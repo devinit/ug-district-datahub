@@ -5,30 +5,37 @@ from django.core.validators import EmailValidator
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel, PageChooserPanel
 
 
-
 def hero_panels(allowed_pages=[]):
     """
     Called when creating page content_panels for pages that require a Hero
     Returns:
         MultiFieldPanel -- Hero content for a page
     """
-    return MultiFieldPanel([
-        FieldPanel('hero_image'),
-        FieldPanel('hero_image_credit_name'),
-        FieldPanel('hero_image_credit_url'),
-        FieldPanel('hero_text', classname="hero_excerpt"),
-        FieldPanel('hero_link_caption'),
-        PageChooserPanel('hero_link', allowed_pages)
-    ], heading="Hero Section", classname='collapsible collapsed')
+    return MultiFieldPanel(
+        [
+            FieldPanel("hero_image"),
+            FieldPanel("hero_image_credit_name"),
+            FieldPanel("hero_image_credit_url"),
+            FieldPanel("hero_text", classname="hero_excerpt"),
+            FieldPanel("hero_link_caption"),
+            PageChooserPanel("hero_link", allowed_pages),
+        ],
+        heading="Hero Section",
+        classname="collapsible collapsed",
+    )
 
 
 def call_to_action_panel():
-    return MultiFieldPanel([
-        FieldPanel('call_to_action_title'),
-        FieldPanel('call_to_action_body'),
-        FieldPanel('call_to_action_button_text'),
-        FieldPanel('call_to_action_button_url'),
-    ], heading='Call to Action Section', classname='collapsible collapsed')
+    return MultiFieldPanel(
+        [
+            FieldPanel("call_to_action_title"),
+            FieldPanel("call_to_action_body"),
+            FieldPanel("call_to_action_button_text"),
+            FieldPanel("call_to_action_button_url"),
+        ],
+        heading="Call to Action Section",
+        classname="collapsible collapsed",
+    )
 
 
 def get_paginator_range(paginator, page):
@@ -39,7 +46,7 @@ def get_paginator_range(paginator, page):
 
 
 def multiple_email_validator(email_string):
-    email_list = email_string.split(',')
+    email_list = email_string.split(",")
     validator = EmailValidator()
     for email in email_list:
         try:
@@ -48,9 +55,11 @@ def multiple_email_validator(email_string):
             raise ValidationError('"%s" is invalid' % email)
 
 
-def ForeignKeyField(model=None, required=False, on_delete=models.SET_NULL, related_name='+', **kwargs) -> models.ForeignKey:
+def ForeignKeyField(
+    model=None, required=False, on_delete=models.SET_NULL, related_name="+", **kwargs
+) -> models.ForeignKey:
     if not model:
-        raise ValueError('ForeignKeyField requires a valid model string reference')
+        raise ValueError("ForeignKeyField requires a valid model string reference")
     required = not required
     return models.ForeignKey(
         model,
@@ -63,8 +72,4 @@ def ForeignKeyField(model=None, required=False, on_delete=models.SET_NULL, relat
 
 
 def WagtailImageField(required=False, **kwargs) -> models.ForeignKey:
-    return ForeignKeyField(
-        model='wagtailimages.Image',
-        required=required,
-        **kwargs
-    )
+    return ForeignKeyField(model="wagtailimages.Image", required=required, **kwargs)
