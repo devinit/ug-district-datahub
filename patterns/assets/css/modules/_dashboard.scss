@@ -4,9 +4,40 @@
 
 @use "sass:math";
 
+// border
+$border-width: 5px;
+
 .dashboard__item {
 	background-color: $cerulean-dark;
     margin-bottom: 2rem;
+
+    .accordion .accordion__list-item {
+        margin-top: 0;
+        border-top: 1px solid #fff;
+
+        &:first-of-type {
+            border-top: none;
+        }
+
+        .accordion__heading {
+            background-color: $cerulean;
+
+            &:hover {
+                background-color: $cerulean-light !important;
+            }
+        }
+
+        &.accordion__list-item--active {
+            .accordion__heading {
+                background-color: $cerulean-light !important;
+            }
+        }
+
+        .accordion__content {
+            padding: 0;
+            border: none;
+        }
+    }
 }
 
 .dashboard__wrap {
@@ -29,7 +60,7 @@
 		width: 70%;
 		float: left;
         @supports (display: grid) {
-            grid-column: 5/span 8;
+            grid-column: 1/span 12;
             grid-row: 1;
             width: auto;
             float: none;
@@ -49,7 +80,7 @@
 }
 
 .dashboard__heading {
-	color: $cerulean-dark;
+	color: #fff;
 	margin: 0.5rem 0;
     @include font-size($gamma);
     @extend %font-heading;
@@ -59,45 +90,13 @@
 	}
 }
 
-.dashboard__aside {
-    color: $cerulean-dark;
-    background-color: $cerulean-light;
-    padding: 2rem;
-    display: block;
-    @include respond-to($c-vp) {
-        width: 30%;
-        float: right;
-        height: 100%;
-        @supports (display: grid) {
-            grid-column: 1/span 4;
-            grid-row: 1;
-            width: auto;
-            float: none;
-        }
-    }
-    transition: all ease-in-out 0.1s;
-}
-a.dashboard__aside {
-    &:hover, &:focus {
-        background-color: $cerulean;
-    }
-}
-
-.dashboard__aside__heading {
-    color: $cerulean-dark;
-    margin-bottom: 1rem;
-}
-
 .dashboard__list {
-	color: $cerulean-dark;
+	color: #fff;
 	@include font-size($delta/1.25);
 	li {
 		margin-bottom: 0.25em;
 		&:last-child {
 			margin-bottom: 0;
-		}
-		span {
-			font-weight: bold;
 		}
         svg {
             width: 18px;
@@ -129,5 +128,43 @@ a.dashboard__aside {
     }
     .drawer__content {
         padding: 0;
+    }
+}
+
+.meta__date {
+	display: inline-block;
+	position: relative;
+	padding-top: 1rem;
+	&:after, &:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 100%;
+		height: $border-width;
+		background: #fff;
+		transition: $transition;
+		transition-delay: 100ms;
+	}
+	&:after {
+		width: 0;
+		background: $action;
+	}
+    svg {
+        width: 18px;
+        height: 18px;
+        vertical-align: text-bottom;
+        margin-right: 5px;
+    }
+}
+
+.meta__date, .meta__author {
+	@include small-caps;
+	@include font-size($eta/1.25);
+	margin-bottom: 1rem;
+    .hero & {
+        @extend %font-heading;
+        letter-spacing: 1.25px;
+        font-size: 1.32rem;
     }
 }

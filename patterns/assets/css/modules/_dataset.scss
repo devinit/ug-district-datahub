@@ -5,7 +5,7 @@
 @use "sass:math";
 
 .dataset__item {
-	background-color: $cerulean-dark;
+	background-color: #fff;
     position: relative;
     @extend %pie-clearfix;
     display: block;
@@ -14,14 +14,11 @@
         border-top: 0;
     }
     transition: all ease-in-out 0.1s;
-    &:hover, &:focus {
-        background-color: lighten($cerulean-dark,5%);
-    }
 }
 
 .dataset__content {
 	padding: 0.5rem 2rem;
-    color: $body-color;
+    color: $slate;
 	// @include respond-to($c-vp) {
 	// 	width: 70%;
 	// 	float: left;
@@ -32,36 +29,15 @@
 }
 
 .dataset__heading {
-	color: $body-color;
+	color: $slate;
 	margin: 0.5rem 0;
 	@include respond-to($c-vp) {
 		margin: 1rem 0;
 	}
 }
 
-.dataset__aside {
-    color: $body-color;
-    background-color: $cerulean-light;
-    padding: 1.5rem 2rem;
-    @include respond-to($c-vp) {
-        width: 15%;
-        float: right;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        right: 15%;
-        bottom: 0;
-    }
-    // & + .dataset__aside{
-    //     right: 0;
-    // }
-    // .dataset__item--heading & {
-    //     background-color: $gnr-slate-a11y;
-    // }
-}
-
 .dataset__list {
-    color: $body-color;
+    color: $slate;
     @include font-size($delta/1.25);
     margin-bottom: 1rem;
     li {
@@ -71,6 +47,12 @@
         }
         span {
             font-weight: bold;
+        }
+
+        &.is-typeset {
+            p {
+                font-size: 1.4rem;
+            }
         }
     }
     svg {
@@ -84,6 +66,16 @@
             height: 23px;
             vertical-align: text-top;
             margin-right: 8px;
+        }
+    }
+
+    .meta__date {
+        padding-top: 0;
+        margin-bottom: 1.25em;
+        color: $slate;
+
+        &::before {
+            display: none;
         }
     }
 }

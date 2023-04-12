@@ -334,3 +334,15 @@
 		left: -$internal-spacing-percent;
 	}
 }
+
+// small caps
+@mixin small-caps {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: #fff;
+	@include font-size($eta/1.25);
+	@include respond-to($c-vp) {
+		letter-spacing: 1.25px;
+		@include font-size($eta);
+	}
+}
