@@ -42,10 +42,10 @@
                           <span class="download__label">Datasets</span>
                           {% for item in page.filtered_datasets %}
                               <a
-                                  href="{% pageurl item.dataset %}"
+                                  href="{% pageurl item %}"
                                   class="download__link js-ga-download-click"
-                                  data-event-label="{{ item.dataset.specific.get_download_name }} / Dataset"
-                              >{{ item.dataset.specific.get_download_name }}</a>
+                                  data-event-label="{{ item.get_download_name }} / Dataset"
+                              >{{ item.get_download_name }}</a>
                           {% endfor %}
                       </li>
                 {% endif %}

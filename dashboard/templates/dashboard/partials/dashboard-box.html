@@ -23,15 +23,16 @@
         </li>
       {% endif %}
 
-      {% if self.show_datasets %}
+      {% if self.show_datasets and dashboard.related_datasets %}
         <li class="accordion__list-item">
           <button type="button" class="accordion__heading">
             {{self.related_datasets_title}}
             <i role="presentation" aria-hidden="true" class="ico ico--20 ico-plus-blank"></i>
           </button>
           <div class="accordion__content">
-            {% include 'dashboard/partials/dataset-item.html' %}
-            {% include 'dashboard/partials/dataset-item.html' %}
+            {% for dataset in dashboard.related_datasets %}
+              {% include 'dashboard/partials/dataset-item.html' %}
+            {% endfor %}
           </div>
         </li>
       {% endif %}

@@ -12,7 +12,6 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from common.constants import (
     INSTRUCTIONS_RICHTEXT_FEATURES,
-    MAX_RELATED_LINKS,
     POSITION_CHOICES,
     SIMPLE_RICHTEXT_FEATURES,
 )
@@ -80,9 +79,7 @@ class FallbackImageMixin(models.Model):
         help_text="Optional: when selected devices with screen widths up to 700px will be served the fallback image",
         verbose_name="Show on tablet",
     )
-    alternative_text = models.TextField(
-        blank=True, null=True, help_text="Accessibility text for screen readers e.t.c"
-    )
+    alternative_text = models.TextField(blank=True, null=True, help_text="Accessibility text for screen readers e.t.c")
 
 
 class CaptionMixin(models.Model):
@@ -107,15 +104,9 @@ class CodePageMixin(InstructionsMixin, CaptionMixin, RoutablePageMixin, models.M
         help_text="Optional: subtitle to appear underneath the title.",
     )
 
-    html = AceEditorField(
-        options={"mode": "html"}, blank=True, default="{% load wagtailcore_tags %}"
-    )
-    javascript = AceEditorField(
-        options={"mode": "javascript"}, blank=True, default='"use strict";'
-    )
-    css = AceEditorField(
-        options={"mode": "css"}, blank=True, default="/* CSS goes here */"
-    )
+    html = AceEditorField(options={"mode": "html"}, blank=True, default="{% load wagtailcore_tags %}")
+    javascript = AceEditorField(options={"mode": "javascript"}, blank=True, default='"use strict";')
+    css = AceEditorField(options={"mode": "css"}, blank=True, default="/* CSS goes here */")
 
     content_panels = Page.content_panels + [
         FieldPanel("subtitle"),
@@ -160,17 +151,6 @@ class CodePageMixin(InstructionsMixin, CaptionMixin, RoutablePageMixin, models.M
         raise Http404()
 
 
-class FilteredDatasetMixin(object):
-    @cached_property
-    def filtered_datasets(self):
-        results = []
-        all_dashbord_datasets = self.dashboard_datasets.all()
-        for dash_dataset in all_dashbord_datasets:
-            if type(dash_dataset.dataset.specific).__name__ == "DatasetPage":
-                results.append(dash_dataset)
-        return results
-
-
 class DashboardPageSearchMixin(object):
     search_fields = Page.search_fields + [
         index.FilterField("slug"),
@@ -199,7 +179,7 @@ class UUIDMixin(models.Model):
 
     def save(self, *args, **kwargs):
         old_path = "/%s" % self.uuid
-        # using Redirect to enforce uuid uniqueness as using a unique field is prone to validation errors on page revisions
+        # using Redirect to enforce uuid uniqueness as using a unique field is prone to validation errors on page revisions # noqa: E501
         existing_redirect = Redirect.objects.filter(old_path=old_path).first()
         if existing_redirect and existing_redirect.redirect_page.id == self.id:
             super(UUIDMixin, self).save(*args, **kwargs)

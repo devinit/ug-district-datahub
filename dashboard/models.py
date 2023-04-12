@@ -31,10 +31,9 @@ from dashboard.utils import (
 )
 from common.mixins import CallToActionMixin
 from common.edit_handlers import MultiFieldPanel
-from .inlines import *
+from .inlines import *  # noqa: F403, F401
 from .snippets import District
 from .mixins import (
-    FilteredDatasetMixin,
     FlexibleContentMixin,
     DashboardPageSearchMixin,
     PublishedDateMixin,
@@ -81,7 +80,7 @@ class VisualisationsPage(InstructionsMixin, Page):
     larger_screen_text = models.CharField(
         max_length=255,
         default="To view this interactive visualisation use a device with a larger screen.",
-        help_text="Text that is displayed for individual charts when the user's screen is less than the minimum width defined in the chart page",
+        help_text="Text that is displayed for individual charts when the user's screen is less than the minimum width defined in the chart page",  # noqa: E501
     )
 
     content_panels = Page.content_panels + [
@@ -95,9 +94,7 @@ class VisualisationsPage(InstructionsMixin, Page):
         MultiFieldPanel(
             [
                 HelpPanel(
-                    """
-                    Fallback text displayed for charts when JavaScript is unavailable or screen size is less than the defined minimum width.
-                """,
+                    "Fallback text displayed for charts when JavaScript is unavailable or screen size is less than the defined minimum width.",  # noqa: E501
                     wrapper_class="help-block help-info no-padding-top",
                 ),
                 FieldPanel("no_js_text"),
@@ -108,9 +105,7 @@ class VisualisationsPage(InstructionsMixin, Page):
         MultiFieldPanel(
             [
                 HelpPanel(
-                    """
-                    Optional: a general set of instructions that can be selected to display with child visualisation content.
-                """,
+                    "Optional: a general set of instructions that can be selected to display with child visualisation content.",  # noqa: E501
                     wrapper_class="help-block help-info no-padding-top",
                 ),
                 FieldPanel("instructions"),
@@ -324,7 +319,6 @@ class NarrativeDashboardPage(
     FlexibleContentMixin,
     DashboardPageSearchMixin,
     UUIDMixin,
-    FilteredDatasetMixin,
     CallToActionMixin,
     Page,
 ):
@@ -415,6 +409,23 @@ class NarrativeDashboardPage(
     @cached_property
     def published_at(self):
         return self.published_date if self.published_date else self.first_published_at
+
+    @cached_property
+    def filtered_datasets(self):
+        results = []
+        all_dashbord_datasets = self.dashboard_datasets.all()
+        for dash_dataset in all_dashbord_datasets:
+            if type(dash_dataset.dataset.specific).__name__ == "DatasetPage":
+                results.append(dash_dataset.dataset.specific)
+        return results
+
+    @cached_property
+    def related_datasets(self):
+        results = self.filtered_datasets
+        children = self.get_children().type(NarrativeDashboardPage).specific()
+        for child in children:
+            results = results + child.filtered_datasets
+        return results
 
 
 class PageDistrict(Orderable):
