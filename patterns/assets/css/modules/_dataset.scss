@@ -13,6 +13,10 @@
     &:first-of-type{
         border-top: 0;
     }
+    &:hover {
+        background: #F3F3F3;
+        box-shadow: -1px 10px 20px #d3d3d3d3;
+    }
     transition: all ease-in-out 0.1s;
 }
 

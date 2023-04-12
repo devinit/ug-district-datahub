@@ -69,6 +69,7 @@ $border-width: 5px;
     &:hover {
         .meta__date {
             &:after {
+                background: $slate;
                 @include respond-to($c-vp) {
                     right: auto;
                     left: 0;
