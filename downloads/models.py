@@ -7,33 +7,33 @@ from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.snippets.models import register_snippet
 from wagtail.search import index
 
-from .fields import download_streamfield, download_image_streamfield, download_date_streamfield
+from .fields import (
+    download_streamfield,
+    download_image_streamfield,
+    download_date_streamfield,
+)
 from .mixins import DownloadGroupMixin
 
 
 class SimpleTaxonomy(models.Model):
-
     class Meta:
         abstract = True
-        ordering = ['title']
+        ordering = ["title"]
 
-    title = models.CharField(
-        max_length=100,
-        help_text='The title of the category'
-    )
+    title = models.CharField(max_length=100, help_text="The title of the category")
     slug = models.SlugField(
         max_length=100,
         unique=True,
-        help_text='The slug must be unqiue for this category'
+        help_text="The slug must be unqiue for this category",
     )
 
     panels = [
         MultiFieldPanel(
             [
-                FieldPanel('title'),
-                FieldPanel('slug'),
+                FieldPanel("title"),
+                FieldPanel("slug"),
             ],
-            heading='Title and slug',
+            heading="Title and slug",
         ),
     ]
 
@@ -49,25 +49,24 @@ class SimpleTaxonomy(models.Model):
 @register_snippet
 class Language(SimpleTaxonomy):
     class Meta:
-        verbose_name = 'Language'
+        verbose_name = "Language"
 
 
 class BaseDownload(models.Model):
-
     class Meta:
         abstract = True
 
     file = models.ForeignKey(
-        'wagtaildocs.Document',
+        "wagtaildocs.Document",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name="+",
     )
     title = models.CharField(
         max_length=255,
         blank=True,
-        help_text='Optional: document title, defaults to the file name if left blank',
+        help_text="Optional: document title, defaults to the file name if left blank",
     )
 
     @cached_property
@@ -82,26 +81,22 @@ class BaseDownload(models.Model):
 class DashboardDownload(index.Indexed, BaseDownload):
 
     language = models.ForeignKey(
-        'Language',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        "Language", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
 
     panels = [
-        FieldPanel('file'),
-        FieldPanel('title'),
-        FieldPanel('language', widget=forms.RadioSelect),
+        FieldPanel("file"),
+        FieldPanel("title"),
+        FieldPanel("language", widget=forms.RadioSelect),
     ]
 
     search_fields = [
-        index.SearchField('title', partial_match=True),
+        index.SearchField("title", partial_match=True),
     ]
 
     def __str__(self):
         if self.language:
-            return '%s | %s' % (self.title, self.language.title)
+            return "%s | %s" % (self.title, self.language.title)
         return self.title
 
     def save(self, *args, **kwargs):
@@ -113,12 +108,12 @@ class DashboardDownload(index.Indexed, BaseDownload):
 class DataDownload(index.Indexed, BaseDownload):
 
     panels = [
-        FieldPanel('file'),
-        FieldPanel('title'),
+        FieldPanel("file"),
+        FieldPanel("title"),
     ]
 
     search_fields = [
-        index.SearchField('title', partial_match=True),
+        index.SearchField("title", partial_match=True),
     ]
 
     def save(self, *args, **kwargs):
@@ -126,67 +121,58 @@ class DataDownload(index.Indexed, BaseDownload):
         super(DataDownload, self).save(*args, **kwargs)
 
 
-
 class DownloadItem(models.Model):
-
     class Meta:
         abstract = True
 
     download = models.ForeignKey(
-        'downloads.DashboardDownload',
+        "downloads.DashboardDownload",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name="+",
     )
 
     panels = [
-        FieldPanel('download'),
+        FieldPanel("download"),
     ]
 
 
 class DataDownloadItem(models.Model):
-
     class Meta:
         abstract = True
 
     download = models.ForeignKey(
-        'downloads.DataDownload',
+        "downloads.DataDownload",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name="+",
     )
 
     panels = [
-        FieldPanel('download'),
+        FieldPanel("download"),
     ]
 
 
 class DownloadDatedItem(models.Model):
-
     class Meta:
         abstract = True
 
     date = models.DateTimeField(
-        help_text='This date will be used for display and ordering',
+        help_text="This date will be used for display and ordering",
     )
     download = models.ForeignKey(
-        'Download',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
+        "Download", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
 
     panels = [
-        FieldPanel('date'),
-        FieldPanel('download'),
+        FieldPanel("date"),
+        FieldPanel("download"),
     ]
 
 
 class DownloadGroupItem(DownloadGroupMixin, models.Model):
-
     class Meta:
         abstract = True
 
@@ -194,7 +180,6 @@ class DownloadGroupItem(DownloadGroupMixin, models.Model):
 
 
 class DownloadImageGroupItem(DownloadGroupMixin, models.Model):
-
     class Meta:
         abstract = True
 
@@ -202,7 +187,6 @@ class DownloadImageGroupItem(DownloadGroupMixin, models.Model):
 
 
 class DownloadDatedGroupItem(DownloadGroupMixin, models.Model):
-
     class Meta:
         abstract = True
 

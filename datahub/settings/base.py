@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 ADMINS = [
-    ('Edwin', 'edwin.magezi@devinit.org'),
-    ('David', 'david.ebukali@devinit.org'),
-    ('Chris', 'chrisw@devinit.org')
+    ("Edwin", "edwin.magezi@devinit.org"),
+    ("David", "david.ebukali@devinit.org"),
+    ("Chris", "chrisw@devinit.org"),
 ]
 
 # Application definition
@@ -48,10 +48,10 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail.contrib.table_block",
     "wagtail",
-    'wagtail.contrib.routable_page',
+    "wagtail.contrib.routable_page",
     "modelcluster",
     "taggit",
-    'wagtailmetadata',
+    "wagtailmetadata",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -62,7 +62,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -88,7 +88,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'datahub.context.globals',
+                "datahub.context.globals",
             ],
         },
     },
@@ -100,9 +100,7 @@ WSGI_APPLICATION = "datahub.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
-}
+DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"))}
 
 
 # Password validation
@@ -147,7 +145,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'patterns/converted-html/assets'),
+    os.path.join(BASE_DIR, "patterns/converted-html/assets"),
     os.path.join(PROJECT_DIR, "static"),
     os.path.join(BASE_DIR, "src/assets"),
 ]
@@ -155,7 +153,7 @@ STATICFILES_DIRS = [
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/4.0/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
@@ -182,13 +180,15 @@ WAGTAILADMIN_BASE_URL = "https://datahub.go.ug"
 
 # Email settings
 
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+EMAIL_BACKEND = config(
+    "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
+)
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST = config('EMAIL_HOST', default="smtp.gmail.com")
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='devinitautomailer@gmail.com')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default=None)
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='devinitautomailer@gmail.com')
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="devinitautomailer@gmail.com")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default=None)
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="devinitautomailer@gmail.com")
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 

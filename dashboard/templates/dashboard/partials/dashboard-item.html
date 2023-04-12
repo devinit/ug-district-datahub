@@ -1,0 +1,19 @@
+{% load static wagtailcore_tags string_utils %}
+
+<a href="{% pageurl item %}" class="dataset__item">
+  <div class="dataset__content">
+      <h3 class="dataset__heading heading type-s">{{item.title}}</h3>
+      <ul class="dataset__list">
+          <li class="meta__date">
+              <i role="presentation" aria-hidden="true" class="ico ico--14 ico-calendar-slate" style="top:-1.5px;"></i>
+              <span>Last updated:</span> {{item.published_at|date:'d M Y'}}
+          </li>
+
+          {% if item.hero_text %}
+          <li class="is-typeset">
+            {{ item.hero_text|content }}
+          </li>
+          {% endif %}
+      </ul>
+  </div>
+</a>

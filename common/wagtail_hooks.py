@@ -5,33 +5,33 @@ from wagtail import hooks
 from wagtail.whitelist import allow_without_attributes, attribute_rule
 
 
-@hooks.register('insert_editor_css')
+@hooks.register("insert_editor_css")
 def editor_css():
 
     # Any extra CSS for customising the page editor can be added here as well
     return format_html('<link rel="stylesheet" href="{}">', static("css/editor.css"))
 
 
-@hooks.register('insert_global_admin_css')
+@hooks.register("insert_global_admin_css")
 def global_admin_css():
     """Add /static/css/admin.css to the admin."""
     return format_html('<link rel="stylesheet" href="{}">', static("css/admin.css"))
 
 
-@hooks.register('construct_whitelister_element_rules')
+@hooks.register("construct_whitelister_element_rules")
 def whitelister_element_rules():
     return {
-        'span': attribute_rule({'style': True}),
-        'p': attribute_rule({'style': True}),
-        'sup': allow_without_attributes,
-        'sub': allow_without_attributes,
-        'code': allow_without_attributes,
-        'blockquote': allow_without_attributes,
-        'abbr': attribute_rule({'title': True}),
+        "span": attribute_rule({"style": True}),
+        "p": attribute_rule({"style": True}),
+        "sup": allow_without_attributes,
+        "sub": allow_without_attributes,
+        "code": allow_without_attributes,
+        "blockquote": allow_without_attributes,
+        "abbr": attribute_rule({"title": True}),
     }
 
 
-@hooks.register('insert_editor_js')
+@hooks.register("insert_editor_js")
 def editor_js():
     return format_html(
         """

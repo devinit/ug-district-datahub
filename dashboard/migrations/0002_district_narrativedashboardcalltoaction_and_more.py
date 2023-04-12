@@ -15,7 +15,6 @@ import wagtailmetadata.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wagtailcore", "0078_referenceindex"),
         ("wagtailimages", "0024_index_image_file_hash"),
@@ -124,9 +123,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "inherit",
-                    models.BooleanField(
-                        default=True, help_text="Optional: show this CTA on child pages"
-                    ),
+                    models.BooleanField(default=True, help_text="Optional: show this CTA on child pages"),
                 ),
             ],
             options={
@@ -231,9 +228,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "uuid",
-                    models.CharField(
-                        default=common.templatetags.string_utils.uid, max_length=6
-                    ),
+                    models.CharField(default=common.templatetags.string_utils.uid, max_length=6),
                 ),
                 (
                     "content",
@@ -308,9 +303,7 @@ class Migration(migrations.Migration):
                                         ),
                                         (
                                             "center",
-                                            wagtail.blocks.BooleanBlock(
-                                                default=False, required=False
-                                            ),
+                                            wagtail.blocks.BooleanBlock(default=False, required=False),
                                         ),
                                     ],
                                     template="blocks/publication_blockquote.html",
@@ -432,15 +425,11 @@ class Migration(migrations.Migration):
                                     [
                                         (
                                             "show_title",
-                                            wagtail.blocks.BooleanBlock(
-                                                default=True, required=False
-                                            ),
+                                            wagtail.blocks.BooleanBlock(default=True, required=False),
                                         ),
                                         (
                                             "pivot_table",
-                                            wagtail.blocks.PageChooserBlock(
-                                                page_type=["dashboard.PivotTable"]
-                                            ),
+                                            wagtail.blocks.PageChooserBlock(page_type=["dashboard.PivotTable"]),
                                         ),
                                     ]
                                 ),
@@ -455,9 +444,7 @@ class Migration(migrations.Migration):
                                         ),
                                         (
                                             "data_source_url",
-                                            wagtail.blocks.URLBlock(
-                                                help_text="Link to the CSV data file"
-                                            ),
+                                            wagtail.blocks.URLBlock(help_text="Link to the CSV data file"),
                                         ),
                                         (
                                             "caption",
@@ -543,15 +530,11 @@ class Migration(migrations.Migration):
                                     [
                                         (
                                             "show_title",
-                                            wagtail.blocks.BooleanBlock(
-                                                default=True, required=False
-                                            ),
+                                            wagtail.blocks.BooleanBlock(default=True, required=False),
                                         ),
                                         (
                                             "allow_share",
-                                            wagtail.blocks.BooleanBlock(
-                                                default=True, required=False
-                                            ),
+                                            wagtail.blocks.BooleanBlock(default=True, required=False),
                                         ),
                                         (
                                             "chart_page",
@@ -571,9 +554,7 @@ class Migration(migrations.Migration):
                                     [
                                         (
                                             "title",
-                                            wagtail.blocks.CharBlock(
-                                                label="Title", required=True
-                                            ),
+                                            wagtail.blocks.CharBlock(label="Title", required=True),
                                         ),
                                         (
                                             "body",
@@ -621,9 +602,7 @@ class Migration(migrations.Migration):
                                                     [
                                                         (
                                                             "name",
-                                                            wagtail.blocks.TextBlock(
-                                                                icon="fa-text"
-                                                            ),
+                                                            wagtail.blocks.TextBlock(icon="fa-text"),
                                                         ),
                                                         (
                                                             "description",
@@ -669,9 +648,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "download_report_body",
-                    models.TextField(
-                        blank=True, null=True, verbose_name="Section body"
-                    ),
+                    models.TextField(blank=True, null=True, verbose_name="Section body"),
                 ),
                 (
                     "download_report_button_text",
@@ -690,7 +667,6 @@ class Migration(migrations.Migration):
             bases=(
                 wagtailmetadata.models.WagtailImageMetadataMixin,
                 dashboard.mixins.DashboardPageSearchMixin,
-                dashboard.mixins.FilteredDatasetMixin,
                 "wagtailcore.page",
                 models.Model,
             ),

@@ -7,7 +7,7 @@ from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     PageChooserPanel,
-    MultiFieldPanel
+    MultiFieldPanel,
 )
 from wagtail.models import Orderable, Page
 from wagtail.fields import RichTextField
@@ -28,53 +28,40 @@ class AbstractLink(models.Model):
     Arguments:
         Model {Django Model}
     """
+
     class Meta:
         abstract = True
 
-    label = models.CharField(
-        max_length=255,
-        blank=True
-    )
+    label = models.CharField(max_length=255, blank=True)
     page = models.ForeignKey(
-        'wagtailcore.Page',
+        "wagtailcore.Page",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name="+",
     )
     link_url = models.URLField(blank=True)
 
-    panels = [
-        FieldPanel('label'),
-        PageChooserPanel('page'),
-        FieldPanel('link_url')
-    ]
+    panels = [FieldPanel("label"), PageChooserPanel("page"), FieldPanel("link_url")]
 
 
 @register_snippet
 class NewsLetter(models.Model):
     caption = models.CharField(
         max_length=255,
-        default='Sign up for our newsletter to receive regular news and updates',
+        default="Sign up for our newsletter to receive regular news and updates",
     )
-    link_label = models.CharField(
-        max_length=255,
-        default='Subscribe here'
-    )
+    link_label = models.CharField(max_length=255, default="Subscribe here")
     link_url = models.URLField(blank=True)
 
-    panels = [
-        FieldPanel('caption'),
-        FieldPanel('link_label'),
-        FieldPanel('link_url')
-    ]
+    panels = [FieldPanel("caption"), FieldPanel("link_label"), FieldPanel("link_url")]
 
     def __str__(self):
         return self.caption
 
     class Meta:
-        verbose_name = 'newsletter'
-        verbose_name_plural = 'newsletters'
+        verbose_name = "newsletter"
+        verbose_name_plural = "newsletters"
 
 
 @register_snippet
@@ -83,10 +70,10 @@ class FooterSection(Orderable, ClusterableModel):
     show_navigation_links = models.BooleanField(default=False)
 
     panels = [
-        FieldPanel('title'),
-        FieldPanel('show_navigation_links'),
-        InlinePanel('footer_section_links', label='Section Links'),
-        InlinePanel('footer_social_links', label='Social Links')
+        FieldPanel("title"),
+        FieldPanel("show_navigation_links"),
+        InlinePanel("footer_section_links", label="Section Links"),
+        InlinePanel("footer_social_links", label="Social Links"),
     ]
 
     def __str__(self):
@@ -99,7 +86,8 @@ class FooterSection(Orderable, ClusterableModel):
 
 class FooterLink(Orderable, AbstractLink):
     section = ParentalKey(
-        'FooterSection', on_delete=models.CASCADE, related_name="footer_section_links")
+        "FooterSection", on_delete=models.CASCADE, related_name="footer_section_links"
+    )
 
     def __str__(self):
         return self.page.title if self.page else self.label
@@ -111,33 +99,28 @@ class FooterLink(Orderable, AbstractLink):
 
 class SocialLink(Orderable, models.Model):
     SOCIAL_CHOICES = [
-        ('twitter', 'Twitter'),
-        ('facebook', 'Facebook'),
-        ('linkedin', 'Linked In'),
-        ('facebook', 'Facebook'),
-        ('youtube', 'YouTube'),
-        ('flickr', 'Flickr'),
+        ("twitter", "Twitter"),
+        ("facebook", "Facebook"),
+        ("linkedin", "Linked In"),
+        ("facebook", "Facebook"),
+        ("youtube", "YouTube"),
+        ("flickr", "Flickr"),
     ]
 
-    social_platform = models.CharField(
-        max_length=100,
-        choices=SOCIAL_CHOICES
-    )
-    link_url = models.CharField(max_length=255, default='')
+    social_platform = models.CharField(max_length=100, choices=SOCIAL_CHOICES)
+    link_url = models.CharField(max_length=255, default="")
     section = ParentalKey(
-        'FooterSection', on_delete=models.CASCADE, related_name="footer_social_links")
+        "FooterSection", on_delete=models.CASCADE, related_name="footer_social_links"
+    )
 
-    panels = [
-        FieldPanel('social_platform'),
-        FieldPanel('link_url')
-    ]
+    panels = [FieldPanel("social_platform"), FieldPanel("link_url")]
 
     def __str__(self):
         return self.social_platform
 
     class Meta(Orderable.Meta):
-        verbose_name = 'Social Link'
-        verbose_name_plural = 'Social Links'
+        verbose_name = "Social Link"
+        verbose_name_plural = "Social Links"
 
 
 @register_snippet
@@ -146,23 +129,24 @@ class FooterText(models.Model):
     body = RichTextField(features=SIMPLE_RICHTEXT_FEATURES)
 
     panels = [
-        FieldPanel('major_content'),
-        FieldPanel('body'),
+        FieldPanel("major_content"),
+        FieldPanel("body"),
     ]
 
     def __str__(self):
         return "Footer Text"
 
     class Meta:
-        verbose_name_plural = 'Footer Text'
+        verbose_name_plural = "Footer Text"
+
 
 class HomePage(HeroMixin, Page):
     content_panels = Page.content_panels + [
         hero_panels(),
     ]
 
-    class Meta():
-        verbose_name = 'Home Page'
+    class Meta:
+        verbose_name = "Home Page"
 
     def serve(self, request, *args, **kwargs):
         dashboard = self.get_children().type(NarrativeDashboardPage).first()
@@ -180,9 +164,9 @@ class StandardPage(SectionBodyMixin, TypesetBodyMixin, HeroMixin, Page):
 
     content_panels = Page.content_panels + [
         hero_panels(),
-        FieldPanel('body'),
-        FieldPanel('sections'),
+        FieldPanel("body"),
+        FieldPanel("sections"),
     ]
 
-    class Meta():
-        verbose_name = 'Standard Page'
+    class Meta:
+        verbose_name = "Standard Page"

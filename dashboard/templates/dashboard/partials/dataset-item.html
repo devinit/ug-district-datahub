@@ -1,0 +1,13 @@
+{% load static wagtailcore_tags %}
+
+<a href="{% pageurl dataset %}" class="dataset__item">
+  <div class="dataset__content">
+      <h3 class="dataset__heading heading type-s">{{dataset.title}}</h3>
+      <ul class="dataset__list">
+          <li class="meta__date">
+              <i role="presentation" aria-hidden="true" class="ico ico--14 ico-calendar-slate" style="top:-1.5px;"></i>
+              <span>Released:</span> {{dataset.release_date|date:"j F Y"}}
+          </li>
+      </ul>
+  </div>
+</a>

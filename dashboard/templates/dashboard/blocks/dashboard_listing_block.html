@@ -1,0 +1,5 @@
+<div class="max-meter max-meter--center">
+  {% for dashboard in page.get_children.specific %}
+    {% include 'dashboard/partials/dashboard-box.html' %}
+  {% endfor %}
+</div>

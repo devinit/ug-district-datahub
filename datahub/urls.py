@@ -23,13 +23,21 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns = [
-        path('robots.txt', TemplateView.as_view(template_name="robots.dev.txt", content_type='text/plain')),
-        path('test404', TemplateView.as_view(template_name='404.html')),
-        path('test500', TemplateView.as_view(template_name='500.html')),
+        path(
+            "robots.txt",
+            TemplateView.as_view(
+                template_name="robots.dev.txt", content_type="text/plain"
+            ),
+        ),
+        path("test404", TemplateView.as_view(template_name="404.html")),
+        path("test500", TemplateView.as_view(template_name="500.html")),
     ] + urlpatterns
 else:
     urlpatterns = [
-        path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
+        path(
+            "robots.txt",
+            TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+        ),
     ] + urlpatterns
 
 urlpatterns = urlpatterns + [
@@ -37,7 +45,7 @@ urlpatterns = urlpatterns + [
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
     path("", include(wagtail_urls)),
-    path('sitemap.xml', sitemap),
+    path("sitemap.xml", sitemap),
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
     #    path("pages/", include(wagtail_urls)),
