@@ -13,15 +13,34 @@
     text-indent: -999em;
 }
 
-.text-branding {
+.logo {
+    display: inline-flex;
+}
+
+.logo img {
+    height: 37px;
+}
+
+.logo .text-branding {
     font-size: 2.5rem;
     font-family: Geomanist Bold,sans-serif;
     text-transform: uppercase;
     color: #000;
+    margin-left: 1rem;
+}
+
+.logo .text-branding span {
+    color: $cerulean-dark;
 }
 
 @media (max-width: 1000px) {
-    .text-branding {
+    .logo {
+        align-items: flex-end;
+    }
+
+    .logo .text-branding,
+    .logo .text-branding span {
         color: #fff;
+        font-size: 2rem;
     }
 }

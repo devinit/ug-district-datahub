@@ -1,9 +1,14 @@
-{% load navigation_tags %}
+{% load static navigation_tags %}
 {% get_site_root as site_root %}
 
 <header role="banner" class="header">
 	<div class="row">
-		<a href="/" class="text-branding">UG Data Hub</a>
+		<a href="/" class="logo">
+      <img src="{% static 'img/logo-ug.png' %}" alt="UG LOGO" />
+      <div class="text-branding">
+        {{global.site_name|default:'UG'}} <span>Data Hub</span>
+      </div>
+    </a>
 		{% primary_menu parent=site_root calling_page=self %}
 	</div>
 </header>
