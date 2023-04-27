@@ -7,13 +7,11 @@ from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     PageChooserPanel,
-    MultiFieldPanel,
 )
 from wagtail.models import Orderable, Page
 from wagtail.fields import RichTextField
 from wagtail.snippets.models import register_snippet
 
-from wagtailmetadata.models import MetadataPageMixin
 
 from common.utils import hero_panels
 from common.mixins import HeroMixin, SectionBodyMixin, TypesetBodyMixin
@@ -85,9 +83,7 @@ class FooterSection(Orderable, ClusterableModel):
 
 
 class FooterLink(Orderable, AbstractLink):
-    section = ParentalKey(
-        "FooterSection", on_delete=models.CASCADE, related_name="footer_section_links"
-    )
+    section = ParentalKey("FooterSection", on_delete=models.CASCADE, related_name="footer_section_links")
 
     def __str__(self):
         return self.page.title if self.page else self.label
@@ -109,9 +105,7 @@ class SocialLink(Orderable, models.Model):
 
     social_platform = models.CharField(max_length=100, choices=SOCIAL_CHOICES)
     link_url = models.CharField(max_length=255, default="")
-    section = ParentalKey(
-        "FooterSection", on_delete=models.CASCADE, related_name="footer_social_links"
-    )
+    section = ParentalKey("FooterSection", on_delete=models.CASCADE, related_name="footer_social_links")
 
     panels = [FieldPanel("social_platform"), FieldPanel("link_url")]
 
@@ -149,7 +143,7 @@ class HomePage(HeroMixin, Page):
         verbose_name = "Home Page"
 
     def serve(self, request, *args, **kwargs):
-        dashboard = self.get_children().type(NarrativeDashboardPage).first()
+        dashboard = self.get_children().type(NarrativeDashboardPage).live().first()
 
         if dashboard:
             return dashboard.specific.serve(request)
