@@ -34,7 +34,7 @@ services:
       - web
 
   nginx:
-    image: nginx:latest
+    container_name: nginx
     build: ./config/nginx/
     ports:
       - "80:80"
