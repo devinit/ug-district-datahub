@@ -49,8 +49,8 @@ services:
       - nginx
     env_file: .env
     environment:
-      - SITE_URL
-      - WWW_SITE_URL
+      - SITE_URL=kayunga.datahub.go.ug
+      - WWW_SITE_URL=www.kayunga.datahub.go.ug
     entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot --email chrisw@devinit.org --agree-tos --no-eff-email -d $SITE_URL -d $WWW_SITE_URL && trap exit TERM; while :; do certbot renew --deploy-hook \"cp -f /etc/letsencrypt/live/kayunga.datahub.go.ug/fullchain.pem /etc/letsencrypt/fullchain.pem; cp -f /etc/letsencrypt/live/kayunga.datahub.go.ug/privatekey.pem /etc/letsencrypt/privatekey.pem\"; sleep 12h & wait $${!}; done;"
     volumes:
       - ./config/letsencrypt:/var/www/certbot/
