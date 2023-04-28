@@ -22,7 +22,7 @@ jobs:
       run: |
         echo "HOST=${{ secrets.DEV_HOST }}" >> $GITHUB_ENV
         echo "USERNAME=${{ secrets.DEV_USER }}" >> $GITHUB_ENV
-        echo "SITE_URL=kayunga.datahub.go.ug" >> $GITHUB_ENV
+        echo "SITE_URL=masindi.datahub.go.ug" >> $GITHUB_ENV
         echo "REPO_PATH=~/git/ug-district-datahub" >> $GITHUB_ENV
 
     - name: Pull latest repo updates to server

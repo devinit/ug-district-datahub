@@ -7,4 +7,4 @@ User-agent: *
 Allow: /
 
 
-Sitemap: https://www.kayunga.datahub.go.ug/sitemap.xml
+Sitemap: https://www.masindi.datahub.go.ug/sitemap.xml
