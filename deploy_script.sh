@@ -6,7 +6,7 @@ APP_NAME="ug-district-datahub"
 ORG_NAME="devinit"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_DIR=$SCRIPT_DIR
-DOMAIN="live/datahub.go.ug"
+DOMAIN="live/kayunga.datahub.go.ug"
 CERTBOT_SUB_DIR='ssl/'$DOMAIN
 FULL_CHAIN_SOURCE=$APP_DIR'/'$CERTBOT_SUB_DIR'/fullchain.pem'
 PRIV_KEY_SOURCE=$APP_DIR'/'$CERTBOT_SUB_DIR'/privkey.pem'
@@ -25,7 +25,7 @@ fi
 if [ ! -f $FULL_CHAIN_DESTINATION ]; then
     FIRST_RUN='1'
     mkdir -p $APP_DIR'/'$CERTBOT_SUB_DIR
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $PRIV_KEY_DESTINATION -out $FULL_CHAIN_DESTINATION -subj "/C=UG/ST=Kampala/L=Kampala/O=Global Security/OU=Devs/CN=datahub.go.ug"
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $PRIV_KEY_DESTINATION -out $FULL_CHAIN_DESTINATION -subj "/C=UG/ST=Kampala/L=Kampala/O=Global Security/OU=Devs/CN=kayunga.datahub.go.ug"
 fi
 
 
