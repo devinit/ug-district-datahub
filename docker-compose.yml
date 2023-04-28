@@ -36,9 +36,10 @@ services:
       - "443:443"
     volumes:
       - ./ssl:/etc/ssl/
-      - ./config/letsencrypt:/letsencrypt/
-      - ./config/nginx:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
       - ./static:/static
+      - ./media:/media
     restart: always
     command: "/bin/sh -c 'while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
