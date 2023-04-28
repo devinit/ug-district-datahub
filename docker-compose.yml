@@ -10,6 +10,8 @@ services:
     restart: always
     volumes:
       - aphrc_dashboard_db:/var/lib/postgresql/data
+    networks:
+      - web
 
   web:
     build:
@@ -28,6 +30,8 @@ services:
     volumes:
       - ./:/code/
     restart: always
+    networks:
+      - web
 
   nginx:
     image: nginx:latest
@@ -42,6 +46,8 @@ services:
       - ./media:/media
     restart: always
     command: "/bin/sh -c 'while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    networks:
+      - web
 
   certbot:
     container_name: CertBot
@@ -52,7 +58,12 @@ services:
       - ./certbot/www:/var/www/certbot
     depends_on:
       - nginx
+    networks:
+      - web
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 volumes:
   aphrc_dashboard_db:
+
+networks:
+  web:
