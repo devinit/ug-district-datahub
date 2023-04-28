@@ -121,6 +121,8 @@ deploy_key
 
 # ssl
 ssl
+certbot
+certbot_logs
 
 # Downloaded Spotlight Files
 /spotlight-*.csv
