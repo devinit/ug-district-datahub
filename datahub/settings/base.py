@@ -145,13 +145,13 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-USE_SPACES = os.getenv("USE_SPACES") == "TRUE"
+USE_SPACES = config("USE_SPACES", cast=bool)
 
 if USE_SPACES:
 
-    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
     AWS_S3_ENDPOINT_URL = "https://fra1.digitaloceanspaces.com"
     AWS_S3_OBJECT_PARAMETERS = {
         "CacheControl": "max-age=86400",
