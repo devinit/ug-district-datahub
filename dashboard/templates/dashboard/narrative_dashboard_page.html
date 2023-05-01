@@ -11,7 +11,7 @@
 {% block body %}
 
 {% if self.depth > 2 %}
-  <section class="section">
+  <section class="section space-section-top--small space-section-bottom--small">
     <div class="row row--narrow">
       <div class="l-sidebar">
           <aside class="l-sidebar__aside">
@@ -30,7 +30,7 @@
   {% include 'dashboard/chapter-nav/nav.html' with page=page menu_label='Jump to section' chapter_number=page.chapter_number %}
 
   {% for block in page.content %}
-    <section class="section section--large">
+    <section class="section space-section-top--small space-section-bottom--small">
       <div class="row row--narrow">
 
         {% if forloop.first %}

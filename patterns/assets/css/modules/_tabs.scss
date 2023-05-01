@@ -8,17 +8,17 @@
 	width: 100%;
 	position: relative;
 	@include respond-to($c-vp) {
-		min-height: 650px;
+		min-height: 550px;
 	}
 	@include respond-to($d-vp) {
-		min-height: 500px;
+		min-height: 400px;
 	}
 	@include respond-to($e-vp + 200px) {
-		min-height: 550px;
+		min-height: 450px;
 	}
 
 	@include respond-to($e-vp + 400px) {
-		min-height: 600px;
+		min-height: 500px;
 	}
 }
 
@@ -68,6 +68,10 @@
 		width: 75%;
 		float: right;
 		left: 25%;
+	}
+
+	.l-2up__col {
+		margin-bottom: 1rem;
 	}
 }
 

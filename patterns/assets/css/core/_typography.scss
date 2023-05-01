@@ -192,6 +192,8 @@
 	p {
 		@extend .para;
 		@extend .para--typeset;
+
+		margin-bottom: 0.5rem;
 	}
 
 	b, strong {
