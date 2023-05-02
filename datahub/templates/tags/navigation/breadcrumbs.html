@@ -3,7 +3,7 @@
 
 {% if ancestors %}
     <ul class="breadcrumbs">
-        {% for ancestor in ancestors|slice:"1:" %}
+        {% for ancestor in ancestors %}
           <li class="breadcrumbs__item" aria-level="{{ forloop.counter }}">
               <a href="{% pageurl ancestor %}">{{ ancestor }}</a>
           </li>
