@@ -29,6 +29,14 @@
         padding: 20em 0 15em 0;
         &--minor{
             padding: 8em 0 15em 0;
+
+            &-bold {
+                padding: 8em 0;
+
+                .hero__title {
+                    font-size: 4.8rem;
+                }
+            }
         }
     }
 }

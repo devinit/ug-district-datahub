@@ -5,6 +5,18 @@
 .max-meter 				{ max-width: 850px; }
 .max-meter--center 		{ margin-left: auto; margin-right: auto; }
 
+.max-meter--wide {
+	.max-meter {
+		max-width: 950px;
+	}
+}
+
+.max-meter--max {
+	.max-meter {
+		max-width: 100%;
+	}
+}
+
 .align-center 			{ text-align: center; }
 .align-left 			{ text-align: left; }
 .align-right 			{ text-align: right; }

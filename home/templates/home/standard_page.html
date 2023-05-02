@@ -1,9 +1,11 @@
 {% extends 'layouts/default.html' %}
 {% load navigation_tags wagtailcore_tags %}
 
+{% block colour %}body--cerulean{% endblock %}
+
 {% block body %}
 
-  {% include 'includes/heroes/hero.html' %}
+  {% include 'includes/heroes/hero-minor.html' %}
 
   <section class="section">
     <div class="row row--narrow">

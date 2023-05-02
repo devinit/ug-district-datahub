@@ -96,9 +96,7 @@ class DocumentBoxSectionBlock(StructBlock):
         ],
         required=False,
     )
-    alt = BooleanBlock(
-        default=True, help_text="White background if checked", required=False
-    )
+    alt = BooleanBlock(default=True, help_text="White background if checked", required=False)
 
     class Meta:
         icon = "doc-full-inverse"
@@ -171,12 +169,8 @@ class ImageBlock(StructBlock):
 
 class BannerBlock(StructBlock):
     image = ImageChooserBlock(required=False)
-    image_credit_name = TextBlock(
-        required=False, help_text="The name of the image source"
-    )
-    image_credit_url = URLBlock(
-        required=False, help_text="A link to the image source, if any"
-    )
+    image_credit_name = TextBlock(required=False, help_text="The name of the image source")
+    image_credit_url = URLBlock(required=False, help_text="A link to the image source, if any")
     video = EmbedBlock(
         help_text="Insert an embed URL e.g https://www.youtube.com/embed/SGJFWirQ3ks",
         icon="fa-video-camera",
@@ -196,9 +190,7 @@ class BannerBlock(StructBlock):
             ("text", TextBlock(template="blocks/banner/text.html")),
             (
                 "richtext",
-                RichTextBlock(
-                    template="blocks/banner/richtext.html", features=RICHTEXT_FEATURES
-                ),
+                RichTextBlock(template="blocks/banner/richtext.html", features=RICHTEXT_FEATURES),
             ),
             (
                 "list",
@@ -214,9 +206,7 @@ class BannerBlock(StructBlock):
                             ),
                             (
                                 "content",
-                                TextBlock(
-                                    required=True, help_text="The list item content"
-                                ),
+                                TextBlock(required=True, help_text="The list item content"),
                             ),
                         ],
                         template="blocks/banner/list_item.html",
@@ -231,9 +221,7 @@ class BannerBlock(StructBlock):
         required=False,
         help_text="Anything from a name, location e.t.c - usually to provide credit for the text",
     )
-    buttons = StreamBlock(
-        [("button", LinkBlock()), ("document_box", DocumentBoxBlock())], required=False
-    )
+    buttons = StreamBlock([("button", LinkBlock()), ("document_box", DocumentBoxBlock())], required=False)
     media_orientation = ChoiceBlock(
         required=False,
         default="left",
@@ -264,9 +252,7 @@ class SectionParagraphBlock(StructBlock):
 
 
 class AnchorBlock(StructBlock):
-    anchor_id = CharBlock(
-        required=True, help_text="The unique indentifier for this anchor"
-    )
+    anchor_id = CharBlock(required=True, help_text="The unique indentifier for this anchor")
 
     class Meta:
         icon = "fa-slack"
@@ -414,9 +400,7 @@ class Table(StructBlock):
         features=RICHTEXT_FEATURES,
         help_text="Optional: caption text to appear below the table",
     )
-    caption_link = URLBlock(
-        required=False, help_text="Optional: external link to appear below the table"
-    )
+    caption_link = URLBlock(required=False, help_text="Optional: external link to appear below the table")
     caption_label = CharBlock(
         required=False,
         help_text="Optional: label for the caption link, defaults to the link if left blank",
@@ -465,9 +449,7 @@ class ImageDuoTextBlock(ImageBlock):
         required=True,
     )
     button = ButtonBlock()
-    alt = BooleanBlock(
-        default=False, help_text="White background if checked.", required=False
-    )
+    alt = BooleanBlock(default=False, help_text="White background if checked.", required=False)
 
     class Meta:
         template = "blocks/duo_body_block_img.html"
@@ -487,9 +469,7 @@ class FullWidthVideoBlock(StructBlock):
 
 
 class CustomEmbedBlock(StructBlock):
-    embed_type = ChoiceBlock(
-        required=True, default="buzzsprout", choices=(("buzzsprout", "Buzzsprout"),)
-    )
+    embed_type = ChoiceBlock(required=True, default="buzzsprout", choices=(("buzzsprout", "Buzzsprout"),))
     embed_url = URLBlock(
         required=True,
         help_text="The URL contained within the embed provider source code.",
@@ -508,9 +488,7 @@ class CustomEmbedBlock(StructBlock):
             pattern = re.compile(buzzsprout_regex)
             match = re.match(pattern, value.get("embed_url"))
             if match is None:
-                errors["embed_url"] = ErrorList(
-                    ["Please enter a valid Buzzsprout embed URL."]
-                )
+                errors["embed_url"] = ErrorList(["Please enter a valid Buzzsprout embed URL."])
 
         if errors:
             raise ValidationError("Validation error in StructBlock", params=errors)
@@ -533,13 +511,55 @@ class VideoDuoTextBlock(StructBlock):
         required=True,
     )
     button = ButtonBlock()
-    alt = BooleanBlock(
-        default=False, help_text="White background if checked.", required=False
-    )
+    alt = BooleanBlock(default=False, help_text="White background if checked.", required=False)
 
     class Meta:
         template = "blocks/duo_body_block_vid.html"
         icon = "fa-video-camera"
+
+
+class DashboardChooserBlock(StructBlock):
+    class Meta:
+        label = "Dashboard Chooser"
+
+    page = PageChooserBlock(page_type="dashboard.NarrativeDashboardPage")
+    icon = ChoiceBlock(
+        required=False,
+        choices=(
+            ("education", "Education"),
+            ("agriculture", "Agriculture"),
+        ),
+    )
+
+
+class DashboardListingBlock(StructBlock):
+    class Meta:
+        label = "Dashboards Listing"
+        template = "blocks/dashboard_listing_block.html"
+        icon = "radio-full"
+
+    dashboards = ListBlock(DashboardChooserBlock())
+    child_dashboards_title = CharBlock(
+        required=False,
+        default="Dashboards",
+        help_text="Optional: the title of the child dashboards accordion",
+    )
+    related_datasets_title = TextBlock(
+        required=False,
+        default="Datasets",
+        help_text="Optional: the title of the related datasets accordion",
+    )
+    show_dashboards = BooleanBlock(required=False, default=True)
+    show_datasets = BooleanBlock(required=False, default=True)
+
+
+class LatestDatasets(StructBlock):
+    class Meta:
+        label = "Latest Datasets"
+        icon = "radio-full"
+        template = "blocks/latest_datasets.html"
+
+    centered = BooleanBlock(required=False, default=False)
 
 
 class SectionStreamBlock(StreamBlock):
@@ -547,17 +567,19 @@ class SectionStreamBlock(StreamBlock):
     The custom blocks that can be rendered as independent sections on a page
     """
 
-    anchor = AnchorBlock()
-    paragraph_block = SectionParagraphBlock()
-    block_quote = SectionBlockQuote()
-    banner_block = BannerBlock()
+    anchor = AnchorBlock(icon="radio-full")
+    paragraph_block = SectionParagraphBlock(icon="radio-full")
+    block_quote = SectionBlockQuote(icon="radio-full")
+    banner_block = BannerBlock(icon="radio-full")
     downloads = DocumentBoxSectionBlock()
-    image = MediaImageBlock()
-    image_duo = ImageDuoTextBlock()
-    video_duo = VideoDuoTextBlock()
-    full_width_video_block = FullWidthVideoBlock()
-    custom_embed = CustomEmbedBlock()
-    cta = CallToActionBlock(template="blocks/section_call_to_action.html")
+    image = MediaImageBlock(icon="image")
+    image_duo = ImageDuoTextBlock(icon="image")
+    video_duo = VideoDuoTextBlock(icon="media")
+    full_width_video_block = FullWidthVideoBlock(icon="media")
+    custom_embed = CustomEmbedBlock(icon="media")
+    cta = CallToActionBlock(template="blocks/section_call_to_action.html", icon="radio-full")
     accordion = AccordionBlock()
+    dashboards = DashboardListingBlock()
+    latest_datasets = LatestDatasets()
 
     required = False

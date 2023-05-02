@@ -8,6 +8,7 @@
     @include respond-to($d-vp) {
         position: relative;
         display: block;
+        margin-bottom: 2em;
         .hero & {
             @include respond-to($d-vp) {
                 position: absolute;
@@ -78,4 +79,8 @@
             }
         }
     }
+}
+
+.breadcrumbs--thin .breadcrumbs {
+    margin-bottom: 0;
 }

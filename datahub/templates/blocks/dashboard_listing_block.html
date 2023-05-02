@@ -1,0 +1,9 @@
+<section class="section">
+  <div class="row row--narrow">
+    <div class="max-meter max-meter--center">
+      {% for dashboard in self.dashboards %}
+        {% include 'dashboard/partials/dashboard-box.html' with dashboard=dashboard.page icon=dashboard.icon %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

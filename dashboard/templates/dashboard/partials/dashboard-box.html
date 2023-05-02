@@ -1,11 +1,19 @@
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
+{% image dashboard.hero_image fill-850x200-c100 as image %}
 <div class="dashboard__item" data-js-entity>
-    <div class="dashboard__wrap">
+    <div class="dashboard__wrap{% if image %} dashboard__wrap--image{% endif %}" {% if image %}style="background-image:url('{{image.url}}')"{% endif %}>
         <a href="{% pageurl dashboard %}" data-js-entity-url class="dashboard__content">
             <p class="meta__date"><svg class="icon-calendar-svg"><use xlink:href="{% static 'svg/icons/renders/sprite.svg#calendar' %}"></use></svg>Last updated: {{dashboard.published_at|date:'d M Y'}}</p>
             <h2 class="dashboard__heading" data-js-entity-title>{{dashboard.title}}</h2>
+            {% if dashboard.hero_text %}
+              <div class="dashboard__sub_heading">{{dashboard.hero_text|richtext}}</div>
+            {% endif %}
+
         </a>
+        {% if icon %}
+        <img class="icon-right" src="{% static 'svg/icons/'|add:icon|add:'.svg' %}" />
+        {% endif %}
     </div>
     <ul class="accordion">
 
