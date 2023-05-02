@@ -16,7 +16,6 @@ from wagtail.snippets.models import register_snippet
 from common.utils import hero_panels
 from common.mixins import HeroMixin, SectionBodyMixin, TypesetBodyMixin
 from common.constants import SIMPLE_RICHTEXT_FEATURES
-from dashboard.models import NarrativeDashboardPage
 
 
 class AbstractLink(models.Model):
@@ -134,20 +133,15 @@ class FooterText(models.Model):
         verbose_name_plural = "Footer Text"
 
 
-class HomePage(HeroMixin, Page):
+class HomePage(SectionBodyMixin, HeroMixin, Page):
+
     content_panels = Page.content_panels + [
         hero_panels(),
+        FieldPanel("sections"),
     ]
 
     class Meta:
         verbose_name = "Home Page"
-
-    def serve(self, request, *args, **kwargs):
-        dashboard = self.get_children().type(NarrativeDashboardPage).live().first()
-
-        if dashboard:
-            return dashboard.specific.serve(request)
-        return super().serve(request)
 
 
 class StandardPage(SectionBodyMixin, TypesetBodyMixin, HeroMixin, Page):
