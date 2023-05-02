@@ -1,6 +1,6 @@
 <form class="form" method="get" action="{{self.pageurl}}">
     {% if topics %}
-      <div class="form-field form-field--inline-five">
+      <div class="form-field form-field--inline-four">
           <label for="topic" class="form-label form-label--hidden">All topics</label>
           <div class="form-field__select-dropdown">
               <select name="topic" id="topic">
@@ -14,7 +14,8 @@
           </div>
       </div>
     {% endif %}
-    <div class="form-field form-field--inline-five">
+    {% comment %}
+      <div class="form-field form-field--inline-five">
         <label for="district" class="form-label form-label--hidden">All districts</label>
         <div class="form-field__select-dropdown">
             <select name="district" id="district">
@@ -32,12 +33,13 @@
                 {% endfor %}
             </select>
         </div>
-    </div>
-    <div class="form-field form-field--inline-five">
+      </div>
+    {% endcomment %}
+    <div class="form-field form-field--inline-four">
         <label for="q" class="form-label form-label--hidden">Search</label>
         <input class="form-item" type="text" name="q" placeholder="Search..." value="{{q|default:''}}">
     </div>
-    <div class="form-field form-field--inline-five resources-filter--button">
+    <div class="form-field form-field--inline-four resources-filter--button">
         <button type="submit" class="button">Filter</button>
     </div>
 </form>
