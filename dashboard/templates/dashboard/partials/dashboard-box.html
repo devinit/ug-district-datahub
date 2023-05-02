@@ -6,6 +6,9 @@
             <p class="meta__date"><svg class="icon-calendar-svg"><use xlink:href="{% static 'svg/icons/renders/sprite.svg#calendar' %}"></use></svg>Last updated: {{dashboard.published_at|date:'d M Y'}}</p>
             <h2 class="dashboard__heading" data-js-entity-title>{{dashboard.title}}</h2>
         </a>
+        {% if icon %}
+        <img class="icon-right" src="{% static 'svg/icons/'|add:icon|add:'.svg' %}" />
+        {% endif %}
     </div>
     <ul class="accordion">
 

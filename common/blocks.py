@@ -518,13 +518,27 @@ class VideoDuoTextBlock(StructBlock):
         icon = "fa-video-camera"
 
 
+class DashboardChooserBlock(StructBlock):
+    class Meta:
+        label = "Dashboard Chooser"
+
+    page = PageChooserBlock(page_type="dashboard.NarrativeDashboardPage")
+    icon = ChoiceBlock(
+        required=False,
+        choices=(
+            ("education", "Education"),
+            ("agriculture", "Agriculture"),
+        ),
+    )
+
+
 class DashboardListingBlock(StructBlock):
     class Meta:
         label = "Dashboards Listing"
         template = "blocks/dashboard_listing_block.html"
         icon = "radio-full"
 
-    dashboards = ListBlock(PageChooserBlock(page_type="dashboard.NarrativeDashboardPage"))
+    dashboards = ListBlock(DashboardChooserBlock())
     child_dashboards_title = CharBlock(
         required=False,
         default="Dashboards",

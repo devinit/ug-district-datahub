@@ -51,6 +51,21 @@ $border-width: 5px;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         }
 	}
+
+    .icon-right {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        height: 50px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .dashboard__wrap {
+        .icon-right {
+            height: 50px;
+        }
+    }
 }
 
 .dashboard__content {
