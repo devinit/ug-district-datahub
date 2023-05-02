@@ -1,6 +1,7 @@
-{% load string_utils dataset_tags %}
+{% load wagtailcore_tags string_utils dataset_tags %}
 
 {% latest_datasets as datasets %}
+{% dataset_listing as listing_page %}
 
 <section class="section space-section-top--small space-section-bottom--small">
     <div class="row row--narrow">
@@ -10,6 +11,11 @@
               {% include 'datasets/partials/card-dataset.html' %}
             {% endfor %}
           </div>
+          {% if listing_page %}
+            <h3 class="is-typeset">
+              <a href="{% pageurl listing_page %}">Show all</a>
+            </h3>
+          {% endif %}
         </div>
     </div>
 </section>
