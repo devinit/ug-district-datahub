@@ -553,23 +553,33 @@ class DashboardListingBlock(StructBlock):
     show_datasets = BooleanBlock(required=False, default=True)
 
 
+class LatestDatasets(StructBlock):
+    class Meta:
+        label = "Latest Datasets"
+        icon = "radio-full"
+        template = "blocks/latest_datasets.html"
+
+    centered = BooleanBlock(required=False, default=False)
+
+
 class SectionStreamBlock(StreamBlock):
     """
     The custom blocks that can be rendered as independent sections on a page
     """
 
-    anchor = AnchorBlock()
-    paragraph_block = SectionParagraphBlock()
-    block_quote = SectionBlockQuote()
-    banner_block = BannerBlock()
+    anchor = AnchorBlock(icon="radio-full")
+    paragraph_block = SectionParagraphBlock(icon="radio-full")
+    block_quote = SectionBlockQuote(icon="radio-full")
+    banner_block = BannerBlock(icon="radio-full")
     downloads = DocumentBoxSectionBlock()
-    image = MediaImageBlock()
-    image_duo = ImageDuoTextBlock()
-    video_duo = VideoDuoTextBlock()
-    full_width_video_block = FullWidthVideoBlock()
-    custom_embed = CustomEmbedBlock()
-    cta = CallToActionBlock(template="blocks/section_call_to_action.html")
+    image = MediaImageBlock(icon="image")
+    image_duo = ImageDuoTextBlock(icon="image")
+    video_duo = VideoDuoTextBlock(icon="media")
+    full_width_video_block = FullWidthVideoBlock(icon="media")
+    custom_embed = CustomEmbedBlock(icon="media")
+    cta = CallToActionBlock(template="blocks/section_call_to_action.html", icon="radio-full")
     accordion = AccordionBlock()
     dashboards = DashboardListingBlock()
+    latest_datasets = LatestDatasets()
 
     required = False
