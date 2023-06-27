@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { AdminTable } from '../../components/AdminTable';
-import { useEntities } from '../hooks/entity';
+import { useDocuments } from '../hooks/document';
 
 const DocumentView: FC = () => {
-  const { data, loading, error } = useEntities();
+  const { data, loading, error } = useDocuments();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -13,7 +13,12 @@ const DocumentView: FC = () => {
     return <div>Failed to fetch entities. Please try again later.</div>;
   }
 
-  return <AdminTable className="listing" data={data.map(({ name, type }) => ({ Name: name, Type: type }))} />;
+  return (
+    <AdminTable
+      className="listing"
+      data={data.map(({ name, type, entity }) => ({ Name: name, Entity: entity, Type: type }))}
+    />
+  );
 };
 
 export default DocumentView;
