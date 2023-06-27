@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../utils';
-import { UseEntitiesReponse } from '../utils/types';
+import { Entity, HookReponse } from '../utils/types';
 
 const fetchEntities = () => {
   const url = `${API_BASE_URL}entities`;
@@ -8,7 +8,7 @@ const fetchEntities = () => {
   return window.fetch(url).then((response) => response.json());
 };
 
-export const useEntities = (): UseEntitiesReponse => {
+export const useEntities = (): HookReponse<Entity> => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

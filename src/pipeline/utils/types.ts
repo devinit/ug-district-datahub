@@ -10,8 +10,8 @@ export type EntityNextCloud = {
   path: string;
 };
 
-export type UseEntitiesReponse = {
-  data: Entity[];
+export type HookReponse<T> = {
+  data: T[];
   loading: boolean;
   error: string;
 };
