@@ -87,11 +87,12 @@ const appConfig = {
   entry: {
     state: './src/state/index.ts',
     dashboard: './src/dashboard/index.ts',
+    pipeline: './src/pipeline/index.ts',
   },
   output: {
     path: path.resolve(__dirname, 'src/assets/'),
     filename: '[name]/js/bundle.js',
-    publicPath: '/assets/',
+    publicPath: '/static/',
     chunkFilename: (pathData) => {
       const { runtime: name } = pathData.chunk;
 
