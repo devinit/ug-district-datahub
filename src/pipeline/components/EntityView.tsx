@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { AdminTable } from '../../components/AdminTable/AdminTable';
 import { useEntities } from '../hooks/entity';
 
 const EntityView: FC = () => {
@@ -12,7 +13,7 @@ const EntityView: FC = () => {
     return <div>Failed to fetch entities. Please try again later.</div>;
   }
 
-  return <div>Content Goes Here {data.length}</div>;
+  return <AdminTable className="listing" data={data.map(({ name, type }) => ({ Name: name, Type: type }))} />;
 };
 
 export default EntityView;
