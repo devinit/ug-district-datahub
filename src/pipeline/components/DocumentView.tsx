@@ -10,7 +10,7 @@ const DocumentView: FC = () => {
   }
 
   if (error) {
-    return <div>Failed to fetch entities. Please try again later.</div>;
+    return <div>Failed to fetch documents. Please try again later.</div>;
   }
 
   return (
