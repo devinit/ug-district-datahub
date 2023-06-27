@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { AdminTable } from '../../components/AdminTable';
 import { useEntities } from '../hooks/entity';
 
-const EntityView: FC = () => {
+const WorkflowView: FC = () => {
   const { data, loading, error } = useEntities();
 
   if (loading) {
@@ -16,4 +16,4 @@ const EntityView: FC = () => {
   return <AdminTable className="listing" data={data.map(({ name, type }) => ({ Name: name, Type: type }))} />;
 };
 
-export default EntityView;
+export default WorkflowView;

@@ -1,4 +1,6 @@
 {% extends "wagtailadmin/base.html" %}
+{% load static %}
+
 {% block titletag %}Pipeline Documents{% endblock %}
 
 {% block extra_css %}
@@ -17,6 +19,10 @@
     {% include "wagtailadmin/shared/header.html" with title="Data Pipeline Documents" icon="decimal" %}
 
     <div class="nice-padding">
-        Content Goes Here
+        <div id="pipeline-documents-root"></div>
     </div>
 {% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'pipeline/js/bundle.js' %}"></script>
+{% endblock extra_js %}
