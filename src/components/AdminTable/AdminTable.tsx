@@ -12,8 +12,9 @@ const AdminTable: FC<AdminTableProps> = ({ data, className, onSelect }) => {
 
   useEffect(() => {
     if (data) {
-      setColumns(Object.keys(data[0]));
-      setRows(data.map((record) => Object.values(record) as string[]));
+      const columns = Object.keys(data[0]).filter((key) => key !== 'original');
+      setColumns(columns);
+      setRows(data.map((record) => columns.reduce<string[]>((row, curr) => row.concat([record[curr] as string]), [])));
     }
   }, [data.length]);
 
@@ -37,7 +38,12 @@ const AdminTable: FC<AdminTableProps> = ({ data, className, onSelect }) => {
           {rows.map((row, key) => (
             <tr key={key}>
               {row.map((cell, id) => (
-                <td key={id} className={classNames({ title: id === 0 })} onClick={() => onSelectRow(data[key])}>
+                <td
+                  key={id}
+                  className={classNames({ title: id === 0 })}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onClick={() => onSelectRow((data[key].original as any) || data[key])}
+                >
                   {id === 0 ? <div className="title-wrapper">{cell}</div> : cell}
                 </td>
               ))}

@@ -37,7 +37,7 @@ const DocumentView: FC = () => {
       </div>
       <AdminTable
         className="listing"
-        data={data.map(({ name, type, entity }) => ({ Name: name, Entity: entity, Type: type }))}
+        data={data.map((item) => ({ Name: item.name, Entity: item.entity, Type: item.type, original: item }))}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSelect={onSelect as any}
       />
