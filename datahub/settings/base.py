@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "common",
     "downloads",
     "datasets",
+    "pipeline",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -180,9 +181,7 @@ WAGTAILADMIN_BASE_URL = "https://datahub.go.ug"
 
 # Email settings
 
-EMAIL_BACKEND = config(
-    "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
-)
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
