@@ -1,4 +1,6 @@
-import React, { FC, useState } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/react';
+import { FC, useState } from 'react';
 import { AdminTable } from '../../components/AdminTable';
 import WagtailModal from '../../components/WagtailModal/WagtailModal';
 import WagtailModalContent from '../../components/WagtailModal/WagtailModalContent';
@@ -26,7 +28,11 @@ const DocumentView: FC = () => {
 
   return (
     <div>
-      <div>
+      <div
+        css={css`
+          margin-bottom: 1rem;
+        `}
+      >
         {activeDocument ? (
           <WagtailModal show onClose={onCloseModal}>
             <WagtailModalContent title="Edit Document">
@@ -34,6 +40,7 @@ const DocumentView: FC = () => {
             </WagtailModalContent>
           </WagtailModal>
         ) : null}
+        <button className="button bicolor icon icon-plus">New Document</button>
       </div>
       <AdminTable
         className="listing"
