@@ -30,3 +30,6 @@ Also, make sure the following secrets are set up in Github under the repo for co
 | PORT | SSH port |
 
 We advise against using the root user to run the deployment. Set up a second user that will be used to run the update. Make sure the second user has permissions to spin up docker containers. Refer to the third option listed here - https://phoenixnap.com/kb/docker-permission-denied. Also, use nvm to install node `>=16 <17`.
+
+## Analytics
+This was setup for the dashboard pages. Nextcloud does not work with google analytics out of the box. The account information can be found on Edwin's APHRC handover notes.
