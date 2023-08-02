@@ -9,7 +9,12 @@ server {
     listen [::]:443 ssl default_server;
     listen 443 ssl default_server;
     server_name _;
-    return 412;
+    # Use below to avoid SSL errors on non-existent domains
+    set $empty ""
+    ssl_ciphers aNULL;
+    ssl_certificate data:$empty;
+    ssl_certificate_key data:$empty;
+    return 444;
 }
 
 server {
