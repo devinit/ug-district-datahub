@@ -48,7 +48,7 @@ services:
       - ./static:/static
       - ./media:/media
     restart: always
-    command: /bin/sh -c "envsubst '$$SITE_URL' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/nginx.conf && while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
+    command: /bin/sh -c "envsubst '$$SITE_URL' < /etc/nginx/conf.d/nginx.template > /etc/nginx/conf.d/nginx.conf && while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
     networks:
       - web
 
