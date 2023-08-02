@@ -21,7 +21,7 @@ jobs:
       # if: endsWith(github.ref, '/dev')
       run: |
         echo "MASINDI_SITE_URL=masindi.datahub.go.ug" >> $GITHUB_ENV
-        echo "REPO_PATH=~/git/ug-district-datahub" >> $GITHUB_ENV
+        echo "REPO_PATH=~/ug-district-datahub" >> $GITHUB_ENV
 
     - name: Pull latest repo updates to server
       # if: endsWith(github.ref, '/dev')
