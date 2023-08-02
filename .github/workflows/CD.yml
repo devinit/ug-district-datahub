@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set env for develop branch
-      if: endsWith(github.ref, '/dev')
+      # if: endsWith(github.ref, '/dev')
       run: |
         echo "MASINDI_HOST=${{ secrets.MASINDI_DEV_HOST }}" >> $GITHUB_ENV
         echo "MASINDI_USERNAME=${{ secrets.MASINDI_DEV_USER }}" >> $GITHUB_ENV
@@ -26,13 +26,14 @@ jobs:
         echo "REPO_PATH=~/git/ug-district-datahub" >> $GITHUB_ENV
 
     - name: Pull latest repo updates to server
-      if: endsWith(github.ref, '/dev')
+      # if: endsWith(github.ref, '/dev')
       uses: appleboy/ssh-action@master
       with:
         host: ${{ env.MASINDI_HOST }}
         username: ${{ env.MASINDI_USERNAME }}
         key: ${{ secrets.MASINDI_KEY }}
         port: ${{ secrets.MASINDI_PORT }}
+        passphrase: ${{ secrets.MASINDI_PASSPHRASE }}
         command_timeout: 30m
         script: |
           cd ${{ env.REPO_PATH }}
