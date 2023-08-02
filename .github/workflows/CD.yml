@@ -43,6 +43,8 @@ jobs:
     - name: Deploy dev branch
       # if: endsWith(github.ref, '/dev')
       uses: appleboy/ssh-action@master
+      env:
+        SITE_URL: ${{ env.MASINDI_SITE_URL }}
       with:
         host: ${{ secrets.MASINDI_HOST }}
         username: ${{ secrets.MASINDI_USERNAME }}
@@ -50,6 +52,7 @@ jobs:
         port: ${{ secrets.MASINDI_PORT }}
         passphrase: ${{ secrets.MASINDI_PASSPHRASE }}
         command_timeout: 30m
+        envs: SITE_URL
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
