@@ -36,16 +36,16 @@ npm run build
 
 echo "Building docker"
 
-docker-compose build db
-docker-compose build --no-cache web
-docker-compose build nginx
-docker-compose build certbot
+docker compose build db
+docker compose build --no-cache web
+docker compose build nginx
+docker compose build certbot
 
-docker-compose down --remove-orphans
-docker-compose up -d
+docker compose down --remove-orphans
+docker compose up -d
 
-docker-compose exec -T web python manage.py migrate --noinput
-docker-compose exec -T web python manage.py collectstatic --noinput
+docker compose exec -T web python manage.py migrate --noinput
+docker compose exec -T web python manage.py collectstatic --noinput
 
 cp -f $FULL_CHAIN_SOURCE $FULL_CHAIN_DESTINATION
 cp -f $PRIV_KEY_SOURCE $PRIV_KEY_DESTINATION
