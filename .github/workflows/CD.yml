@@ -37,7 +37,7 @@ jobs:
           cd ${{ env.REPO_PATH }}
           git stash
           git fetch --all --prune
-          git checkout dev
+          git checkout feature/harden-security
           git pull
 
     - name: Deploy dev branch
