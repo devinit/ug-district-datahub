@@ -5,7 +5,7 @@ on:
     tags:
       - "*"
     branches:
-      - "dev"
+      - "feature/harden-security"
   pull_request:
     branches:
       - "*"
@@ -42,16 +42,17 @@ jobs:
           git pull
 
     - name: Deploy dev branch
-      if: endsWith(github.ref, '/dev')
+      # if: endsWith(github.ref, '/dev')
       uses: appleboy/ssh-action@master
       with:
         host: ${{ env.MASINDI_HOST }}
         username: ${{ env.MASINDI_USERNAME }}
         key: ${{ secrets.MASINDI_KEY }}
         port: ${{ secrets.MASINDI_PORT }}
+        passphrase: ${{ secrets.MASINDI_PASSPHRASE }}
         command_timeout: 30m
         script: |
           cd ${{ env.REPO_PATH }}
-          echo "SITE_URL=masindi.datahub.go.ug" > .env.nginx
+          echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
           chmod 700 "deploy_script.sh"
           ./deploy_script.sh
