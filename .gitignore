@@ -115,6 +115,7 @@ $RECYCLE.BIN/
 .fabricrc
 
 .env
+.env.nginx
 storage/
 deploy_key
 .vscode
