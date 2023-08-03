@@ -51,5 +51,5 @@ cp -f $FULL_CHAIN_SOURCE $FULL_CHAIN_DESTINATION
 cp -f $PRIV_KEY_SOURCE $PRIV_KEY_DESTINATION
 
 if [ $FIRST_RUN == "1" ]; then
-    docker-compose restart web
+    docker compose restart web
 fi
