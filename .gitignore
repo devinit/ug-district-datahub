@@ -124,13 +124,11 @@ ssl
 certbot
 certbot_logs
 
-# Downloaded Spotlight Files
-/spotlight-*.csv
-
 node_modules/
 
 /datahub/**/static/**/js/*.js
 /datahub/**/static/**/js/*.LICENSE.txt
+/datahub/templates/robots.txt
 
 /src/assets/**/js/*.js
 /src/assets/**/js/*.LICENSE.txt

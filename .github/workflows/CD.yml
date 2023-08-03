@@ -56,5 +56,6 @@ jobs:
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
+          envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
           ./deploy_script.sh

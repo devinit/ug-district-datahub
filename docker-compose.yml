@@ -26,6 +26,7 @@ services:
       - HS_TICKET_PIPELINE
       - HS_TICKET_PIPELINE_STAGE
       - ENVIRONMENT
+      - SITE_URL
     working_dir: /code/
     volumes:
       - ./:/code/
