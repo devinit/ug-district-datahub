@@ -20,19 +20,19 @@ jobs:
     - name: Set env for develop branch
       if: endsWith(github.ref, '/dev')
       run: |
-        echo "HOST=${{ secrets.DEV_HOST }}" >> $GITHUB_ENV
-        echo "USERNAME=${{ secrets.DEV_USER }}" >> $GITHUB_ENV
-        echo "SITE_URL=datahub.go.ug" >> $GITHUB_ENV
-        echo "REPO_PATH=~/git/ug-district-datahub" >> $GITHUB_ENV
+        echo "MASINDI_SITE_URL=masindi.datahub.go.ug" >> $GITHUB_ENV
+        echo "KAYUNGA_SITE_URL=kayunga.datahub.go.ug" >> $GITHUB_ENV
+        echo "REPO_PATH=~/ug-district-datahub" >> $GITHUB_ENV
 
-    - name: Pull latest repo updates to server
+    - name: Pull latest repo updates to Masindi server
       if: endsWith(github.ref, '/dev')
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ env.HOST }}
-        username: ${{ env.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
+        host: ${{ secrets.MASINDI_HOST }}
+        username: ${{ secrets.MASINDI_USERNAME }}
+        key: ${{ secrets.MASINDI_KEY }}
+        port: ${{ secrets.MASINDI_PORT }}
+        passphrase: ${{ secrets.MASINDI_PASSPHRASE }}
         command_timeout: 30m
         script: |
           cd ${{ env.REPO_PATH }}
@@ -41,16 +41,59 @@ jobs:
           git checkout dev
           git pull
 
-    - name: Deploy dev branch
+    - name: Deploy dev branch to Masindi server
+      if: endsWith(github.ref, '/dev')
+      uses: appleboy/ssh-action@master
+      env:
+        SITE_URL: ${{ env.MASINDI_SITE_URL }}
+      with:
+        host: ${{ secrets.MASINDI_HOST }}
+        username: ${{ secrets.MASINDI_USERNAME }}
+        key: ${{ secrets.MASINDI_KEY }}
+        port: ${{ secrets.MASINDI_PORT }}
+        passphrase: ${{ secrets.MASINDI_PASSPHRASE }}
+        command_timeout: 30m
+        envs: SITE_URL
+        script: |
+          cd ${{ env.REPO_PATH }}
+          echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
+          envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
+          chmod 700 "deploy_script.sh"
+          ./deploy_script.sh
+
+    - name: Pull latest repo updates to Kayunga server
       if: endsWith(github.ref, '/dev')
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ env.HOST }}
-        username: ${{ env.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
+        host: ${{ secrets.KAYUNGA_HOST }}
+        username: ${{ secrets.KAYUNGA_USERNAME }}
+        key: ${{ secrets.KAYUNGA_KEY }}
+        port: ${{ secrets.KAYUNGA_PORT }}
+        passphrase: ${{ secrets.KAYUNGA_PASSPHRASE }}
         command_timeout: 30m
         script: |
           cd ${{ env.REPO_PATH }}
+          git stash
+          git fetch --all --prune
+          git checkout dev
+          git pull
+
+    - name: Deploy dev branch to Kayunga server
+      if: endsWith(github.ref, '/dev')
+      uses: appleboy/ssh-action@master
+      env:
+        SITE_URL: ${{ env.KAYUNGA_SITE_URL }}
+      with:
+        host: ${{ secrets.KAYUNGA_HOST }}
+        username: ${{ secrets.KAYUNGA_USERNAME }}
+        key: ${{ secrets.KAYUNGA_KEY }}
+        port: ${{ secrets.KAYUNGA_PORT }}
+        passphrase: ${{ secrets.KAYUNGA_PASSPHRASE }}
+        command_timeout: 30m
+        envs: SITE_URL
+        script: |
+          cd ${{ env.REPO_PATH }}
+          echo "SITE_URL=${{ env.KAYUNGA_SITE_URL }}" > .env.nginx
+          envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
           ./deploy_script.sh

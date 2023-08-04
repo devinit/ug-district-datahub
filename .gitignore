@@ -115,20 +115,21 @@ $RECYCLE.BIN/
 .fabricrc
 
 .env
+.env.nginx
 storage/
 deploy_key
 .vscode
 
 # ssl
 ssl
-
-# Downloaded Spotlight Files
-/spotlight-*.csv
+certbot
+certbot_logs
 
 node_modules/
 
 /datahub/**/static/**/js/*.js
 /datahub/**/static/**/js/*.LICENSE.txt
+/datahub/templates/robots.txt
 
 /src/assets/**/js/*.js
 /src/assets/**/js/*.LICENSE.txt

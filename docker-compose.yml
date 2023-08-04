@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.7"
 
 services:
   db:
@@ -10,6 +10,8 @@ services:
     restart: always
     volumes:
       - aphrc_dashboard_db:/var/lib/postgresql/data
+    networks:
+      - web
 
   web:
     build:
@@ -24,38 +26,49 @@ services:
       - HS_TICKET_PIPELINE
       - HS_TICKET_PIPELINE_STAGE
       - ENVIRONMENT
+      - SITE_URL
     working_dir: /code/
     volumes:
       - ./:/code/
     restart: always
+    networks:
+      - web
 
   nginx:
-    image: nginx:latest
+    container_name: nginx
+    build: ./config/nginx/
+    env_file: .env.nginx
+    environment:
+      - SITE_URL
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./ssl:/etc/ssl/
-      - ./config/letsencrypt:/letsencrypt/
-      - ./config/nginx:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/ssl
+      - ./certbot/www:/var/www/certbot
       - ./static:/static
+      - ./media:/media
     restart: always
-    command: "/bin/sh -c 'while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    command: /bin/sh -c "envsubst '$$SITE_URL' < /etc/nginx/conf.d/nginx.template > /etc/nginx/conf.d/nginx.conf && while :; do sleep 12h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
+    networks:
+      - web
 
   certbot:
-    container_name: certbot
-    image: certbot/certbot:latest
+    container_name: CertBot
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      - ./certbot_logs:/var/log/letsencrypt
     depends_on:
       - nginx
-    env_file: .env
-    environment:
-      - SITE_URL
-      - WWW_SITE_URL
-    entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot --email chrisw@devinit.org --agree-tos --no-eff-email -d $SITE_URL -d $WWW_SITE_URL && trap exit TERM; while :; do certbot renew --deploy-hook \"cp -f /etc/letsencrypt/live/datahub.go.ug/fullchain.pem /etc/letsencrypt/fullchain.pem; cp -f /etc/letsencrypt/live/datahub.go.ug/privatekey.pem /etc/letsencrypt/privatekey.pem\"; sleep 12h & wait $${!}; done;"
-    volumes:
-      - ./config/letsencrypt:/var/www/certbot/
-      - ./ssl:/etc/letsencrypt/
-      - ./certbot_logs:/var/log/letsencrypt
+    networks:
+      - web
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 volumes:
   aphrc_dashboard_db:
+
+networks:
+  web:

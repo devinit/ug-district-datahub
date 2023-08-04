@@ -7,4 +7,4 @@ User-agent: *
 Allow: /
 
 
-Sitemap: https://www.datahub.go.ug/sitemap.xml
+Sitemap: https://www.$SITE_URL/sitemap.xml

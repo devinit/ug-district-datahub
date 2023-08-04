@@ -176,13 +176,11 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "https://datahub.go.ug"
+WAGTAILADMIN_BASE_URL = "https://" + os.getenv("SITE_URL", "kayunga.datahub.go.ug")
 
 # Email settings
 
-EMAIL_BACKEND = config(
-    "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
-)
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
