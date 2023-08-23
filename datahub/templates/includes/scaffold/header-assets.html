@@ -1,4 +1,5 @@
-{% load static %}
+{% load static string_utils %}
+{% settings_value "WAGTAILADMIN_BASE_URL" as base_url %}
 
 <link href="{% static 'css/screen.min.css' %}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700" rel="stylesheet">
@@ -10,12 +11,17 @@
 <script src="{% static 'js/libs/modernizr.js' %}"></script>
 {% include 'includes/scaffold/favicon.html' %}
 <link href="{% static 'css/datahub.min.css' %}" rel="stylesheet" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PKFYRVCTG"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
 
-gtag('config', 'G-8PKFYRVCTG');
-</script>
+{% if 'kayunga' in base_url %}
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PKFYRVCTG"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-8PKFYRVCTG');
+	</script>
+{% else %}
+
+{% endif %}
