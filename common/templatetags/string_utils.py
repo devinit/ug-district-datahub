@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 from urllib.parse import parse_qs
 
 from django import template
+from django.conf import settings
 from django.utils import formats
 from django.utils.text import Truncator, slugify
 from django.utils.html import strip_tags
@@ -239,3 +240,9 @@ def buzzsprout_container_id(buzzsprout_url):
         return container_ids[0]
     else:
         return ""
+
+
+# Read settings value
+@register.simple_tag
+def settings_value(name):
+    return getattr(settings, name, "")
