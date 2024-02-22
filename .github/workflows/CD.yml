@@ -23,6 +23,8 @@ jobs:
         echo "MASINDI_SITE_URL=masindi.datahub.go.ug" >> $GITHUB_ENV
         echo "KAYUNGA_SITE_URL=kayunga.datahub.go.ug" >> $GITHUB_ENV
         echo "REPO_PATH=~/ug-district-datahub" >> $GITHUB_ENV
+        echo "MASINDI_TAG_ID=G-JEX2JKPWJT" >> $GITHUB_ENV
+        echo "KAYUNGA_TAG_ID=G-8PKFYRVCTG" >> $GITHUB_ENV
 
     - name: Pull latest repo updates to Masindi server
       if: endsWith(github.ref, '/dev')
@@ -46,6 +48,7 @@ jobs:
       uses: appleboy/ssh-action@master
       env:
         SITE_URL: ${{ env.MASINDI_SITE_URL }}
+        MASINDI_TAG_ID: ${{ env.MASINDI_TAG_ID }}
       with:
         host: ${{ secrets.MASINDI_HOST }}
         username: ${{ secrets.MASINDI_USERNAME }}
@@ -57,6 +60,7 @@ jobs:
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
+          echo "MASINDI_TAG_ID=${{ env.MASINDI_TAG_ID }}" >> .env.nginx
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
           ./deploy_script.sh
@@ -83,6 +87,7 @@ jobs:
       uses: appleboy/ssh-action@master
       env:
         SITE_URL: ${{ env.KAYUNGA_SITE_URL }}
+        KAYUNGA_TAG_ID: ${{ env.KAYUNGA_TAG_ID }}
       with:
         host: ${{ secrets.KAYUNGA_HOST }}
         username: ${{ secrets.KAYUNGA_USERNAME }}
@@ -94,6 +99,7 @@ jobs:
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.KAYUNGA_SITE_URL }}" > .env.nginx
+          echo "KAYUNGA_TAG_ID=${{ env.KAYUNGA_TAG_ID }}" >> .env.nginx
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
           ./deploy_script.sh
