@@ -56,7 +56,9 @@ jobs:
         port: ${{ secrets.MASINDI_PORT }}
         passphrase: ${{ secrets.MASINDI_PASSPHRASE }}
         command_timeout: 30m
-        envs: SITE_URL
+        envs: |
+          SITE_URL
+          MASINDI_TAG_ID
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
@@ -95,7 +97,9 @@ jobs:
         port: ${{ secrets.KAYUNGA_PORT }}
         passphrase: ${{ secrets.KAYUNGA_PASSPHRASE }}
         command_timeout: 30m
-        envs: SITE_URL
+        envs: |
+          SITE_URL
+          KAYUNGA_TAG_ID
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.KAYUNGA_SITE_URL }}" > .env.nginx
