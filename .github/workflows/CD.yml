@@ -47,6 +47,7 @@ jobs:
       env:
         SITE_URL: ${{ env.MASINDI_SITE_URL }}
         MASINDI_TAG_ID: "G-JEX2JKPWJT"
+        MASINDI_DB_CONNECTION_STRING: ${{ secrets.MASINDI_DB_CONNECTION_STRING }}
       with:
         host: ${{ secrets.MASINDI_HOST }}
         username: ${{ secrets.MASINDI_USERNAME }}
@@ -54,11 +55,12 @@ jobs:
         port: ${{ secrets.MASINDI_PORT }}
         passphrase: ${{ secrets.MASINDI_PASSPHRASE }}
         command_timeout: 30m
-        envs: SITE_URL,MASINDI_TAG_ID
+        envs: SITE_URL,MASINDI_TAG_ID,MASINDI_DB_CONNECTION_STRING
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
           echo "MASINDI_TAG_ID=${{ env.MASINDI_TAG_ID }}" >> .env
+          echo "MASINDI_DB_CONNECTION_STRING=${{ env.MASINDI_DB_CONNECTION_STRING }}" >> .env
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
           ./deploy_script.sh
@@ -86,6 +88,7 @@ jobs:
       env:
         SITE_URL: ${{ env.KAYUNGA_SITE_URL }}
         KAYUNGA_TAG_ID: "G-8PKFYRVCTG"
+        KAYUNGA_DB_CONNECTION_STRING: ${{ secrets.KAYUNGA_DB_CONNECTION_STRING }}
       with:
         host: ${{ secrets.KAYUNGA_HOST }}
         username: ${{ secrets.KAYUNGA_USERNAME }}
@@ -93,11 +96,12 @@ jobs:
         port: ${{ secrets.KAYUNGA_PORT }}
         passphrase: ${{ secrets.KAYUNGA_PASSPHRASE }}
         command_timeout: 30m
-        envs: SITE_URL,KAYUNGA_TAG_ID
+        envs: SITE_URL,KAYUNGA_TAG_ID,KAYUNGA_DB_CONNECTION_STRING
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.KAYUNGA_SITE_URL }}" > .env.nginx
           echo "KAYUNGA_TAG_ID=${{ env.KAYUNGA_TAG_ID }}" >> .env
+          echo "KAYUNGA_DB_CONNECTION_STRING=${{ env.KAYUNGA_DB_CONNECTION_STRING }}" >> .env
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
           ./deploy_script.sh
