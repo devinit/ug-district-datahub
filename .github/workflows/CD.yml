@@ -59,7 +59,7 @@ jobs:
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
-          echo "MASINDI_TAG_ID=${{ env.MASINDI_TAG_ID }}" >> .env
+          echo "MASINDI_TAG_ID=${{ env.MASINDI_TAG_ID }}" > .env
           echo "MASINDI_DB_CONNECTION_STRING=${{ env.MASINDI_DB_CONNECTION_STRING }}" >> .env
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
@@ -100,7 +100,7 @@ jobs:
         script: |
           cd ${{ env.REPO_PATH }}
           echo "SITE_URL=${{ env.KAYUNGA_SITE_URL }}" > .env.nginx
-          echo "KAYUNGA_TAG_ID=${{ env.KAYUNGA_TAG_ID }}" >> .env
+          echo "KAYUNGA_TAG_ID=${{ env.KAYUNGA_TAG_ID }}" > .env
           echo "KAYUNGA_DB_CONNECTION_STRING=${{ env.KAYUNGA_DB_CONNECTION_STRING }}" >> .env
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
           chmod 700 "deploy_script.sh"
