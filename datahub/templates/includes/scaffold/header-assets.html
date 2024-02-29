@@ -1,4 +1,5 @@
 {% load static %}
+{% load analytics_tags navigation_tags %}
 
 <link href="{% static 'css/screen.min.css' %}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700" rel="stylesheet">
@@ -11,11 +12,13 @@
 {% include 'includes/scaffold/favicon.html' %}
 <link href="{% static 'css/datahub.min.css' %}" rel="stylesheet" />
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PKFYRVCTG"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
+{% get_district_variable_name page.get_site.root_url as district_variable %}
+{% get_env_variable district_variable as tag_id %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{tag_id}}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-gtag('config', 'G-8PKFYRVCTG');
-</script>
+    gtag('config', '{{tag_id}}');
+  </script>
