@@ -1,5 +1,5 @@
 {% extends 'layouts/default.html' %}
-{% load navigation_tags wagtailcore_tags %}
+{% load string_utils dashboard_tags static navigation_tags wagtailcore_tags %}
 
 {% block colour %}body--cerulean{% endblock %}
 {% block body_class %}max-meter--wide{% endblock %}
@@ -9,7 +9,22 @@
   {% include 'includes/heroes/hero-minor-bold.html' %}
 
   {% for block in self.sections %}
-    {% include_block block %}
+    {% if block.block_type == 'interactive_chart' %}
+      {% include_block block with id=block.id|string_start %}
+    {% else %}
+      {% include_block block %}
+    {% endif %}
   {% endfor %}
 
 {% endblock body %}
+
+{% block html_header %}
+  {{block.super}}
+  {% load_viz_assets source='header' %}
+{% endblock html_header %}
+
+{% block html_footer %}
+  {{block.super}}
+  <script src="{% static 'dashboard/js/bundle.js' %}"></script>
+  {% load_viz_assets source='footer' %}
+{% endblock html_footer %}
