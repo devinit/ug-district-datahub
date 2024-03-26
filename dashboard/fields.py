@@ -25,6 +25,7 @@ from common.blocks import (
     AnchorBlock,
     CallToActionBlock,
     SectionBlockQuote,
+    InteractiveChartBlock
 )
 
 
@@ -250,25 +251,6 @@ class RichText(AbstractRichText):
     rich_text = RichTextBlock(
         features=RICHTEXT_FEATURES,
     )
-
-
-class InteractiveChartBlock(StructBlock):
-    class Meta:
-        help_text = "Select a chart page"
-        icon = "fa-area-chart"
-        label = "Interactive Chart"
-        template = "dashboard/blocks/interactive_chart.html"
-        form_template = "dashboard/block_forms/custom_struct.html"
-
-    show_title = BooleanBlock(required=False, default=True)
-    allow_share = BooleanBlock(required=False, default=True)
-    chart_page = PageChooserBlock(page_type=["dashboard.ChartPage", "dashboard.RawCodePage"])
-
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        chart_page = value["chart_page"]
-        context["chart"] = chart_page.specific if chart_page and chart_page.live else ""
-        return context
 
 
 class DashboardListingBlock(StructBlock):

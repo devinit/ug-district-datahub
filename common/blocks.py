@@ -562,6 +562,25 @@ class LatestDatasets(StructBlock):
     centered = BooleanBlock(required=False, default=False)
 
 
+class InteractiveChartBlock(StructBlock):
+    class Meta:
+        help_text = "Select a chart page"
+        icon = "fa-area-chart"
+        label = "Interactive Chart"
+        template = "dashboard/blocks/interactive_chart.html"
+        form_template = "dashboard/block_forms/custom_struct.html"
+
+    show_title = BooleanBlock(required=False, default=True)
+    allow_share = BooleanBlock(required=False, default=True)
+    chart_page = PageChooserBlock(page_type=["dashboard.ChartPage", "dashboard.RawCodePage"])
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        chart_page = value["chart_page"]
+        context["chart"] = chart_page.specific if chart_page and chart_page.live else ""
+        return context
+
+
 class SectionStreamBlock(StreamBlock):
     """
     The custom blocks that can be rendered as independent sections on a page
@@ -581,5 +600,6 @@ class SectionStreamBlock(StreamBlock):
     accordion = AccordionBlock()
     dashboards = DashboardListingBlock()
     latest_datasets = LatestDatasets()
+    interactive_chart = InteractiveChartBlock()
 
     required = False

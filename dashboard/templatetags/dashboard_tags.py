@@ -1,14 +1,22 @@
 import json
 from django.template import Context, Library, Template
+from home.models import HomePage
 
 register = Library()
 
+def get_content(page):
+    if hasattr(page, "sections") and isinstance(page, HomePage):
+        return page.sections
+    elif hasattr(page, "tools"):
+        return page.tools
+    else:
+        return page.content
 
 @register.simple_tag(takes_context=True)
 def page_contains_chart(context):
     self = context.get("page")
     try:
-        content = self.tools if hasattr(self, "tools") else self.content
+        content = get_content(self)
         for item in content:
             if item.block.name == "interactive_chart":
                 return True
@@ -62,7 +70,7 @@ def load_viz_assets(context, source="header"):
     self = context["page"]
     assets = []
     try:
-        content = self.tools if hasattr(self, "tools") else self.content
+        content = get_content(self)
         for block in content:
             if block.block_type == "interactive_chart":
                 chart_page = block.value["chart_page"]
