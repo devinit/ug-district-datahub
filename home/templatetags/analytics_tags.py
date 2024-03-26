@@ -16,4 +16,4 @@ def get_district_variable_name(root_url):
         if len(domain_parts) > 1:
             district = domain_parts[0].upper()
             return f"{district}_TAG_ID"
-    return None
+    return ''
