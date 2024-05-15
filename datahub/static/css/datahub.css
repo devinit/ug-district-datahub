@@ -63,6 +63,13 @@
   display: none;
 }
 
+@media screen and (min-width: 1200px) {
+  .hero--minor-bold {
+    padding: 1em 0;
+  }
+}
+
+
 /** ==== CHARTS ==== **/
 .svg-container .main-svg .hoverlayer .hovertext .plotly-charts-tooltip {
   background-color: #ffffff;
