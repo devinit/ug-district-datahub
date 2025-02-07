@@ -18,6 +18,7 @@ FIRST_RUN="0"
 export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
+source $NVM_DIR"/nvm.sh";
 nvm install v16.20.2
 nvm use v16.20.2
 
