@@ -65,6 +65,7 @@ function init_letsencrypt{
     echo "### Building services ..."
     docker compose build db
     docker compose build --no-cache web
+    echo "### Building Nginx ..."
     docker compose build nginx
     docker compose build certbot
     echo "### Starting web ..."
