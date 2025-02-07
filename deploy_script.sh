@@ -67,6 +67,7 @@ function init_letsencrypt{
     docker compose build --no-cache web
     docker compose build nginx
     docker compose build certbot
+    docker compose up web
     docker compose up --force-recreate -d nginx
     echo
 

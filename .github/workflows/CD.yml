@@ -6,7 +6,6 @@ on:
       - "*"
     branches:
       - "dev"
-      - "fix-deployment"
   pull_request:
     branches:
       - "*"
@@ -19,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set env for develop branch
-      if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'deployment')
+      if: endsWith(github.ref, '/dev')
       run: |
         echo "MASINDI_SITE_URL=masindi.datahub.go.ug" >> $GITHUB_ENV
         echo "KAYUNGA_SITE_URL=kayunga.datahub.go.ug" >> $GITHUB_ENV
@@ -64,7 +63,7 @@ jobs:
     #       ./deploy_script.sh
 
     - name: Pull latest repo updates to Kayunga server
-      if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'deployment')
+      if: endsWith(github.ref, '/dev')
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.KAYUNGA_HOST }}
@@ -82,7 +81,7 @@ jobs:
           git pull
 
     - name: Deploy dev branch to Kayunga server
-      if: endsWith(github.ref, '/dev') || endsWith(github.ref, 'deployment')
+      if: endsWith(github.ref, '/dev')
       uses: appleboy/ssh-action@master
       env:
         SITE_URL: ${{ env.KAYUNGA_SITE_URL }}
