@@ -63,6 +63,10 @@ function init_letsencrypt{
 
 
     echo "### Starting nginx ..."
+    docker compose build db
+    docker compose build --no-cache web
+    docker compose build nginx
+    docker compose build certbot
     docker compose up --force-recreate -d nginx
     echo
 
@@ -118,17 +122,17 @@ npm run build
 
 echo "Building docker"
 
-docker compose build db
-docker compose build --no-cache web
-docker compose build nginx
-docker compose build certbot
-
 if [ ! -f $FULL_CHAIN_DESTINATION ]; then
     FIRST_RUN='1'
     # mkdir -p $APP_DIR'/'$CERTBOT_SUB_DIR
     # openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $PRIV_KEY_DESTINATION -out $FULL_CHAIN_DESTINATION -subj "/C=UG/ST=Kampala/L=Kampala/O=Global Security/OU=Devs/CN=$SITE_URL"
     init_letsencrypt
 fi
+
+docker compose build db
+docker compose build --no-cache web
+docker compose build nginx
+docker compose build certbot
 
 docker compose down --remove-orphans
 docker compose up -d
