@@ -69,7 +69,7 @@ function init_letsencrypt{
     docker compose build nginx
     docker compose build certbot
     echo "### Starting web ..."
-    docker compose up web
+    docker compose up -d web
     echo "### Starting nginx ..."
     docker compose up --force-recreate -d nginx
     echo
