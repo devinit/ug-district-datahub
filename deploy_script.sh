@@ -62,12 +62,14 @@ function init_letsencrypt{
     echo
 
 
-    echo "### Starting nginx ..."
+    echo "### Building services ..."
     docker compose build db
     docker compose build --no-cache web
     docker compose build nginx
     docker compose build certbot
+    echo "### Starting web ..."
     docker compose up web
+    echo "### Starting nginx ..."
     docker compose up --force-recreate -d nginx
     echo
 
