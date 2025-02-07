@@ -105,15 +105,15 @@ function init_letsencrypt{
         $domain_args \
         --rsa-key-size $rsa_key_size \
         --agree-tos \
+        --non-interactive \
         --force-renewal" certbot
     echo
 
     echo "### Reloading nginx ..."
     docker compose exec nginx nginx -s reload
+    echo
+
 }
-
-
-
 
 if [ -d $APP_DIR ]; then
       cd $APP_DIR
