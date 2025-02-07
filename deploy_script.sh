@@ -33,7 +33,7 @@ function init_letsencrypt {
     rsa_key_size=4096
     data_path="./certbot"
     email="wakibic@gmail.com" # Adding a valid address is strongly recommended
-    staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
+    staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
     if [ -d "$data_path" ]; then
         read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
@@ -144,8 +144,6 @@ docker compose up -d
 docker compose exec -T web python manage.py migrate --noinput
 docker compose exec -T web python manage.py collectstatic --noinput
 
-# cp -f $FULL_CHAIN_SOURCE $FULL_CHAIN_DESTINATION
-# cp -f $PRIV_KEY_SOURCE $PRIV_KEY_DESTINATION
 
 if [ $FIRST_RUN == "1" ]; then
     docker compose restart web
