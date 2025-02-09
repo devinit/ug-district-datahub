@@ -8,7 +8,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_DIR=$SCRIPT_DIR
 DOMAIN="live/$SITE_URL"
 CERTBOT_SUB_DIR='ssl/'$DOMAIN
-FULL_CHAIN_DESTINATION=$APP_DIR'certbot/conf/live/'$DOMAIN'/fullchain.pem'
+FULL_CHAIN_DESTINATION=$APP_DIR'certbot/conf/'$DOMAIN
 REPOSITORY="https://github.com/"$ORG_NAME"/"$APP_NAME".git"
 FIRST_RUN="0"
 
@@ -121,7 +121,7 @@ npm run build
 
 echo "Building docker"
 
-if [ ! -f $FULL_CHAIN_DESTINATION ]; then
+if [ ! -d $FULL_CHAIN_DESTINATION ]; then
     FIRST_RUN='1'
     init_letsencrypt
 fi
