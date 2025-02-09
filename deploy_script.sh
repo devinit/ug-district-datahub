@@ -8,10 +8,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_DIR=$SCRIPT_DIR
 DOMAIN="live/$SITE_URL"
 CERTBOT_SUB_DIR='ssl/'$DOMAIN
-FULL_CHAIN_SOURCE=$APP_DIR'/'$CERTBOT_SUB_DIR'/fullchain.pem'
-PRIV_KEY_SOURCE=$APP_DIR'/'$CERTBOT_SUB_DIR'/privkey.pem'
-FULL_CHAIN_DESTINATION=$APP_DIR'/ssl/fullchain.pem'
-PRIV_KEY_DESTINATION=$APP_DIR'/ssl/privkey.pem'
+FULL_CHAIN_DESTINATION=$APP_DIR'certbot/conf/live/'$DOMAIN'/fullchain.pem'
 REPOSITORY="https://github.com/"$ORG_NAME"/"$APP_NAME".git"
 FIRST_RUN="0"
 
