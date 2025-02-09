@@ -63,7 +63,7 @@ jobs:
           echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
           echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> .env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> .env
+          echo "DJANGO_SECRET_KEY='${{ secrets.DJANGO_SECRET_KEY }}'" >> .env
           echo "ENVIRONMENT=production" >> .env
           echo "SITE_URL=${{ env.MASINDI_SITE_URL }}" > .env.nginx
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
@@ -109,7 +109,7 @@ jobs:
           echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
           echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> .env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> .env
+          echo "DJANGO_SECRET_KEY='${{ secrets.DJANGO_SECRET_KEY }}'" >> .env
           echo "ENVIRONMENT=production" >> .env
           echo "SITE_URL=${{ env.KAYUNGA_SITE_URL }}" > .env.nginx
           envsubst '$SITE_URL' < ./datahub/templates/robots.template > ./datahub/templates/robots.txt
