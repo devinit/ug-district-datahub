@@ -19,6 +19,8 @@ source $NVM_DIR"/nvm.sh";
 nvm install v16.20.2
 nvm use v16.20.2
 
+export USER_INFO=$(id -u):$(id -g)
+
 function init_letsencrypt {
 
     if ! [ -x "$(command -v docker compose)" ]; then
