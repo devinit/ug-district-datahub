@@ -40,6 +40,7 @@ from .mixins import (
     UUIDMixin,
 )
 from downloads.utils import DownloadsPanel
+from common.constants import CHARTS_CONFIG
 
 
 class VisualisationsPage(InstructionsMixin, Page):
@@ -70,6 +71,12 @@ class VisualisationsPage(InstructionsMixin, Page):
         default="{% load wagtailcore_tags %}",
         help_text="Optional: code that should be added to bottom of the document body e.g. JavaScript",
     )
+    chart_reference_configuration = AceEditorField(
+        options={"mode": "json5"},
+        blank=True,
+        default=CHARTS_CONFIG.strip(),
+        help_text="Example configurations for charts. Use as a reference when creating new charts.",
+    )
 
     no_js_text = models.CharField(
         max_length=255,
@@ -88,6 +95,7 @@ class VisualisationsPage(InstructionsMixin, Page):
             [
                 FieldPanel("header_assets"),
                 FieldPanel("footer_assets"),
+                FieldPanel("chart_reference_configuration"),
             ],
             heading="Assets",
         ),
