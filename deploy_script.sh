@@ -142,4 +142,5 @@ docker compose exec -T web python manage.py collectstatic --noinput
 
 if [ $FIRST_RUN == "1" ]; then
     docker compose restart web
+    docker compose exec --user root certbot chmod -R 777 /var/lib/letsencrypt
 fi
